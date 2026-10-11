@@ -2446,3 +2446,13 @@ matters. Engine only: the client screens for it come in a later step.
   standards, not cypresses, at the khan's tent; the bare flagpole gone.
 - **Cost.** Building every settlement grew to ~32 s on the (slow) cloud machine; the
   planners and the ground were then optimised (see PLAN). The log prints the time per phase.
+
+## D-282 The find-skills skill, kept in the repo — owner's request (2026-10-11)
+- **What the owner asked.** Add the "find skills" Claude skill: it searches the open agent
+  skills directory (skills.sh) for a skill suited to a task and installs it.
+- Vercel's `find-skills` (MIT, `vercel-labs/skills`) is copied unchanged, with its licence,
+  into `.claude/skills/find-skills/`, so every cloud session on this repo loads it (cloud
+  containers start fresh; a skill installed only in the user folder would vanish).
+- It works through `npx skills find <query>` / `npx skills add <owner/repo@skill>`; it checks
+  install counts and the source's reputation before recommending, and installs only on the
+  owner's say-so.
