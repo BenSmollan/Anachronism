@@ -2456,3 +2456,18 @@ matters. Engine only: the client screens for it come in a later step.
 - It works through `npx skills find <query>` / `npx skills add <owner/repo@skill>`; it checks
   install counts and the source's reputation before recommending, and installs only on the
   owner's say-so.
+
+## D-283 Game-development skills from the open directory — owner's request (2026-10-11)
+- Found with find-skills (D-282) and vetted: install count, source, licence, and every file read
+  (all are markdown guides; none runs commands or fetches anything). Copied unchanged with their
+  licences into `.claude/skills/`:
+  - gamedev-skills/awesome-gamedev-agent-skills (Apache-2.0, LICENSE + NOTICE kept):
+    `godot-shaders`, `procedural-gen`, `game-feel`, `performance-optimization`, `game-ui-ux`,
+    `camera-systems`, `game-ai`.
+  - wshobson/agents (MIT): `godot-gdscript-patterns`.
+  - minimax-ai/skills (MIT): `shader-dev` (GLSL techniques, to adapt to Godot's language).
+- The gamedev-skills Godot guides target Godot 4.7; this project runs 4.5, so anything they mark
+  as new in 4.7 is checked before use. The project's own rules (CLAUDE.md, the model kit, D-xxx)
+  win over any general advice in them.
+- Left out: `godot-master` (very broad, LGPL), `create-game-assets` (2D/AI-image oriented, wants
+  Python packages), and the Three.js/Unity/Unreal/Roblox skills (other engines).
