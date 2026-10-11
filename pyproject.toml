@@ -32,6 +32,7 @@ build-backend = "uv_build"
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+extend-exclude = [".claude"]  # installed skills are third-party guides, kept as their authors wrote them (D-283)
 
 [tool.ruff.lint]
 select = [
