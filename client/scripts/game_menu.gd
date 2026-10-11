@@ -152,6 +152,12 @@ func open_settings() -> void:
 	replay.add_theme_font_size_override("font_size", 16)
 	replay.toggled.connect(TurnReplay.set_enabled)
 	body.add_child(replay)
+	var shake := CheckBox.new()
+	shake.text = "Shake the camera at great moments (battles, conquests, breakthroughs)"
+	shake.button_pressed = CameraRig.shake_enabled()
+	shake.add_theme_font_size_override("font_size", 16)
+	shake.toggled.connect(CameraRig.set_shake_enabled)
+	body.add_child(shake)
 	if audio != null:
 		body.add_child(UiStyle.label("Sound", 20, UiStyle.RED, "title", 800))
 		var music := CheckBox.new()

@@ -253,6 +253,7 @@ problems, and waits for approval (D-002: approval = merging the phase PR).
 - [x] Cities planned on their ground: no overlaps, nothing in the sea, own shapes, walls on the outline, paving by development (D-279)
 - [x] Detailed buildings from a model kit: seven regional modules, culture-specific houses and palaces, civic landmarks, walls (D-280)
 - [x] Living cities: ground blended under buildings, culture-specific town and village plans, generated house variety, props, plants and animals (D-281)
+- [x] Performance pass (trees, armies, props; measured) and smooth screen shake with a Settings switch (D-284)
 - [ ] Source-check pass over the helper-written chronicles (written without network access) before any public release
 - [ ] Phase 7 gate
 ## Phase 8+ — More regions, first contact, tiered victory, art/sound, packaging

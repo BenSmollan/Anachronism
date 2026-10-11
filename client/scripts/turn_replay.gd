@@ -538,19 +538,12 @@ func _arrow(stage: Node3D, from: Vector3, to: Vector3, delay: float) -> void:
 	tween.tween_callback(arrow.queue_free)
 
 
-## The camera shudders at a great impact.
-func _shake(seconds: float, strength: float) -> void:
+## The camera shudders at a great impact (game-feel: smooth decaying trauma, see CameraRig).
+## `strength` 0..3 as the old shake took it; `_seconds` is kept for the callers.
+func _shake(_seconds: float, strength: float) -> void:
 	if _skip:
 		return
-	var camera := _rig.camera
-	var tween := _tween()
-	var steps := int(seconds / 0.04)
-	for i in steps:
-		var fade := 1.0 - float(i) / steps
-		tween.tween_property(camera, "h_offset", randf_range(-1, 1) * strength * fade, 0.04)
-		tween.parallel().tween_property(camera, "v_offset", randf_range(-1, 1) * strength * fade, 0.04)
-	tween.tween_property(camera, "h_offset", 0.0, 0.05)
-	tween.parallel().tween_property(camera, "v_offset", 0.0, 0.05)
+	_rig.add_trauma(clampf(strength / 3.0, 0.0, 1.0))
 
 
 ## Dust, sparks and flashes where armies meet; `size` scales it.
@@ -754,7 +747,8 @@ func _stone(camp: Vector3, city: Vector3, delay: float) -> void:
 		stone.position = start.lerp(end, t) + Vector3(0, sin(t * PI) * height, 0), 0.0, 1.0, 0.9)
 	tween.tween_callback(func() -> void:
 		stone.queue_free()
-		_burst(end, 0.35))
+		_burst(end, 0.35)
+		_rig.add_trauma(0.18))
 
 
 # --- land changing hands -----------------------------------------------------------------
@@ -776,6 +770,7 @@ func _taken(taken: Array) -> void:
 			shown += 1
 		_banner(change, at, mine)
 		if mine and not _skip:
+			_rig.add_trauma(0.55)   # a city of yours won or lost: a blow felt through the map
 			await _wait(1.6)
 
 
@@ -960,6 +955,7 @@ func _breakthroughs(items: Array) -> void:
 			return
 		_audio.play("victory")
 		_pillar(at)
+		_rig.add_trauma(0.35)
 		_caption(at + Vector3(0, 40, 0), "✦ %s ✦" % str(item["name"]).to_upper(), 54, Color(1.0, 0.86, 0.35), Color(0.25, 0.12, 0.02), 0.2, 64.0)
 		_caption(at + Vector3(0, 40, 0), "%s years before its time" % GameHud.number(int(item["ahead"])), 30, Color(1.0, 0.97, 0.9), Color(0.25, 0.12, 0.02), 0.5)
 		await _wait(2.6)

@@ -2471,3 +2471,31 @@ matters. Engine only: the client screens for it come in a later step.
   win over any general advice in them.
 - Left out: `godot-master` (very broad, LGPL), `create-game-assets` (2D/AI-image oriented, wants
   Python packages), and the Three.js/Unity/Unreal/Roblox skills (other engines).
+
+## D-284 Using the skills: measured performance work and game feel — DELEGATED (2026-10-11)
+- **What the owner asked.** "Use the skills to improve the game." Led by the
+  performance-optimization skill (measure first, fix the biggest cost, measure again) and the
+  game-feel skill (layered, short feedback scaled to how much a moment matters).
+- **Measured, not guessed.** A `--perf` option prints draw calls, triangles and memory for a
+  view, and `--perf-parts` how much each part of the world costs (hide it, re-measure).
+  Qin's capital, close (distance 14) and the province view (120), before → after:
+  triangles 30.8M → 14.2M close, 46.8M → 20.1M wide; draw calls 2,505 → 2,306 and
+  4,888 → 2,267; scene objects 4,097 → 3,193 and 9,424 → 3,167.
+- **The two biggest costs found:**
+  - **Trees** were 21M of the 31M close-up triangles: every map tree was the full Kenney model
+    (up to 400 triangles) out to 260 units, with shadows. Now the detailed trees show only
+    within 60 units, in small batches; beyond, a simple tree of a few dozen triangles without
+    a shadow stands in, fading across. Clearing trees out of cities covers both.
+  - **Armies** were 212,000 triangles and 180 nodes each (5.4M in the province view): every
+    head and helmet was Godot's default sphere (some 4,000 triangles), each part its own node.
+    Now spheres are low-poly and each army is one mesh per colour: 5,900 triangles, 8 nodes,
+    and looks the same at map scale.
+  - Small settlement props (barrels, animals, garden beds) now show only within 100 units.
+- **Game feel.** The camera shake was random jumps along a tween; now it is the skill's
+  "trauma" model: great moments add trauma (0..1), the camera sways by trauma squared along
+  smooth waves, and it settles in under a second. Battles shake hardest, a city of yours won
+  or lost strongly, a breakthrough moderately, siege stones landing lightly. A Settings
+  checkbox turns screen shake off (accessibility, as the skill advises).
+- **Tried and dropped.** A tilt-shift (depth of field) "diorama" look close up: it showed no
+  visible effect in the headless renderer at any strength, so it was removed rather than
+  shipped unverified.

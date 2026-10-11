@@ -27,6 +27,7 @@ static var MODULES := {}
 
 const SHOW_WITHIN := 320.0          ## camera distance at which settlements appear
 const FAR_UNTIL := 1400.0           ## city icons stand in for them out to here
+const PROPS_WITHIN := 100.0         ## barrels, animals and garden beds only this close (D-284)
 ## The map is cut into tiles, each its own batch: Godot hides a batch by the camera's distance
 ## to the batch's centre, so one batch for the whole map vanished on large maps.
 const TILE := 120.0
@@ -375,6 +376,7 @@ func prop(kind: String, pixel: Vector2, yaw: float, size := 1.0, site := -1, lif
 		var part := _model(module, kind, HOUSE_UNIT)
 		if part != "":
 			_what[part] = ""
+			_parts[part]["within"] = PROPS_WITHIN   # too small to see from farther
 			_add(part, pixel, lift, yaw, Vector3.ONE * size, Color(0.6, 0.5, 0.4), site, 0.7 if site >= 0 else 0.0)
 			return true
 	return false
@@ -767,7 +769,7 @@ func _multimesh(entry: Dictionary, indices: Array) -> MultiMeshInstance3D:
 	if entry.get("far", false):
 		Lod.between(instance, SHOW_WITHIN, FAR_UNTIL)  # crossfades with the town itself
 	else:
-		Lod.near(instance, SHOW_WITHIN)
+		Lod.near(instance, float(entry.get("within", SHOW_WITHIN)))
 	instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON   # soft shadows under buildings (G1)
 	return instance
 

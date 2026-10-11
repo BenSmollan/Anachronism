@@ -794,6 +794,35 @@ func _take_screenshot(path: String) -> void:
 		bridge.stop()
 		get_tree().quit()
 		return
+	if options.has("perf"):  # --perf: what this view costs to draw, measured over 30 frames
+		var worst := 0.0
+		for i in 30:
+			await get_tree().process_frame
+			worst = maxf(worst, Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0)
+		print("PERF draw_calls=%d primitives=%d objects=%d process_ms=%.1f worst_process_ms=%.1f nodes=%d mem_mb=%.0f" % [
+			Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
+			Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME),
+			Performance.get_monitor(Performance.RENDER_TOTAL_OBJECTS_IN_FRAME),
+			Performance.get_monitor(Performance.TIME_PROCESS) * 1000.0, worst,
+			Performance.get_monitor(Performance.OBJECT_NODE_COUNT),
+			Performance.get_monitor(Performance.MEMORY_STATIC) / 1048576.0])
+		if options.has("perf-parts"):  # --perf-parts: what each part of the world costs
+			var total: float = Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)
+			var parts: Array = []
+			for child in holder.get_children():
+				for sub in ([child] + (child.get_children() if child.get_child_count() <= 12 else [])):
+					if sub is Node3D and (sub as Node3D).visible:
+						parts.append(sub)
+			for part in parts:
+				(part as Node3D).visible = false
+				for i in 3:
+					await get_tree().process_frame
+				var without: float = Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME)
+				(part as Node3D).visible = true
+				if total - without > 200000.0:
+					print("PERF part %s: %.1fM primitives" % [part.get_path(), (total - without) / 1e6])
+			for i in 3:
+				await get_tree().process_frame
 	if options.has("no-ui"):  # --no-ui: the map alone, every panel and card hidden (screenshots)
 		for layer in get_tree().root.find_children("*", "CanvasLayer", true, false):
 			(layer as CanvasLayer).hide()

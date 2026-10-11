@@ -25,13 +25,20 @@ static func make(colour: Color, facing: float, siege := false) -> Node3D:
 	body.size = Vector3(0.11, 0.17, 0.08) * S
 	var legs := BoxMesh.new()
 	legs.size = Vector3(0.1, 0.1, 0.07) * S
+	# Spheres and poles at a modest smoothness: at their size on the map the default
+	# (4,000 triangles a sphere) showed nothing more, yet made each army 212,000 triangles
+	# (performance skill, D-284). Now a few thousand.
 	var head := SphereMesh.new()
 	head.radius = 0.045 * S
 	head.height = 0.09 * S
+	head.radial_segments = 8
+	head.rings = 4
 	var helmet := SphereMesh.new()
 	helmet.radius = 0.05 * S
 	helmet.height = 0.05 * S
 	helmet.is_hemisphere = true
+	helmet.radial_segments = 8
+	helmet.rings = 3
 	var shield := BoxMesh.new()   # a tall oblong shield, rimmed
 	shield.size = Vector3(0.1, 0.16, 0.015) * S
 	var rim := BoxMesh.new()
@@ -43,6 +50,8 @@ static func make(colour: Color, facing: float, siege := false) -> Node3D:
 	var boss := SphereMesh.new()
 	boss.radius = 0.02 * S
 	boss.height = 0.02 * S
+	boss.radial_segments = 6
+	boss.rings = 2
 	var spear := CylinderMesh.new()
 	spear.top_radius = 0.006 * S
 	spear.bottom_radius = 0.006 * S
@@ -78,21 +87,20 @@ static func make(colour: Color, facing: float, siege := false) -> Node3D:
 	for lx in [-0.04, 0.04]:
 		for lz in [-0.1, 0.1]:
 			_part(army, leg, horse, Vector3(lx * S, 0.07 * S, cz + lz * S))
-	var n := _part(army, neck, horse, Vector3(0, 0.3 * S, cz - 0.13 * S))
-	n.rotation.x = 0.5
+	_part(army, neck, horse, Vector3(0, 0.3 * S, cz - 0.13 * S), 0.5)
 	_part(army, muzzle, horse, Vector3(0, 0.37 * S, cz - 0.19 * S))
 	_part(army, body, coat, Vector3(0, 0.34 * S, cz))
 	_part(army, head, skin, Vector3(0, 0.47 * S, cz))
 	_part(army, helmet, trim, Vector3(0, 0.49 * S, cz))
 	var cape := BoxMesh.new()
 	cape.size = Vector3(0.12, 0.16, 0.02) * S
-	var c := _part(army, cape, trim, Vector3(0, 0.33 * S, cz + 0.06 * S))
-	c.rotation.x = -0.3
+	_part(army, cape, trim, Vector3(0, 0.33 * S, cz + 0.06 * S), -0.3)
 	# the standard: a tall pole and a long banner in the owner's colours
 	var pole := CylinderMesh.new()
 	pole.top_radius = 0.012 * S
 	pole.bottom_radius = 0.012 * S
 	pole.height = 1.1 * S
+	pole.radial_segments = 6
 	_part(army, pole, wood, Vector3(0.12 * S, 0.55 * S, cz))
 	var banner := BoxMesh.new()
 	banner.size = Vector3(0.3, 0.42, 0.015) * S
@@ -101,6 +109,7 @@ static func make(colour: Color, facing: float, siege := false) -> Node3D:
 	stripe.size = Vector3(0.3, 0.05, 0.02) * S
 	_part(army, stripe, trim, Vector3(0.28 * S, 0.72 * S, cz))
 	_part(army, _cone(0.03 * S, 0.08 * S), _material(Color(0.95, 0.8, 0.3)), Vector3(0.12 * S, 1.14 * S, cz))
+	_merge(army)
 	if siege:
 		var engine := MeshInstance3D.new()
 		engine.mesh = KenneyKit.mesh("castle/siege-trebuchet", 0.75 * S, "accents")
@@ -146,16 +155,32 @@ static func _material(colour: Color) -> StandardMaterial3D:
 
 static func _cone(radius: float, height: float) -> CylinderMesh:
 	var mesh := CylinderMesh.new()
+	mesh.radial_segments = 6
 	mesh.top_radius = 0.0
 	mesh.bottom_radius = radius
 	mesh.height = height
 	return mesh
 
 
-static func _part(parent: Node3D, mesh: Mesh, material: Material, at: Vector3) -> MeshInstance3D:
-	var part := MeshInstance3D.new()
-	part.mesh = mesh
-	part.material_override = material
-	part.position = at
-	parent.add_child(part)
-	return part
+## Add a part to `parent`'s batch for its material, at `at`, tipped by `tilt` about x. The
+## batches become one mesh per material in `_merge`: an army was 180 nodes (180 draw calls).
+static func _part(parent: Node3D, mesh: Mesh, material: Material, at: Vector3, tilt := 0.0) -> void:
+	if not parent.has_meta("batches"):
+		parent.set_meta("batches", {})
+	var batches: Dictionary = parent.get_meta("batches")
+	if not batches.has(material):
+		var st := SurfaceTool.new()
+		st.begin(Mesh.PRIMITIVE_TRIANGLES)
+		batches[material] = st
+	(batches[material] as SurfaceTool).append_from(mesh, 0, Transform3D(Basis(Vector3.RIGHT, tilt), at))
+
+
+## One mesh per material for everything `_part` gathered under `parent`.
+static func _merge(parent: Node3D) -> void:
+	var batches: Dictionary = parent.get_meta("batches", {})
+	for material in batches:
+		var part := MeshInstance3D.new()
+		part.mesh = (batches[material] as SurfaceTool).commit()
+		part.material_override = material
+		parent.add_child(part)
+	parent.remove_meta("batches")

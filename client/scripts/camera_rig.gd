@@ -25,6 +25,15 @@ var _anchor := Vector2(-1, -1)   ## the screen point zoom keeps still (-1: the c
 var _glide := Vector2.ZERO       ## pan velocity after a drag, ground units per second
 var _drag_velocity := Vector2.ZERO
 var _flight: Tween
+## Shake (game-feel): a "trauma" of 0..1 that great moments add to and that drains away; the
+## camera sways by trauma squared, so small knocks barely stir it and great ones punch, along
+## smooth waves rather than a random buzz. It moves only the view, never the map.
+const SHAKE_DECAY := 1.1       ## trauma lost per second
+const SHAKE_REACH := 0.018     ## at full trauma, the sway as a share of the camera's distance
+const SETTINGS := "user://settings.cfg"
+var trauma := 0.0
+var _shake_t := 0.0
+static var _shake_on := -1     ## the player's choice, read once (-1: not read yet)
 
 
 func _ready() -> void:
@@ -140,7 +149,44 @@ func _unhandled_input(event: InputEvent) -> void:
 		_drag_velocity = _drag_velocity.lerp(amount / step, 0.5)
 
 
+## Add to the shake: about 0.2 for a knock, 0.5 for a blow, 0.9 for a cataclysm.
+func add_trauma(amount: float) -> void:
+	if shake_enabled():
+		trauma = clampf(trauma + amount, 0.0, 1.0)
+
+
+## Whether the player wants the camera to shake (Settings; on unless switched off).
+static func shake_enabled() -> bool:
+	if _shake_on < 0:
+		var config := ConfigFile.new()
+		_shake_on = 1 if config.load(SETTINGS) != OK or bool(config.get_value("display", "shake", true)) else 0
+	return _shake_on == 1
+
+
+static func set_shake_enabled(on: bool) -> void:
+	var config := ConfigFile.new()
+	config.load(SETTINGS)
+	config.set_value("display", "shake", on)
+	config.save(SETTINGS)
+	_shake_on = 1 if on else 0
+
+
+func _shake_step(delta: float) -> void:
+	if trauma <= 0.0:
+		return
+	trauma = maxf(trauma - SHAKE_DECAY * delta, 0.0)
+	var power := trauma * trauma
+	_shake_t += delta * 22.0
+	var reach := distance * SHAKE_REACH * power
+	camera.h_offset = reach * (sin(_shake_t * 1.7) + 0.5 * sin(_shake_t * 3.1))
+	camera.v_offset = reach * 0.7 * (sin(_shake_t * 2.3 + 1.0) + 0.5 * sin(_shake_t * 4.3))
+	if trauma <= 0.0:
+		camera.h_offset = 0.0
+		camera.v_offset = 0.0
+
+
 func _process(delta: float) -> void:
+	_shake_step(delta)
 	if is_flying():
 		return
 	var move := Vector2(Input.get_axis("ui_left", "ui_right"), Input.get_axis("ui_up", "ui_down"))
