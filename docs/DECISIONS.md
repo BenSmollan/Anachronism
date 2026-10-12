@@ -2499,3 +2499,11 @@ matters. Engine only: the client screens for it come in a later step.
 - **Tried and dropped.** A tilt-shift (depth of field) "diorama" look close up: it showed no
   visible effect in the headless renderer at any strength, so it was removed rather than
   shipped unverified.
+
+## D-285 Caveman skill: shorter replies — owner's request (2026-10-12)
+- Found with find-skills (568K installs, Apache-2.0, juliusbrussee/caveman); copied unchanged
+  with its licence into `.claude/skills/caveman/`. It trims Claude's chat replies (no
+  greetings, recaps or filler; every fact, command and number kept) to save usage. It never
+  touches code, commits, docs or memory files, and switches back to full sentences for
+  warnings, irreversible actions, questions to the owner, or when the owner seems confused,
+  which keeps faith with "explain in plain language". Off with "stop caveman" / "normal mode".
