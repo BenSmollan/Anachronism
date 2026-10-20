@@ -1,8 +1,7 @@
-## The screens before a game: the title screen and the civilisation picker (step 2.9).
+## The screens before a game: the title screen and the year picker.
 ##
-## The picker works like Rise of Kingdoms: moments in history across the top, a big
-## portrait of the chosen civilisation's ruler, its story and strengths, a gold CONFIRM
-## button, and every civilisation of that moment as a badge along the bottom.
+## The player always plays Rome (D-286). The picker shows one Roman-styled card per Rome
+## scenario the engine lists (year, title, pitch); pick a year, then BEGIN.
 class_name Menus
 extends CanvasLayer
 
@@ -25,7 +24,6 @@ func _ready() -> void:
 
 var can_continue := false   ## an autosaved game exists
 var difficulty := "normal"  ## chosen in the picker; kept while browsing moments
-var _moments_scroll := 0  ## where the timeline of moments was last scrolled to
 var chronicle := true   ## follow history in chapters (D-120), where the state has them
 
 
@@ -45,7 +43,7 @@ func show_title() -> void:
 	var title := UiStyle.headline("MERITUS", 96, UiStyle.GOLD)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(title)
-	var tagline := UiStyle.headline("Guide a civilisation with ideas ahead of their time", 26, UiStyle.CREAM)
+	var tagline := UiStyle.headline("Guide Rome, 509 to 27 BC, with ideas ahead of their time", 26, UiStyle.CREAM)
 	tagline.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	column.add_child(tagline)
 	# which build this is, so old downloads can be told from new ones (written by package.sh)
@@ -110,110 +108,182 @@ func show_disclaimer() -> void:
 	_root.add_child(card)
 
 
-func show_picker(scenario_id := "", civ_id := "") -> void:
+const ROME := "rome"
+const SENATE_RED := Color(0.36, 0.05, 0.06)
+const SENATE_RED_DARK := Color(0.16, 0.02, 0.03)
+
+
+## Pick a starting year for Rome. The catalogue is whatever the engine lists for Rome, so a
+## new Rome scenario simply appears as one more card. `scenario_id` preselects a card.
+func show_picker(scenario_id := "", _civ_id := "") -> void:
 	if catalog.is_empty():
 		return
 	scenario = catalog[0]
 	for s in catalog:
 		if s["id"] == scenario_id:
 			scenario = s
-		elif scenario_id == "" and civ_id != "" and s["civs"].any(func(c): return c["id"] == civ_id):
-			scenario = s  # the moment this civilisation belongs to
-	var wanted := civ_id if civ_id != "" else str(scenario["default_civ"])
-	civ = scenario["civs"][0]
-	for c in scenario["civs"]:
-		if c["id"] == wanted:
-			civ = c
+	civ = _rome_of(scenario)
 	_draw_picker()
+
+
+## Rome's entry in a scenario (the player's civilisation is always Rome).
+func _rome_of(s: Dictionary) -> Dictionary:
+	for c in s["civs"]:
+		if c["id"] == ROME:
+			return c
+	return s["civs"][0]
 
 
 func _draw_picker() -> void:
 	_clear()
-	var colour := Color(civ["colour"])
 	var back := ColorRect.new()
 	back.set_anchors_preset(Control.PRESET_FULL_RECT)
-	back.color = colour.darkened(0.55)
+	back.color = SENATE_RED_DARK
 	_root.add_child(back)
-	# moments in history, on a timeline
-	var heading := UiStyle.headline("CHOOSE YOUR\nMOMENT", 28, UiStyle.GOLD)
-	heading.position = Vector2(36, 8)
-	_root.add_child(heading)
-	var moments := ScrollContainer.new()
-	moments.position = Vector2(300, 2)
-	moments.size = Vector2(1290, 120)
-	moments.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	var timeline := Timeline.new()
-	timeline.setup(catalog, str(scenario["id"]))
-	timeline.chosen.connect(func(id: String): show_picker(id))
-	moments.add_child(timeline)
-	_root.add_child(moments)
-	# keep the chosen moment in view, gliding there from where the timeline was
+	var glow := ColorRect.new()  # a deep red wash fading to dark at the foot
+	glow.set_anchors_preset(Control.PRESET_FULL_RECT)
+	var gradient := Gradient.new()
+	gradient.set_color(0, Color(SENATE_RED, 1.0))
+	gradient.set_color(1, Color(SENATE_RED_DARK, 1.0))
+	var wash := GradientTexture2D.new()
+	wash.gradient = gradient
+	wash.fill_from = Vector2(0.5, 0.0)
+	wash.fill_to = Vector2(0.5, 1.0)
+	var wash_rect := TextureRect.new()
+	wash_rect.texture = wash
+	wash_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	wash_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	wash_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_root.add_child(wash_rect)
+	var frame := MarginContainer.new()
+	frame.set_anchors_preset(Control.PRESET_FULL_RECT)
+	for side in ["left", "right"]:
+		frame.add_theme_constant_override("margin_" + side, 40)
+	frame.add_theme_constant_override("margin_top", 22)
+	frame.add_theme_constant_override("margin_bottom", 24)
+	var column := VBoxContainer.new()
+	column.add_theme_constant_override("separation", 10)
+	frame.add_child(column)
+	_root.add_child(frame)
+	# SPQR header
+	var spqr := UiStyle.headline("S · P · Q · R", 64, UiStyle.GOLD)
+	spqr.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(spqr)
+	column.add_child(_gold_rule())
+	var ask := UiStyle.headline("CHOOSE THE YEAR OF ROME", 30, UiStyle.CREAM)
+	ask.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	column.add_child(ask)
+	# one card per Rome scenario, side by side; scrolls sideways when there are many
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	var cards := HBoxContainer.new()
+	cards.add_theme_constant_override("separation", 18)
+	cards.alignment = BoxContainer.ALIGNMENT_CENTER
+	cards.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	cards.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	for s in catalog:
+		cards.add_child(_year_card(s))
+	scroll.add_child(cards)
+	column.add_child(scroll)
+	# keep the chosen card in view
 	var index := maxi(0, catalog.find(scenario))
-	var goal := maxi(0, int(timeline.step * (index + 0.5) - moments.size.x / 2.0))
-	var from := _moments_scroll
 	get_tree().process_frame.connect(func() -> void:
-		if not is_instance_valid(moments):
-			return
-		moments.scroll_horizontal = from
-		var glide := moments.create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-		glide.tween_property(moments, "scroll_horizontal", goal, 0.35)
-		_moments_scroll = goal, CONNECT_ONE_SHOT)
-	# portrait
-	var portrait := Portrait.new()
-	portrait.position = Vector2(40, 124)
-	portrait.size = Vector2(540, 580)
-	portrait.setup(civ)
-	_root.add_child(portrait)
-	# the civilisation's card
+		if is_instance_valid(scroll) and is_instance_valid(cards) and index < cards.get_child_count():
+			scroll.ensure_control_visible(cards.get_child(index)), CONNECT_ONE_SHOT)
+	column.add_child(_gold_rule())
+	column.add_child(_picker_footer())
+
+
+## The scenario's name without a trailing year ("Rome and Carthage, 264 BC" -> "Rome and Carthage"),
+## since the year is the card's heading.
+func _title_of(s: Dictionary) -> String:
+	var name := str(s["name"])
+	var year := GameHud.year_text(int(s["start_year"]))
+	if name.ends_with(", " + year):
+		name = name.trim_suffix(", " + year)
+	return name
+
+
+## A thin gold line.
+func _gold_rule() -> Control:
+	var rule := ColorRect.new()
+	rule.color = UiStyle.GOLD_DARK
+	rule.custom_minimum_size.y = 3
+	return rule
+
+
+## One starting year as a card: the year large, then the title and Rome's pitch.
+func _year_card(s: Dictionary) -> Control:
+	var rome := _rome_of(s)
+	var chosen: bool = s["id"] == scenario["id"]
 	var card := PanelContainer.new()
-	card.position = Vector2(620, 124)
-	card.custom_minimum_size = Vector2(940, 580)
-	card.size = Vector2(940, 580)
+	card.custom_minimum_size = Vector2(380, 470)
+	card.mouse_filter = Control.MOUSE_FILTER_STOP
+	card.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	var fill := Color(0.50, 0.08, 0.09) if chosen else Color(0.30, 0.05, 0.06)
+	var box := UiStyle.panel(fill, UiStyle.GOLD if chosen else UiStyle.GOLD_DARK, 8)
+	var border := 5 if chosen else 2
+	box.set_border_width_all(border)
+	box.set_content_margin_all(18)
+	card.add_theme_stylebox_override("panel", box)
 	var body := VBoxContainer.new()
-	body.add_theme_constant_override("separation", 7)
+	body.add_theme_constant_override("separation", 8)
+	body.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	card.add_child(body)
-	var head := HBoxContainer.new()
-	head.add_theme_constant_override("separation", 16)
-	if str(civ.get("symbol", "")) != "":
-		var arms := TextureRect.new()
-		arms.texture = Symbols.shield(colour, str(civ["symbol"]), 128)
-		arms.custom_minimum_size = Vector2(80, 94)
-		arms.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		arms.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		head.add_child(arms)
-	else:
-		var emblem := UiStyle.label(str(civ["emblem"]), 64, colour.darkened(0.3), "emblem")
-		head.add_child(emblem)
-	var names := VBoxContainer.new()
-	names.add_theme_constant_override("separation", -4)
-	names.add_child(UiStyle.label(str(civ["name"]), 48, UiStyle.INK, "title", 900))
-	var ruler := "Ruler: %s" % civ["leader"] if str(civ["leader"]) != "" else "Ruler unrecorded"
-	names.add_child(UiStyle.label("%s   ·   Capital: %s" % [ruler, civ["capital"]], 17, UiStyle.INK_SOFT))
-	head.add_child(names)
-	body.add_child(head)
-	var moment := UiStyle.label("%s" % scenario["name"], 20, UiStyle.RED, "title", 800)
-	body.add_child(moment)
-	body.add_child(UiStyle.wrapped(str(civ["description"]), 16, UiStyle.INK_SOFT, 860))
-	if str(civ["pitch"]) != "":
-		var pitch_box := PanelContainer.new()
-		pitch_box.add_theme_stylebox_override("panel", UiStyle.panel(UiStyle.PARCHMENT, Color(UiStyle.GOLD_DARK, 0.5), 10))
-		var pitch := UiStyle.wrapped(str(civ["pitch"]), 19, UiStyle.INK, 820)
+	var year := UiStyle.headline(GameHud.year_text(int(s["start_year"])), 54, UiStyle.GOLD)
+	year.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	body.add_child(year)
+	body.add_child(_gold_rule())
+	var title := UiStyle.label(_title_of(s).to_upper(), 20, UiStyle.CREAM, "title", 800)
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.custom_minimum_size.x = 340
+	body.add_child(title)
+	var pitch_text := str(rome.get("pitch", ""))
+	if pitch_text != "":
+		var pitch := UiStyle.wrapped(pitch_text, 16, Color(0.98, 0.90, 0.62), 340)
 		pitch.add_theme_font_override("font", UiStyle.font("body", 800))
-		pitch_box.add_child(pitch)
-		body.add_child(pitch_box)
-	var stats := HBoxContainer.new()
-	stats.add_theme_constant_override("separation", 12)
-	for entry in [["People", GameHud.people(int(civ["population"]))], ["Provinces", str(int(civ["provinces"]))],
-			["Known ideas", str(int(civ["advances"]))], ["Literacy", GameHud.pct(int(civ["literacy_bp"]))]]:
-		stats.add_child(_chip(entry[0], entry[1], colour))
-	body.add_child(stats)
-	var story := UiStyle.wrapped(str(scenario["description"]), 13, UiStyle.INK_SOFT, 860)
-	body.add_child(story)
+		pitch.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		body.add_child(pitch)
+	if str(s["description"]).strip_edges() != "":
+		var story := UiStyle.wrapped(str(s["description"]), 14, Color(0.93, 0.86, 0.78), 340)
+		story.max_lines_visible = 8
+		story.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		body.add_child(story)
+	var fill_space := Control.new()
+	fill_space.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	fill_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	body.add_child(fill_space)
+	var facts := UiStyle.label("%s   ·   %d provinces" % [GameHud.people(int(rome["population"])), int(rome["provinces"])],
+		15, UiStyle.GOLD, "body", 800)
+	facts.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	facts.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	body.add_child(facts)
+	for child in body.get_children():
+		child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	card.gui_input.connect(func(event: InputEvent) -> void:
+		if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			if chosen and event.double_click:
+				_begin()
+			else:
+				show_picker(str(s["id"])))
+	return card
+
+
+## Back, difficulty, history mode and the gold BEGIN button.
+func _picker_footer() -> Control:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 12)
+	var back_button := UiStyle.big_button("BACK", 20, Color(0.85, 0.80, 0.70))
+	back_button.pressed.connect(show_title)
+	row.add_child(back_button)
+	var push := Control.new()
+	push.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(push)
 	var chapters := int(civ.get("chronicle", 0))
 	if chapters > 0:
 		# chronicle mode: live through the real history, chapter by chapter, and try to outdo it
-		var ways := HBoxContainer.new()
-		ways.add_theme_constant_override("separation", 8)
 		for follow in [true, false]:
 			var label := ("FOLLOW HISTORY · %d chapters" % chapters) if follow else "FREE PLAY"
 			var way := UiStyle.big_button(label, 16, UiStyle.GOLD if chronicle == follow else Color(0.85, 0.80, 0.70))
@@ -223,77 +293,33 @@ func _draw_picker() -> void:
 			way.pressed.connect(func():
 				chronicle = follow
 				_draw_picker())
-			ways.add_child(way)
-		body.add_child(ways)
-	var fill := Control.new()
-	fill.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	body.add_child(fill)
-	var row := HBoxContainer.new()
-	var back_button := UiStyle.big_button("BACK", 20, Color(0.85, 0.80, 0.70))
-	back_button.pressed.connect(show_title)
-	row.add_child(back_button)
-	var push := Control.new()
-	push.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(push)
+			row.add_child(way)
+		var gap := Control.new()
+		gap.custom_minimum_size.x = 16
+		row.add_child(gap)
 	# difficulty: how bold the rivals are and how forgiving the opening turns
-	var levels := HBoxContainer.new()
-	levels.add_theme_constant_override("separation", 6)
-	levels.alignment = BoxContainer.ALIGNMENT_CENTER
 	var tips := {"easy": "Gentler rivals, slower conquests, five quiet turns to start",
 		"normal": "The game as designed", "hard": "Bolder rivals, faster conquests, no grace"}
 	for level in ["easy", "normal", "hard"]:
-		var chosen: bool = level == difficulty
-		var pick := UiStyle.big_button(level.to_upper(), 16, UiStyle.GOLD if chosen else Color(0.85, 0.80, 0.70))
+		var pick := UiStyle.big_button(level.to_upper(), 16, UiStyle.GOLD if level == difficulty else Color(0.85, 0.80, 0.70))
 		pick.custom_minimum_size = Vector2(96, 44)
 		pick.tooltip_text = tips[level]
 		pick.pressed.connect(func():
 			difficulty = level
 			_draw_picker())
-		levels.add_child(pick)
-	row.add_child(levels)
-	var push2 := Control.new()
-	push2.custom_minimum_size.x = 24
-	row.add_child(push2)
-	var confirm := UiStyle.big_button("CONFIRM", 32)
-	confirm.custom_minimum_size = Vector2(300, 72)
-	confirm.pressed.connect(func(): start_requested.emit(str(scenario["id"]), str(civ["id"]), difficulty,
-		chronicle and int(civ.get("chronicle", 0)) > 0))
-	row.add_child(confirm)
-	body.add_child(row)
-	_root.add_child(card)
-	# every civilisation of this moment, as badges
-	var strip := PanelContainer.new()
-	strip.add_theme_stylebox_override("panel", UiStyle.panel(Color(0.08, 0.06, 0.05, 0.85), UiStyle.GOLD_DARK, 12))
-	strip.position = Vector2(20, 720)
-	strip.size = Vector2(1560, 170)
-	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(1520, 150)
-	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	var badges := HBoxContainer.new()
-	badges.add_theme_constant_override("separation", 4)
-	# states with a chronicle first (gold seal: its chapters), each group in the moment's order
-	var ordered: Array = scenario["civs"].filter(func(c): return int(c.get("chronicle", 0)) > 0)
-	ordered += scenario["civs"].filter(func(c): return int(c.get("chronicle", 0)) == 0)
-	for c in ordered:
-		var badge := CivBadge.new()
-		badge.setup(c)
-		badge.selected = c["id"] == civ["id"]
-		badge.chosen.connect(func(id: String): show_picker(str(scenario["id"]), id))
-		badges.add_child(badge)
-	scroll.add_child(badges)
-	strip.add_child(scroll)
-	_root.add_child(strip)
+		row.add_child(pick)
+	var gap2 := Control.new()
+	gap2.custom_minimum_size.x = 16
+	row.add_child(gap2)
+	var begin := UiStyle.big_button("BEGIN", 32)
+	begin.custom_minimum_size = Vector2(300, 72)
+	begin.pressed.connect(_begin)
+	row.add_child(begin)
+	return row
 
 
-func _chip(name: String, value: String, colour: Color) -> Control:
-	var box := PanelContainer.new()
-	box.add_theme_stylebox_override("panel", UiStyle.panel(colour.lightened(0.55), colour.darkened(0.2), 10))
-	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation", -2)
-	column.add_child(UiStyle.label(name, 13, UiStyle.INK_SOFT))
-	column.add_child(UiStyle.label(value, 24, UiStyle.INK, "body", 900))
-	box.add_child(column)
-	return box
+func _begin() -> void:
+	start_requested.emit(str(scenario["id"]), ROME, difficulty, chronicle and int(civ.get("chronicle", 0)) > 0)
 
 
 func _clear() -> void:

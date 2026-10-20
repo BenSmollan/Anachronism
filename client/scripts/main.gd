@@ -4,12 +4,12 @@
 ## `--seed=N` picks the game, `--turns=N` plays N turns (the player does nothing) first,
 ## `--focus=province_id,distance` points the camera at a province (practice map),
 ## `--look=lat,lon,distance` points it at a real place, `--scenario=ID` picks the scenario
-## (default `warring_states`; `bronze_dawn` is the fictional test world). On the real map:
+## (default `punic_wars`; the player is always Rome). On the real map:
 ## `--start=idea_id` begins an experiment, `--select=province_id` selects a province and
 ## `--play=N` then ends N turns, `--click=x,y` clicks the map, `--tab=ideas|projects|world` opens a panel (all for
 ## screenshots and tests). `--smoke` goes through the title screen and picker, builds the
-## game, prints SMOKE OK and quits. `--screen=title|picker` (`--pick=civ_id`) shows the menus;
-## `--civ=ID` starts straight away as that civilisation.
+## game, prints SMOKE OK and quits. `--screen=title|picker` (`--pick=scenario_id`) shows the menus;
+## `--civ=ID` starts straight away as that civilisation (default rome).
 extends Node3D
 
 const UiScale := preload("res://scripts/ui_scale.gd")
@@ -70,10 +70,10 @@ func _ready() -> void:
 	holder = Node3D.new()
 	holder.name = "World"
 	add_child(holder)
-	var real: Array = catalog["scenarios"].filter(func(s): return s["map"] != null)
+	var real: Array = catalog["scenarios"].filter(func(s): return s["map"] != null and s["civs"].any(func(c): return c["id"] == "rome"))
 	var direct := options.has("scenario") or options.has("civ") or (options.has("screenshot") and not options.has("screen"))
 	if direct or real.is_empty():
-		_start_game(str(options.get("scenario", "warring_states")), str(options.get("civ", "")))
+		_start_game(str(options.get("scenario", "punic_wars")), str(options.get("civ", "rome")))
 		return
 	# Title screen over a slowly drifting view of the real map, then the civilisation picker.
 	_ensure_earth(str(real[0]["map"]))
@@ -89,13 +89,13 @@ func _ready() -> void:
 		menus.can_continue = saves["saves"].any(func(s): return s["name"] == "autosave")
 	menus.show_title()
 	if options.get("screen", "") == "picker" or options.has("smoke"):
-		menus.show_picker("", str(options.get("pick", "")))
+		menus.show_picker(str(options.get("pick", "")))
 	if options.has("continue"):  # --continue: resume the autosave, as the title button does
 		_continue_game()
 		return
 	if options.has("smoke"):  # CI self-test: title, picker, then the game itself
 		await get_tree().process_frame
-		_start_game(str(real[0]["id"]), "")
+		_start_game(str(real[0]["id"]), "rome")
 	elif options.has("screenshot"):
 		_take_screenshot(str(options["screenshot"]))
 

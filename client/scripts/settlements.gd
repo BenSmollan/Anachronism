@@ -273,11 +273,8 @@ func recolour() -> void:
 		else:
 			mm.set_instance_color(where[1], colour)
 
-## A portrait style's building style: east, nile, near_east, classical, northern, steppe or
-## south_asian.
+## A portrait style's building style: nile, near_east, classical or northern.
 static func style_of(portrait: String) -> String:
-	if portrait in ["steppe", "rus"]:
-		return "steppe" if portrait == "steppe" else "northern"
 	if portrait in ["pharaoh", "kushite"]:
 		return "nile"
 	match Portrait.FAMILY.get(portrait, ""):
@@ -287,9 +284,7 @@ static func style_of(portrait: String) -> String:
 			return "classical"
 		"northern":
 			return "northern"
-		"south_asian":
-			return "south_asian"
-	return "east"
+	return "classical"  # Rome and the Mediterranean are the default look
 
 # --- where people live -------------------------------------------------------------------
 

@@ -13,7 +13,6 @@ const SKIN := Color(0.93, 0.76, 0.60)
 const SKIN_SHADE := Color(0.80, 0.60, 0.45)
 const HAIR := Color(0.12, 0.09, 0.08)
 const BRONZE := Color(0.72, 0.52, 0.24)
-const EAST_ASIAN := ["court", "steppe", "southern", "hills", "samurai", "joseon", ""]
 const FAMILY := {
 	"roman": "classical", "greek": "classical", "hellenistic": "classical", "punic": "classical",
 	"celtic": "northern", "pharaoh": "near_east", "berber": "near_east", "kushite": "near_east",
@@ -61,9 +60,7 @@ func setup(civ: Dictionary) -> void:
 	style = str(civ.get("portrait", "court"))
 	culture = str(civ.get("culture", ""))
 	civ_id = str(civ["id"])
-	if ADVISERS.has(style) and culture == "steppe":
-		style = "steppe"  # a khan's counsellors wear the steppe's furs too
-	elif ADVISERS.has(style) and not culture in EAST_ASIAN:
+	if ADVISERS.has(style):
 		style = ADVISERS[style].get(FAMILY.get(culture, "classical"), style)
 	_roll(civ_id)
 	var path := "res://portraits/%s.png" % civ_id
@@ -89,7 +86,7 @@ func _roll(id: String) -> void:
 	blush = dice.randf() < 0.35
 	scar = style in ["general", "legate", "knight", "charioteer", "viking"] and dice.randf() < 0.4
 	rays = dice.randi_range(10, 22)
-	var dark_haired: bool = culture in EAST_ASIAN or style in EAST_ASIAN or FAMILY.get(culture, "") in ["near_east", "south_asian"]
+	var dark_haired: bool = FAMILY.get(culture, "") in ["near_east", "south_asian"]
 	hair_colour = HAIR_COLOURS[dice.randi() % (2 if dark_haired else HAIR_COLOURS.size())]
 	if age > 0.7:
 		hair_colour = hair_colour.lerp(Color(0.86, 0.86, 0.84), (age - 0.7) / 0.3 * 0.9)
@@ -109,20 +106,14 @@ func _draw() -> void:
 	var skin := _skin()
 	# neck
 	draw_rect(Rect2(cx - r * 0.38, head.y + r * 0.8, r * 0.76, r * 0.9), skin.darkened(0.15))
-	if style in ["steppe", "celtic"]:
-		_ellipse(head + Vector2(0, r * 0.2 if style == "celtic" else -r * 0.1), Vector2(r * 1.15, r * (1.25 if style == "celtic" else 1.05)), _hair())
+	if style == "celtic":
+		_ellipse(head + Vector2(0, r * 0.2), Vector2(r * 1.15, r * 1.25), _hair())
 	_ellipse(head, Vector2(r * 0.92 * face_w, r * 1.12 * face_h), skin)
 	_ellipse(head + Vector2(r * 0.25, r * 0.25), Vector2(r * 0.55, r * 0.7), Color(skin.darkened(0.15), 0.35))
 	for side in [-1, 1]:  # ears
 		_ellipse(head + Vector2(side * r * 0.92 * face_w, r * 0.05), Vector2(r * 0.14, r * 0.24), skin.darkened(0.08))
 	_face(head, r)
 	match style:
-		"steppe":
-			_fur_hat(head, r)
-		"southern":
-			_topknot(head, r)
-		"hills":
-			_helmet(head, r)
 		"scholar":
 			_scholar_cap(head, r)
 		"steward":
@@ -187,10 +178,6 @@ func _draw() -> void:
 			_augur(head, r, w, h)
 		"priest":
 			_priest(head, r, w, h)
-		"samurai":
-			_samurai(head, r, w, h)
-		"joseon":
-			_gat(head, r)
 		"indian":
 			_indian(head, r, w, h)
 		"brahmin":
@@ -237,28 +224,10 @@ func _robe(w: float, h: float, cx: float) -> void:
 	for side in [-1, 1]:
 		draw_line(Vector2(cx + side * w * 0.30, top + h * 0.10), Vector2(cx + side * w * 0.36, h), shade, w * 0.012)
 	var neck := Vector2(cx, top - h * 0.01)
-	if not _east_asian():
-		# a round-necked tunic with an embroidered band, as worn west of the Pamirs
-		draw_arc(neck + Vector2(0, -h * 0.02), w * 0.11, PI * 0.05, PI * 0.95, 16, UiStyle.GOLD, w * 0.03)
-		draw_rect(Rect2(cx - w * 0.025, neck.y + h * 0.09, w * 0.05, h * 0.3), UiStyle.GOLD.darkened(0.1))
-		draw_rect(Rect2(cx - w * 0.40, h * 0.92, w * 0.80, h * 0.035), shade)
-		return
-	# white under-collar, then the two lapels (right over left, as in Chinese dress)
-	draw_colored_polygon([neck + Vector2(-w * 0.09, 0), neck + Vector2(w * 0.09, 0), neck + Vector2(0, h * 0.16)], Color(0.95, 0.93, 0.88))
-	var band := w * 0.05
-	var trim := UiStyle.GOLD if style != "steppe" else Color(0.62, 0.48, 0.32)
-	var left_lapel := PackedVector2Array([neck + Vector2(-w * 0.10, 0), neck + Vector2(-w * 0.10 + band, 0),
-		neck + Vector2(w * 0.12, h * 0.30), neck + Vector2(w * 0.12 - band, h * 0.32)])
-	var right_lapel := PackedVector2Array([neck + Vector2(w * 0.10, 0), neck + Vector2(w * 0.10 - band, 0),
-		neck + Vector2(-w * 0.02, h * 0.17), neck + Vector2(w * 0.02, h * 0.19)])
-	draw_colored_polygon(right_lapel, trim.darkened(0.15))
-	draw_colored_polygon(left_lapel, trim)
-	if style == "steppe":  # fur collar
-		for i in 11:
-			draw_circle(neck + Vector2(-w * 0.25 + i * w * 0.05, h * 0.0), w * 0.04, Color(0.68, 0.54, 0.38))
-	# belt
+	# a round-necked tunic with an embroidered band
+	draw_arc(neck + Vector2(0, -h * 0.02), w * 0.11, PI * 0.05, PI * 0.95, 16, UiStyle.GOLD, w * 0.03)
+	draw_rect(Rect2(cx - w * 0.025, neck.y + h * 0.09, w * 0.05, h * 0.3), UiStyle.GOLD.darkened(0.1))
 	draw_rect(Rect2(cx - w * 0.40, h * 0.92, w * 0.80, h * 0.035), shade)
-	draw_rect(Rect2(cx - w * 0.03, h * 0.915, w * 0.06, h * 0.045), UiStyle.GOLD)
 
 
 func _face(head: Vector2, r: float) -> void:
@@ -289,7 +258,7 @@ func _face(head: Vector2, r: float) -> void:
 		pass  # the square curled beard is drawn with the crown
 	elif style == "pharaoh":
 		draw_rect(Rect2(head.x - r * 0.1, head.y + r * 0.75, r * 0.2, r * 0.55), Color(0.2, 0.15, 0.1))
-	elif style != "southern":
+	else:
 		draw_polyline([head + Vector2(-r * 0.4, r * 0.55), head + Vector2(-r * 0.1, r * 0.42),
 			head + Vector2(r * 0.1, r * 0.42), head + Vector2(r * 0.4, r * 0.55)], _hair(), r * 0.08)
 		var beard: float = {"court": 1.35, "scholar": 1.9, "diviner": 1.6, "general": 1.0,
@@ -301,8 +270,6 @@ func _face(head: Vector2, r: float) -> void:
 			beard_colour = Color(0.72, 0.45, 0.2)
 		draw_colored_polygon([head + Vector2(-r * 0.14 * beard_len, r * 0.7), head + Vector2(r * 0.14 * beard_len, r * 0.7),
 			head + Vector2(0, r * beard)], beard_colour)
-	else:
-		_mouth(head, r)
 	# hair at the temples
 	if not style in ["pharaoh", "scribe", "priest"]:
 		for side in [-1, 1]:
@@ -328,27 +295,6 @@ func _crown(head: Vector2, r: float) -> void:
 			continue  # keep the face clear
 		for k in 4:
 			draw_circle(Vector2(x, head.y - r * 1.25 + k * r * 0.16), r * 0.05, [UiStyle.GOLD, Color(0.85, 0.25, 0.18), Color(0.25, 0.6, 0.4), Color(0.95, 0.95, 0.9)][k])
-
-
-func _fur_hat(head: Vector2, r: float) -> void:
-	draw_colored_polygon([head + Vector2(-r * 0.95, -r * 0.55), head + Vector2(r * 0.95, -r * 0.55),
-		head + Vector2(r * 0.15, -r * 2.1), head + Vector2(-r * 0.25, -r * 1.9)], colour.darkened(0.1))
-	for side in [-1, 1]:
-		draw_colored_polygon([head + Vector2(side * r * 0.95, -r * 0.6), head + Vector2(side * r * 1.2, r * 0.4),
-			head + Vector2(side * r * 0.75, r * 0.3)], Color(0.62, 0.48, 0.32))
-	draw_rect(Rect2(head.x - r * 1.05, head.y - r * 0.85, r * 2.1, r * 0.4), Color(0.62, 0.48, 0.32))
-	for i in 8:
-		draw_circle(Vector2(head.x - r * 0.95 + i * r * 0.27, head.y - r * 0.85), r * 0.13, Color(0.68, 0.54, 0.38))
-
-
-func _topknot(head: Vector2, r: float) -> void:
-	_ellipse(head + Vector2(0, -r * 0.7), Vector2(r * 0.97, r * 0.6), _hair())
-	draw_circle(head + Vector2(r * 0.1, -r * 1.45), r * 0.42, _hair())
-	draw_line(head + Vector2(-r * 0.6, -r * 1.7), head + Vector2(r * 0.9, -r * 1.25), UiStyle.GOLD, r * 0.09)
-	draw_rect(Rect2(head.x - r * 0.95, head.y - r * 0.72, r * 1.9, r * 0.18), Color(0.75, 0.15, 0.12))
-	# a phoenix feather for Chu and Yue
-	draw_colored_polygon([head + Vector2(r * 0.4, -r * 1.6), head + Vector2(r * 1.4, -r * 2.6),
-		head + Vector2(r * 0.7, -r * 1.5)], Color(0.2, 0.55, 0.45))
 
 
 func _helmet(head: Vector2, r: float) -> void:
@@ -408,13 +354,9 @@ func _diviner(head: Vector2, r: float, w: float, h: float) -> void:
 		draw_circle(Vector2(w * 0.5, h * 0.64) + Vector2(cos(a) * w * 0.16, sin(a) * h * 0.12), r * 0.09, Color(0.9, 0.85, 0.7))
 
 
-func _east_asian() -> bool:
-	return style in EAST_ASIAN or (style in ADVISERS and culture in EAST_ASIAN)
-
-
 func _skin() -> Color:
 	var base := SKIN
-	match culture if culture != "" and not culture in EAST_ASIAN else style:
+	match culture if culture != "" else style:
 		"kushite":
 			base = Color(0.45, 0.30, 0.20)
 		"pharaoh", "berber", "punic", "scribe", "priest", "vizier", "assyrian", "turban", "hittite":
@@ -629,36 +571,6 @@ func _rus_cap(head: Vector2, r: float) -> void:
 	for i in 8:
 		draw_circle(Vector2(head.x - r * 0.9 + i * r * 0.26, head.y - r * 0.9), r * 0.12, Color(0.5, 0.36, 0.22))
 	draw_circle(head + Vector2(0, -r * 1.6), r * 0.1, UiStyle.GOLD)
-
-
-## A daimyo in armour: a lacquered kabuto with a golden crescent crest and neck guard.
-func _samurai(head: Vector2, r: float, w: float, h: float) -> void:
-	var lacquer := Color(0.12, 0.10, 0.10)
-	for k in 3:  # neck guard plates (shikoro)
-		var y := head.y - r * 0.2 + k * r * 0.22
-		draw_colored_polygon([Vector2(head.x - r * (1.05 + k * 0.12), y), Vector2(head.x + r * (1.05 + k * 0.12), y),
-			Vector2(head.x + r * (1.12 + k * 0.12), y + r * 0.2), Vector2(head.x - r * (1.12 + k * 0.12), y + r * 0.2)],
-			colour.darkened(0.2 + k * 0.1))
-	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 1.05, r * 0.7), lacquer)
-	draw_rect(Rect2(head.x - r * 1.0, head.y - r * 0.52, r * 2.0, r * 0.14), UiStyle.GOLD.darkened(0.2))
-	# the maedate: a golden crescent
-	draw_arc(head + Vector2(0, -r * 1.55), r * 0.7, PI * 0.1, PI * 0.9, 20, UiStyle.GOLD, r * 0.16)
-	draw_circle(head + Vector2(0, -r * 1.05), r * 0.14, UiStyle.GOLD)
-	# lamellar shoulders (sode) in the clan colour
-	for side in [-1, 1]:
-		for row in 3:
-			var x: float = w * 0.5 + side * w * 0.3
-			draw_rect(Rect2(x - w * 0.09, h * 0.65 + row * h * 0.045, w * 0.18, h * 0.04), colour.darkened(0.1 + row * 0.12))
-			draw_line(Vector2(x - w * 0.09, h * 0.65 + row * h * 0.045 + h * 0.04), Vector2(x + w * 0.09, h * 0.65 + row * h * 0.045 + h * 0.04), UiStyle.GOLD, 1.5)
-
-
-## A Joseon scholar-official's gat: a wide black horsehair hat.
-func _gat(head: Vector2, r: float) -> void:
-	_ellipse(head + Vector2(0, -r * 0.62), Vector2(r * 0.96, r * 0.62), _hair())
-	_ellipse(head + Vector2(0, -r * 0.72), Vector2(r * 1.9, r * 0.22), Color(0.1, 0.1, 0.12, 0.85))
-	draw_rect(Rect2(head.x - r * 0.5, head.y - r * 1.5, r * 1.0, r * 0.8), Color(0.1, 0.1, 0.12, 0.9))
-	draw_line(head + Vector2(-r * 0.9, -r * 0.6), head + Vector2(-r * 0.7, r * 0.9), Color(0.1, 0.1, 0.12), r * 0.05)
-	draw_line(head + Vector2(r * 0.9, -r * 0.6), head + Vector2(r * 0.7, r * 0.9), Color(0.1, 0.1, 0.12), r * 0.05)
 
 
 # --- advisers of the Mediterranean, the Near East and the medieval north -----------------
