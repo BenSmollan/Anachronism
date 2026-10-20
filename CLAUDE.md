@@ -3,7 +3,8 @@
 The game is called **Meritus** wherever players see it (D-121); the Python package, commands,
 repository and environment variables keep the code name `anachronism`.
 
-Turn-based historical strategy game (Python + pygame-ce). The player feeds a civilisation
+Turn-based historical strategy game (Python + Godot). Since D-286 the player is Rome only, 509-27 BC
+(plan: `docs/plans/rome.md`). The player feeds Rome
 ideas ahead of their time; an LLM interprets and narrates, a deterministic engine decides.
 
 **Start every session** by reading this file and `docs/PLAN.md`. **End every session** by

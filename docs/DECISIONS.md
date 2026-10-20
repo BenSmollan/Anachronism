@@ -2507,3 +2507,16 @@ matters. Engine only: the client screens for it come in a later step.
   touches code, commits, docs or memory files, and switches back to full sentences for
   warnings, irreversible actions, questions to the owner, or when the owner seems confused,
   which keeps faith with "explain in plain language". Off with "stop caveman" / "normal mode".
+
+## D-286 Rome only, 509-27 BC, a thousand times deeper — owner's direction (2026-10-20)
+- **What the owner asked.** Scrap every other timeline; you can only play the Roman state; the
+  scale shrinks but historical accuracy and detail multiply; build the city of Rome (the owner
+  named "Rome Remodelled", taken to mean Rome Reborn); same concept, narrower and deeper.
+- **Owner's choices (asked 2026-10-20):** build our own Rome (Rome Reborn is commercial,
+  Flyover Zone holds an exclusive licence; it is used only as visual reference); the
+  Republic to Augustus, 509-27 BC; keep the time-traveller core; archive then remove the rest.
+- **Archive.** The whole multi-civilisation game is kept on the branch
+  `claude/archive-multi-civ` (commit 93815d7). A git tag was refused by the repository, so a
+  branch holds it instead.
+- The plan, its sources and its phases (R0-R6, each a gate): `docs/plans/rome.md`. Every
+  historical fact will carry its source, and the linter will enforce that.

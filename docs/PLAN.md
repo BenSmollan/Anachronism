@@ -8,6 +8,17 @@ gameplay"): province buildings first (D-111), then a review of the brief for gap
 Each phase ends at a **gate**: Claude stops, summarises, shows how to run it, lists known
 problems, and waits for approval (D-002: approval = merging the phase PR).
 
+## Rome rework (D-286): the current direction — design: plans/rome.md
+- [x] R0 Plan and archive (branch `claude/archive-multi-civ`) — **gate: owner approves plans/rome.md**
+- [ ] R1 Narrow the game to Rome: remove other packs, chronicles and styles; one map re-cut for Italy; start points 509/390/264/133/49 BC
+- [ ] R2 The Roman state: yearly magistrates, Senate, families and factions, orders, cursus honorum, the Fasti
+- [ ] R3 Italy and the world: peoples of Italy, allies, citizenship, colonies, overseas powers, provinces and governors
+- [ ] R4 Army, economy, religion
+- [ ] R5 The city of Rome: topography, dated monuments, Roman kit forms, the city visit
+- [ ] R6 Depth pass: every year 509-27 BC checked against the sources; full campaign playthrough
+
+Everything below is the history of the multi-civilisation game, kept for the record.
+
 ## Phase 0 — Foundations
 - [x] 0.1 Read brief, ask questions, record decisions (DECISIONS.md), draft docs
 - [x] 0.2 Owner approves DESIGN.md, ARCHITECTURE.md, PLAN.md (approved 2026-09-30)
