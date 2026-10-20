@@ -1,0 +1,347 @@
+schema_version: 1
+# Italy, Sicily, Sardinia and Corsica at the grain of their peoples, for the Roman Republic (D-286).
+# SKELETON by the lead: ids and rough centres are fixed (other files use them); the provinces
+# agent refines names, centres, terrain, capacity, resources, neighbours and coastal flags.
+provinces:
+  - id: it_roma
+    name: "Rome and the Ager Romanus"
+    latlon: [41.9, 12.5]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 600000
+    resources: {}
+    neighbours: [it_aequi, it_caere, it_latium, it_sabina, it_tarquinii, it_veii, it_volsci]
+  - id: it_latium
+    name: "Latium (Latin League)"
+    latlon: [41.8, 12.8]
+    terrain: hills
+    coastal: false
+    river: false
+    capacity: 520000
+    resources: {}
+    neighbours: [it_aequi, it_aurunci, it_caere, it_hernici, it_roma, it_sabina, it_veii, it_volsci]
+  - id: it_veii
+    name: "Veii and southern Etruria"
+    latlon: [42.1, 12.3]
+    terrain: hills
+    coastal: false
+    river: true
+    capacity: 360000
+    resources: {}
+    neighbours: [it_caere, it_latium, it_roma, it_sabina, it_tarquinii, it_umbria, it_volsinii]
+  - id: it_caere
+    name: "Caere and the Etruscan coast"
+    latlon: [42.0, 12.0]
+    terrain: plains
+    coastal: true
+    river: false
+    capacity: 320000
+    resources: {}
+    neighbours: [it_latium, it_roma, it_sabina, it_tarquinii, it_veii, it_volsinii]
+  - id: it_tarquinii
+    name: "Tarquinii and Vulci"
+    latlon: [42.35, 11.7]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 400000
+    resources: {}
+    neighbours: [it_caere, it_etruria_n, it_roma, it_sabina, it_veii, it_volsinii]
+  - id: it_volsinii
+    name: "Volsinii and Clusium"
+    latlon: [42.75, 11.95]
+    terrain: hills
+    coastal: false
+    river: true
+    capacity: 440000
+    resources: {}
+    neighbours: [it_caere, it_etruria_n, it_sabina, it_tarquinii, it_umbria, it_veii]
+  - id: it_etruria_n
+    name: "Northern Etruria (Volaterrae, Arretium)"
+    latlon: [43.35, 11.2]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 520000
+    resources: {}
+    neighbours: [it_ligures_apuani, it_tarquinii, it_umbria, it_volsinii]
+  - id: it_sabina
+    name: "Sabine country"
+    latlon: [42.3, 12.85]
+    terrain: hills
+    coastal: false
+    river: true
+    capacity: 300000
+    resources: {}
+    neighbours: [it_aequi, it_caere, it_latium, it_marsi, it_picenum, it_roma, it_tarquinii, it_umbria, it_veii, it_volsinii]
+  - id: it_aequi
+    name: "Aequi"
+    latlon: [42.05, 13.2]
+    terrain: mountains
+    coastal: false
+    river: false
+    capacity: 180000
+    resources: {}
+    neighbours: [it_frentani, it_hernici, it_latium, it_marsi, it_picenum, it_roma, it_sabina, it_volsci]
+  - id: it_hernici
+    name: "Hernici"
+    latlon: [41.72, 13.38]
+    terrain: hills
+    coastal: false
+    river: true
+    capacity: 180000
+    resources: {}
+    neighbours: [it_aequi, it_aurunci, it_campania, it_frentani, it_latium, it_marsi, it_volsci]
+  - id: it_volsci
+    name: "Volsci (Antium, Satricum)"
+    latlon: [41.5, 12.95]
+    terrain: plains
+    coastal: true
+    river: false
+    capacity: 340000
+    resources: {}
+    neighbours: [it_aequi, it_aurunci, it_hernici, it_latium, it_roma]
+  - id: it_aurunci
+    name: "Aurunci and Ausones (Fundi, Formiae)"
+    latlon: [41.3, 13.55]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 220000
+    resources: {}
+    neighbours: [it_campania, it_hernici, it_latium, it_samnium, it_volsci]
+  - id: it_marsi
+    name: "Marsi, Paeligni and Vestini"
+    latlon: [42.05, 13.75]
+    terrain: mountains
+    coastal: false
+    river: false
+    capacity: 280000
+    resources: {}
+    neighbours: [it_aequi, it_frentani, it_hernici, it_picenum, it_sabina, it_samnium]
+  - id: it_umbria
+    name: "Umbria"
+    latlon: [42.95, 12.6]
+    terrain: hills
+    coastal: false
+    river: true
+    capacity: 460000
+    resources: {}
+    neighbours: [it_etruria_n, it_picenum, it_sabina, it_senones, it_veii, it_volsinii]
+  - id: it_picenum
+    name: "Picenum"
+    latlon: [43.15, 13.6]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 460000
+    resources: {}
+    neighbours: [it_aequi, it_marsi, it_sabina, it_senones, it_umbria]
+  - id: it_senones
+    name: "Ager Gallicus (Senones)"
+    latlon: [43.65, 12.95]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 300000
+    resources: {}
+    neighbours: [it_picenum, it_umbria]
+  - id: it_campania
+    name: "Campania (Capua, Cumae, Neapolis)"
+    latlon: [40.95, 14.3]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 1040000
+    resources: {}
+    neighbours: [it_apulia, it_aurunci, it_hernici, it_hirpini, it_samnium]
+  - id: it_samnium
+    name: "Samnium (Pentri, Caudini)"
+    latlon: [41.55, 14.4]
+    terrain: mountains
+    coastal: false
+    river: true
+    capacity: 660000
+    resources: {}
+    neighbours: [it_apulia, it_aurunci, it_campania, it_frentani, it_hirpini, it_marsi]
+  - id: it_hirpini
+    name: "Hirpini"
+    latlon: [41.0, 14.95]
+    terrain: mountains
+    coastal: false
+    river: false
+    capacity: 260000
+    resources: {}
+    neighbours: [it_apulia, it_campania, it_frentani, it_lucania, it_samnium]
+  - id: it_frentani
+    name: "Frentani"
+    latlon: [42.05, 14.6]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 180000
+    resources: {}
+    neighbours: [it_aequi, it_apulia, it_hernici, it_hirpini, it_marsi, it_samnium]
+  - id: it_apulia
+    name: "Apulia (Daunia: Arpi, Luceria)"
+    latlon: [41.45, 15.55]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 520000
+    resources: {}
+    neighbours: [it_campania, it_frentani, it_hirpini, it_lucania, it_samnium]
+  - id: it_lucania
+    name: "Lucania"
+    latlon: [40.45, 15.8]
+    terrain: mountains
+    coastal: true
+    river: false
+    capacity: 420000
+    resources: {}
+    neighbours: [it_apulia, it_hirpini, it_tarentum]
+  - id: it_messapia
+    name: "Messapia and Brundisium"
+    latlon: [40.55, 17.9]
+    terrain: plains
+    coastal: true
+    river: false
+    capacity: 340000
+    resources: {}
+    neighbours: [it_tarentum]
+  - id: it_tarentum
+    name: "Tarentum and Metapontum"
+    latlon: [40.45, 17.1]
+    terrain: plains
+    coastal: true
+    river: false
+    capacity: 400000
+    resources: {}
+    neighbours: [it_lucania, it_messapia]
+  - id: it_bruttium
+    name: "Bruttium (Croton, Locri, Thurii)"
+    latlon: [39.25, 16.5]
+    terrain: mountains
+    coastal: true
+    river: false
+    capacity: 400000
+    resources: {}
+    neighbours: []
+  - id: it_rhegium
+    name: "Rhegium"
+    latlon: [38.1, 15.7]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 120000
+    resources: {}
+    neighbours: [si_messana]
+  - id: it_boii
+    name: "Boii (Felsina/Bononia)"
+    latlon: [44.5, 11.3]
+    terrain: plains
+    coastal: false
+    river: true
+    capacity: 500000
+    resources: {}
+    neighbours: [it_ligures_apuani, it_veneti]
+  - id: it_insubres
+    name: "Insubres (Mediolanum)"
+    latlon: [45.45, 9.2]
+    terrain: plains
+    coastal: false
+    river: true
+    capacity: 600000
+    resources: {}
+    neighbours: [it_cenomani, it_liguria]
+  - id: it_cenomani
+    name: "Cenomani (Brixia)"
+    latlon: [45.5, 10.25]
+    terrain: plains
+    coastal: false
+    river: true
+    capacity: 400000
+    resources: {}
+    neighbours: [it_insubres]
+  - id: it_veneti
+    name: "Veneti"
+    latlon: [45.45, 11.9]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 440000
+    resources: {}
+    neighbours: [it_boii]
+  - id: it_liguria
+    name: "Liguria"
+    latlon: [44.35, 8.9]
+    terrain: mountains
+    coastal: true
+    river: false
+    capacity: 300000
+    resources: {}
+    neighbours: [it_insubres, it_ligures_apuani]
+  - id: it_ligures_apuani
+    name: "Apuan Ligurians and Luna"
+    latlon: [44.1, 10.1]
+    terrain: mountains
+    coastal: true
+    river: true
+    capacity: 160000
+    resources: {}
+    neighbours: [it_boii, it_etruria_n, it_liguria]
+  - id: si_messana
+    name: "Messana"
+    latlon: [38.15, 15.4]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 180000
+    resources: {}
+    neighbours: [it_rhegium, si_syracuse]
+  - id: si_syracuse
+    name: "Syracuse"
+    latlon: [37.1, 15.2]
+    terrain: plains
+    coastal: true
+    river: false
+    capacity: 600000
+    resources: {}
+    neighbours: [si_messana]
+  - id: si_akragas
+    name: "Akragas and Gela"
+    latlon: [37.3, 13.6]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 360000
+    resources: {}
+    neighbours: [si_panormus]
+  - id: si_panormus
+    name: "Panormus and western Sicily (Lilybaeum)"
+    latlon: [37.95, 13.0]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 380000
+    resources: {}
+    neighbours: [si_akragas]
+  - id: sa_sardinia
+    name: "Sardinia"
+    latlon: [40.0, 9.0]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 500000
+    resources: {}
+    neighbours: []
+  - id: co_corsica
+    name: "Corsica"
+    latlon: [42.15, 9.1]
+    terrain: mountains
+    coastal: true
+    river: false
+    capacity: 120000
+    resources: {}
+    neighbours: []
