@@ -1,0 +1,127 @@
+# Topography of Rome. Heights are modern metres above sea level of the natural summit
+# (ancient heights have not changed much on the summits, but valley floors have been raised
+# by 5-15 m of later fill: ancient ground level in the Forum was about 10-11 m a.s.l.
+# versus 14-16 m today). Coordinates are summit centres, WGS84, approx 100 m.
+hills:
+- id: capitolinus
+  latin: Mons Capitolinus
+  english: Capitoline Hill
+  height_m: 46
+  lat: 41.8934
+  lon: 12.4828
+  regio: 8
+  summits: [{name: Capitolium, location: southern summit (temple of Jupiter), lat: 41.8929, lon: 12.4827}, {name: Arx, location: northern summit, lat: 41.8946, lon: 12.4833}, {name: Asylum, location: the saddle between them, lat: 41.8940, lon: 12.4840}]
+  text: "Two summits joined by a saddle (the Intermontium). Steep cliffs to the south (Tarpeian Rock) and a long steep approach, the Clivus Capitolinus, from the Forum."
+  sources: ["Livy 1.33; 5.47", "Platner-Ashby s.v. Capitolium; Arx"]
+- id: palatinus
+  latin: Mons Palatinus
+  english: Palatine Hill
+  height_m: 51
+  lat: 41.8892
+  lon: 12.4875
+  regio: 10
+  summits: [{name: Germalus, location: north-west spur (Cermalus), lat: 41.8895, lon: 12.4851}, {name: Palatium, location: main plateau, lat: 41.8892, lon: 12.4880}, {name: Velia, location: saddle toward the Esquiline, lat: 41.8908, lon: 12.4900}]
+  text: "Traditional site of the first settlement of Romulus (Roma Quadrata); the Germalus is the western spur above the Velabrum; house of the aristocracy in the Late Republic."
+  sources: ["Livy 1.7; Dion. Hal. 1.79", "Platner-Ashby s.v. Palatium"]
+- id: aventinus
+  latin: Mons Aventinus
+  english: Aventine Hill
+  height_m: 46
+  lat: 41.8825
+  lon: 12.4825
+  regio: 13
+  summits: [{name: Aventinus Maior, location: north-west knob, lat: 41.8840, lon: 12.4790}, {name: Aventinus Minor, location: south-east knob, lat: 41.8800, lon: 12.4860}]
+  text: "Plebeian hill, outside the pomerium until Claudius (AD 49); the secessions of the plebs went to the Aventine or Sacred Mount (Livy 3.50, 3.54)."
+  sources: ["Livy 3.50", "Platner-Ashby s.v. Aventinus"]
+- id: caelius
+  latin: Mons Caelius
+  english: Caelian Hill
+  height_m: 50
+  lat: 41.8855
+  lon: 12.4962
+  regio: 2
+  text: "Elongated spur east of the Palatine, enclosed by the Servian Wall (Porta Caelimontana); said to be settled by Alba refugees (Livy 1.30)."
+  sources: ["Livy 1.30", "Platner-Ashby s.v. Caelius Mons"]
+- id: esquilinus
+  latin: Mons Esquilinus
+  english: Esquiline Hill
+  height_m: 60
+  lat: 41.8930
+  lon: 12.5000
+  regio: 5
+  summits: [{name: Oppius, location: south-western spur (Domus Aurea area), lat: 41.8905, lon: 12.4950}, {name: Cispius, location: northern spur (S. Maria Maggiore), lat: 41.8975, lon: 12.4985}, {name: Fagutal, location: western arm, lat: 41.8918, lon: 12.4945}]
+  text: "Largest of the hills; the Servian agger runs across its east side; necropolis for the poor in the plain outside the Porta Esquilina until Maecenas' gardens in the 30s BC."
+  sources: ["Varro LL 5.50", "Platner-Ashby s.v. Esquiliae"]
+- id: viminalis
+  latin: Mons Viminalis
+  english: Viminal Hill
+  height_m: 57
+  lat: 41.9005
+  lon: 12.4965
+  regio: 6
+  text: "Narrow spur between Quirinal and Esquiline, crossed by the Servian agger."
+  sources: ["Varro LL 5.51", "Platner-Ashby s.v. Viminalis"]
+- id: quirinalis
+  latin: Mons Quirinalis
+  english: Quirinal Hill
+  height_m: 61
+  lat: 41.9030
+  lon: 12.4895
+  regio: 6
+  text: "Highest of the traditional seven hills; Sabine (Quirinus, Fides, Salus) settlement; north-east end the Colline Gate."
+  sources: ["Varro LL 5.51", "Livy 1.44", "Platner-Ashby s.v. Quirinalis"]
+other_heights:
+- {id: pincius, latin: Collis Hortulorum, english: Pincian Hill, height_m: 63, lat: 41.9100, lon: 12.4820, text: "Outside the Servian Wall; Gardens of Lucullus and Sallustius (late Republic).", sources: ["Platner-Ashby s.v. Horti Lucullani"]}
+- {id: ianiculum, latin: Ianiculum, english: Janiculum, height_m: 82, lat: 41.8890, lon: 12.4610, text: "Ridge across the Tiber, a fort of Ancus Marcius (Livy 1.33.6); military flag raised during comitia centuriata.", sources: ["Livy 1.33.6", "Platner-Ashby s.v. Ianiculum"]}
+- {id: vaticanus, latin: Mons Vaticanus, english: Vatican Hill, height_m: 75, lat: 41.9030, lon: 12.4530, text: "North of the Janiculum, outside the city; fields of the Tiber plain.", sources: ["Platner-Ashby s.v. Vaticanus Mons"]}
+valleys:
+- id: forum_valley
+  latin: Forum Romanum
+  english: Forum valley
+  lat: 41.8925
+  lon: 12.4853
+  floor_m: 11
+  text: "Marshy valley between the Capitol, Palatine, Velia and Quirinal spur, drained by the Cloaca Maxima and paved from about 600 BC; the ancient ground is 4-5 m below present level."
+  sources: ["Livy 1.38.6", "Dion. Hal. 3.67", "Platner-Ashby s.v. Forum Romanum"]
+- id: velabrum
+  latin: Velabrum
+  english: Velabrum
+  lat: 41.8905
+  lon: 12.4830
+  floor_m: 10
+  text: "Low marshy ground between the Capitol, Palatine and the Forum Boarium; flooded by the Tiber until the Cloaca Maxima drained it; the Vicus Tuscus ran through it; one of the oldest market places."
+  sources: ["Varro LL 5.43-44", "Platner-Ashby s.v. Velabrum"]
+- id: vallis_murcia
+  latin: Vallis Murcia
+  english: Valley of Murcia (Circus Maximus)
+  lat: 41.8861
+  lon: 12.4851
+  floor_m: 12
+  text: "Long valley between the Palatine and Aventine; site of the Circus Maximus, with the Murtia/Murcia stream."
+  sources: ["Livy 1.35.8", "Platner-Ashby s.v. Circus Maximus"]
+- id: subura_argiletum
+  latin: Subura / Argiletum
+  english: Subura valley
+  lat: 41.8955
+  lon: 12.4905
+  floor_m: 18
+  text: "Low district between the Viminal, Esquiline and Capitol-Forum; crowded; Argiletum road to the Forum."
+  sources: ["Varro LL 5.48", "Platner-Ashby s.v. Subura"]
+tiber:
+  latin: Tiberis
+  english: Tiber
+  lat: 41.8900
+  lon: 12.4770
+  width_m: 60
+  text: "River 60-90 m wide through the city, flowing north to south then west; the Tiber Island and fords at the Forum Boarium; the Pons Sublicius is the earliest crossing; floods regular (Livy 7.3.2; 24.9.6; 35.9.2). Floodplain (Campus Martius, Forum Boarium, Forum Holitorium) lay 2-6 m above normal water. Harbour at the Emporium (193 BC)."
+  sources: ["Livy 1.4", "Livy 7.3.2", "Livy 35.9.2", "Platner-Ashby s.v. Tiberis"]
+  island: {latin: Insula Tiberina, lat: 41.8900, lon: 12.4775, length_m: 270, width_m: 67}
+  course: [[41.9335,12.4668],[41.9060,12.4690],[41.8960,12.4720],[41.8925,12.4755],[41.8900,12.4775],[41.8885,12.4780],[41.8830,12.4770],[41.8770,12.4760],[41.8700,12.4720]]
+campus_martius:
+  latin: Campus Martius
+  english: Campus Martius
+  lat: 41.9000
+  lon: 12.4700
+  floor_m: 12
+  text: "Floodplain of the river bend west and north of the Capitol, about 2 km long; land of the Tarquins consecrated to Mars (Livy 2.5.2); muster, voting (Saepta), games, later monuments; frequently flooded (Livy 35.9.2)."
+  sources: ["Livy 2.5.2", "Strabo 5.3.8", "Platner-Ashby s.v. Campus Martius"]
