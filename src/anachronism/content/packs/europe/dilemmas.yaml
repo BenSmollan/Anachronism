@@ -1,30 +1,6 @@
 schema_version: 1
 # Historical choices for the Europe pack's moments (D-104).
 dilemmas:
-  - id: gordian_knot
-    title: The Gordian knot
-    text: "At Gordium hangs the ox-cart of King Midas, bound by a knot no one can untie. Whoever looses it, they say, will rule all Asia. {ruler} stands before it, and the army is watching."
-    chance_bp: 6000
-    scenarios: [alexander]
-    civs: [macedon]
-    after_year: -335
-    before_year: -320
-    choices:
-      - {label: "Cut it with the sword", outcome: "One stroke. That night there is thunder: the gods approve. The army would follow its king anywhere.", legitimacy_bp: 1500, influence: {nobility: 500}}
-      - {label: "Untie it with patience", outcome: "It takes hours, and a peg pulled from the yoke. Clever rather than grand - the scholars love it.", legitimacy_bp: 600, knowledge_bp: 1000}
-      - {label: "Leave it be", outcome: "Omens are for priests. The soldiers mutter that the king is afraid.", unrest_bp: 600}
-
-  - id: diogenes
-    title: The philosopher in the barrel
-    text: "At Corinth lives Diogenes, who owns nothing and sleeps in a jar. {ruler} goes to see him and asks if there is anything he desires."
-    chance_bp: 3000
-    scenarios: [alexander]
-    civs: [macedon]
-    before_year: -320
-    choices:
-      - {label: "Listen to his answer", outcome: "'Stand out of my sunlight.' The king laughs: 'Were I not Alexander, I would be Diogenes.' The philosophers are charmed.", knowledge_bp: 800, legitimacy_bp: 300}
-      - {label: "Have him flogged", outcome: "The old man is beaten and the story spreads across Greece.", legitimacy_bp: -800, unrest_bp: 400}
-
   - id: corvus
     title: Copy the enemy's ship
     text: "A Carthaginian warship has run aground on the coast. Rome has never built a fleet - but here is a perfect model."
@@ -35,12 +11,3 @@ dilemmas:
     choices:
       - {label: "Copy it plank by plank", outcome: "In sixty days Rome builds a hundred ships, with a boarding bridge - the corvus - of its own invention.", materials_bp: -2000, knowledge_bp: 1200, idea: sternpost_rudder}
       - {label: "Stay a land power", outcome: "The legions are enough. Let Carthage keep the sea.", legitimacy_bp: 200}
-
-  - id: millennium
-    title: The thousandth year
-    text: "The year 1000 approaches. Preachers say the world will end; crowds flock to the churches of {civ} and the fields go untended."
-    chance_bp: 8000
-    scenarios: [year_1000]
-    choices:
-      - {label: "Lead the processions", outcome: "The ruler walks barefoot with the pilgrims. The world does not end, and the people remember who prayed with them.", influence: {clergy: 900}, legitimacy_bp: 600, food_bp: -1000}
-      - {label: "Order the harvest gathered", outcome: "The world does not end, and the granaries are full. The priests are less pleased.", food_bp: 1000, influence: {clergy: -500}}

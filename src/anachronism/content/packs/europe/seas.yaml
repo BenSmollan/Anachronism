@@ -1,18 +1,17 @@
 schema_version: 1
 # Seas of Europe, the Mediterranean and the Near East. latlon: roughly each sea's middle.
 seas:
-  - {id: tyrrhenian, name: Tyrrhenian Sea, latlon: [40.0, 12.0], neighbours: [a3_byzacena, a3_campania, a3_carthage, a3_etruria, a3_latium, a3_magna_graecia, a3_sardinia, a3_syracuse, a3_west_sicily, br_italy, br_sardinia, car_byzacena, car_carthage, car_lilybaeum, car_sardinia, corsica, gau_boii, liguria, m_apulia, m_ifriqiya, m_lombard_south, m_lombardy, m_rome, m_sicily, m_tuscany, mas_massalia, messana, rom_bruttium, rom_campania, rom_etruria, rom_latium, syr_syracuse]}
-  - {id: ionian, name: Ionian Sea, latlon: [38.0, 18.5], neighbours: [a3_aetolia, a3_epirus, a3_illyria, a3_laconia, a3_magna_graecia, a3_peloponnese, a3_syracuse, ach_achaea, aet_aetolia, epi_epirus, illyria, m_apulia, m_hellas, m_ohrid, m_sicily, messana, myc_iolkos, myc_pylos, rom_bruttium, rom_tarentum, spa_laconia, syr_syracuse]}
-  - {id: adriatic, name: Adriatic Sea, latlon: [43.0, 15.5], neighbours: [a3_etruria, a3_illyria, a3_magna_graecia, a3_samnium, br_italy, gau_boii, illyria, m_apulia, m_croatia, m_dalmatia, m_lombard_south, m_ohrid, m_tuscany, m_venice, rom_apulia, rom_samnium, rom_tarentum, rom_umbria]}
-  - {id: aegean, name: Aegean Sea, latlon: [38.5, 25.0], neighbours: [a3_aegean_thrace, a3_attica, a3_boeotia, a3_caria, a3_chalcidice, a3_ionia, a3_laconia, a3_lydia, a3_pella, a3_peloponnese, a3_thessaly, ath_attica, br_lukka, hat_arzawa, m_constantinople, m_crete, m_hellas, m_thessalonica, m_thrakesion, mac_corinth, mac_macedonia, mac_thessaly, myc_argolid, myc_crete, myc_iolkos, myc_millawanda, myc_pylos, myc_thebes, per_pergamon, rho_rhodes, spa_laconia, thrace, wil_wilusa]}
-  - {id: levantine, name: Levantine Sea, latlon: [34.0, 32.5], neighbours: [a3_caria, a3_cilicia, a3_cyprus, a3_egypt, a3_judea, a3_libya, a3_phoenicia, a3_syria, ala_alashiya, amu_amurru, br_libya, br_lukka, egy_canaan, egy_delta, egy_upe, hat_aleppo, hat_kadesh, hat_kizzuwatna, hat_lower_land, m_antioch, m_barqa, m_cairo, m_cyprus, m_syria, pto_coele_syria, pto_cyprus, pto_delta, sel_asia, sel_cilicia, sel_syria, uga_ugarit]}
-  - {id: libyan_sea, name: Libyan Sea, latlon: [33.5, 18.0], neighbours: [a3_byzacena, a3_libya, br_libya, car_byzacena, car_emporia, m_barqa, m_ifriqiya, m_tripolitania, pto_cyrenaica]}
-  - {id: balearic, name: Balearic Sea, latlon: [38.5, 4.5], neighbours: [a3_carthage, a3_numidia, a3_sardinia, br_iberia, br_sardinia, car_carthage, car_gades, car_sardinia, east_iberia, m_barcelona, m_central_maghreb, m_cordoba, m_fez, m_ifriqiya, m_toulouse, m_valencia, mas_massalia, mauretania, num_masaesyli, num_massyli, southern_gaul]}
-  - {id: atlantic, name: Atlantic Ocean, latlon: [40.0, -10.5], neighbours: [br_iberia, car_gades, lusitania, m_cordoba, m_fez, m_galicia, m_seville, mauretania]}
-  - {id: black_sea, name: Black Sea, latlon: [43.5, 34.0], neighbours: [a3_bosporus, a3_byzantium, a3_dobruja, a3_odrysia, a3_pontus, a3_scythia, bit_bithynia, bosporus, br_caucasus, br_kaska, br_pontic, colchis, hat_upper_land, m_armeniakon, m_constantinople, m_kutaisi, m_moesia, m_pecheneg, pon_pontus, scythia, thrace, wil_wilusa]}
-  - {id: red_sea, name: Red Sea, latlon: [24.5, 36.5], neighbours: [a3_egypt, a3_nabataea, a3_upper_egypt, br_irem, egy_canaan, egy_delta, egy_middle, egy_thebes, m_cairo, m_upper_egypt, nabataea, pto_delta, pto_middle, pto_thebaid]}
-  - {id: persian_gulf, name: Persian Gulf, latlon: [27.5, 51.0], neighbours: [a3_susiana, bab_sealand, ela_susa, m_basra, m_fars, sel_susiana]}
-  - {id: caspian, name: Caspian Sea, latlon: [42.0, 50.5], neighbours: [a3_hyrcania]}
-  - {id: north_sea, name: North Sea, latlon: [56.0, 3.0], neighbours: [belgic_gaul, br_britain, br_gaul, br_nordic, britain, germania, m_alba, m_east_anglia, m_flanders, m_gotaland, m_jutland, m_normandy, m_northumbria, m_saxony, m_scania, m_viken, m_wessex]}
-  - {id: baltic, name: Baltic Sea, latlon: [57.0, 19.0], neighbours: [br_nordic, germania, m_estonia, m_finland, m_gotaland, m_greater_poland, m_jutland, m_lithuania, m_novgorod, m_pomerania, m_prussia, m_saxony, m_scania, m_svealand]}
-  - {id: biscay, name: Bay of Biscay, latlon: [45.5, -4.0], neighbours: [belgic_gaul, br_britain, br_gaul, britain, celtiberia, central_gaul, m_aquitaine, m_brittany, m_galicia, m_leon, m_munster, m_navarre, m_normandy, m_ulster, m_wales, m_wessex, southern_gaul]}
+  - {id: tyrrhenian, name: Tyrrhenian Sea, latlon: [40.0, 12.0], neighbours: [car_byzacena, car_carthage, car_lilybaeum, car_sardinia, corsica, gau_boii, liguria, mas_massalia, messana, rom_bruttium, rom_campania, rom_etruria, rom_latium, syr_syracuse]}
+  - {id: ionian, name: Ionian Sea, latlon: [38.0, 18.5], neighbours: [ach_achaea, aet_aetolia, epi_epirus, illyria, messana, rom_bruttium, rom_tarentum, spa_laconia, syr_syracuse]}
+  - {id: adriatic, name: Adriatic Sea, latlon: [43.0, 15.5], neighbours: [gau_boii, illyria, rom_apulia, rom_samnium, rom_tarentum, rom_umbria]}
+  - {id: aegean, name: Aegean Sea, latlon: [38.5, 25.0], neighbours: [ath_attica, mac_corinth, mac_macedonia, mac_thessaly, per_pergamon, rho_rhodes, spa_laconia, thrace]}
+  - {id: levantine, name: Levantine Sea, latlon: [34.0, 32.5], neighbours: [pto_coele_syria, pto_cyprus, pto_delta, sel_asia, sel_cilicia, sel_syria]}
+  - {id: libyan_sea, name: Libyan Sea, latlon: [33.5, 18.0], neighbours: [car_byzacena, car_emporia, pto_cyrenaica]}
+  - {id: balearic, name: Balearic Sea, latlon: [38.5, 4.5], neighbours: [car_carthage, car_gades, car_sardinia, east_iberia, mas_massalia, mauretania, num_masaesyli, num_massyli, southern_gaul]}
+  - {id: atlantic, name: Atlantic Ocean, latlon: [40.0, -10.5], neighbours: [car_gades, lusitania, mauretania]}
+  - {id: black_sea, name: Black Sea, latlon: [43.5, 34.0], neighbours: [bit_bithynia, bosporus, colchis, pon_pontus, scythia, thrace]}
+  - {id: red_sea, name: Red Sea, latlon: [24.5, 36.5], neighbours: [nabataea, pto_delta, pto_middle, pto_thebaid]}
+  - {id: persian_gulf, name: Persian Gulf, latlon: [27.5, 51.0], neighbours: [sel_susiana]}
+  - {id: north_sea, name: North Sea, latlon: [56.0, 3.0], neighbours: [belgic_gaul, britain, germania]}
+  - {id: baltic, name: Baltic Sea, latlon: [57.0, 19.0], neighbours: [germania]}
+  - {id: biscay, name: Bay of Biscay, latlon: [45.5, -4.0], neighbours: [belgic_gaul, britain, celtiberia, central_gaul, southern_gaul]}
