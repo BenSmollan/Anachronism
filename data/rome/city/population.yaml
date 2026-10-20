@@ -1,0 +1,60 @@
+# Population of Rome and extent of the built-up area, 509-27 BC.
+# All figures are uncertain: the sources give citizen counts (adult males), not city residents.
+# "kind" says what the number measures. Where a range is given it is the spread of the estimates.
+census_figures:   # Roman citizens (adult males, sui iuris) on the census rolls, not residents of the city
+- {year: -508, citizens: 130000, certainty: legendary, kind: citizens_total, source: "Dion. Hal. 5.20.3 gives 130,000 for the first census of the Republic; the figure is probably invented)"}
+- {year: -465, citizens: 104714, certainty: traditional, kind: citizens_total, source: "Livy 3.3.9"}
+- {year: -294, citizens: 262321, certainty: probable, kind: citizens_total, source: "Livy Per. 11"}
+- {year: -280, citizens: 287222, certainty: probable, kind: citizens_total, source: "Livy Per. 13"}
+- {year: -252, citizens: 297797, certainty: probable, kind: citizens_total, source: "Livy Per. 18"}
+- {year: -247, citizens: 241212, certainty: probable, kind: citizens_total, source: "Livy Per. 19"}
+- {year: -234, citizens: 270713, certainty: probable, kind: citizens_total, source: "Livy Per. 20"}
+- {year: -209, citizens: 137108, certainty: probable, kind: citizens_total, source: "Livy 27.36.7 (after the Hannibalic losses)"}
+- {year: -204, citizens: 214000, certainty: probable, kind: citizens_total, source: "Livy 29.37.5"}
+- {year: -189, citizens: 258318, certainty: probable, kind: citizens_total, source: "Livy 38.36.10"}
+- {year: -174, citizens: 269015, certainty: probable, kind: citizens_total, source: "Livy Per. 41"}
+- {year: -169, citizens: 312805, certainty: probable, kind: citizens_total, source: "Livy Per. 45"}
+- {year: -164, citizens: 337022, certainty: probable, kind: citizens_total, source: "Livy Per. 46"}
+- {year: -136, citizens: 317933, certainty: probable, kind: citizens_total, source: "Livy Per. 56"}
+- {year: -131, citizens: 318823, certainty: probable, kind: citizens_total, source: "Livy Per. 59"}
+- {year: -125, citizens: 394736, certainty: probable, kind: citizens_total, source: "Livy Per. 60"}
+- {year: -115, citizens: 394336, certainty: probable, kind: citizens_total, source: "Livy Per. 63"}
+- {year: -70, citizens: 910000, certainty: probable, kind: citizens_total, source: "Phlegon of Tralles (FGrH 257 F 12); Livy Per. 98 has 900,000; reflects enfranchisement of Italians after the Social War"}
+- {year: -28, citizens: 4063000, certainty: certain, kind: citizens_total, source: "Res Gestae 8 (4,063,000 in 28 BC; 4,233,000 in 8 BC); includes women and children probably not counted in earlier censuses"}
+note_census: "Before 70 BC, the figures are adult male citizens (assidui) of the whole Roman state, almost all of them farmers outside the city; they cannot be turned into a population for the city itself. The 4 million of 28 BC counts all citizens (the counting rule changed)."
+grain_dole:
+- {year: -123, recipients: null, what: "C. Gracchus' grain law: monthly grain at a fixed price to citizens (Plut. C. Gracchus 5; Livy Per. 60)", source: "Plut. C. Gracchus 5"}
+- {year: -58, recipients: null, what: "Clodius' law makes the grain free (Cic. Sest. 55; Asc. Pis. 8)", source: "Cic. Sest. 55"}
+- {year: -62, recipients: null, what: "Cato extends the dole (Plut. Cato Minor 26)", source: "Plut. Cato Minor 26"}
+- {year: -46, recipients: 320000, what: "number of recipients before Caesar's census, reduced to 150,000 afterward (Suet. Iul. 41.3)", source: "Suet. Iul. 41.3"}
+- {year: -46, recipients: 150000, what: "after Caesar's revision of the lists (Suet. Iul. 41.3; Plut. Caes. 55)", source: "Suet. Iul. 41.3"}
+- {year: -2, recipients: 200000, what: "Augustus' distribution to the plebs urbana in 2 BC (Res Gestae 15.4); outside the 27 BC limit", source: "Res Gestae 15"}
+city_population:
+- {year: -500, low: 25000, high: 40000, central: 30000, source: "modern estimate from the settled area (about 285 ha); no ancient figure", estimate_by: "Hopkins (1978) discusses; Morley (1996) on Rome", certainty: low}
+- {year: -400, low: 25000, high: 40000, central: 30000, source: "modern estimate; Veii's capture and the Gallic sack (390) interrupt the growth", estimate_by: "Cornell, Beginnings of Rome (1995)", certainty: low}
+- {year: -300, low: 40000, high: 60000, central: 50000, source: "modern estimate from the Servian Wall area (426 ha)", estimate_by: "Morley 1996 / Scheidel", certainty: low}
+- {year: -200, low: 150000, high: 250000, central: 200000, source: "modern estimate, after the Hannibalic War; immigration of Italian farmers", estimate_by: "Morley 1996; Hopkins 1978 (c. 200,000)", certainty: low}
+- {year: -130, low: 200000, high: 400000, central: 300000, source: "modern estimates", estimate_by: "Hopkins 1978; Lo Cascio (1994) argues higher", certainty: low}
+- {year: -50, low: 500000, high: 1000000, central: 750000, source: "modern estimates; Lo Cascio argues about 1 million, Morley about 500,000-600,000, Hopkins 750,000-800,000", estimate_by: "Morley 1996; Hopkins 1978; Lo Cascio 1994", certainty: low}
+- {year: -27, low: 800000, high: 1000000, central: 900000, source: "estimate for Augustan Rome, based on 200,000 dole recipients and Strabo/Dio on the city's size", estimate_by: "Hopkins 1978; Morley 1996; Scheidel (2007)", certainty: low}
+built_up_area:
+- period: "509-390 BC"
+  text: "Settlement concentrated on the Palatine, Capitol, Velia and the Forum valley, with extensions on the lower Esquiline, Caelian and Quirinal; fortified in parts by a 6th-century wall and an agger on the east."
+  points: [[41.8925,12.4853],[41.8890,12.4870],[41.8935,12.4830]]
+  source: "Cornell, Beginnings of Rome 1995 (modern synthesis); Platner-Ashby s.v. Roma"
+- period: "390-378 BC"
+  text: "After the Gallic sack (390), rebuilding on the old street plan was said to be hasty (Livy 5.55.2-5)."
+  points: [[41.8925,12.4853]]
+  source: "Livy 5.55.2-5"
+- period: "378-250 BC"
+  text: "City enclosed by the Servian Wall: circuit about 11 km, area about 426 ha; seven hills and the Forum within, the Campus Martius and Aventine suburbs outside (Aventine within the pomerium only from Claudius)."
+  points: [[41.8885,12.4885],[41.8845,12.4850],[41.8795,12.4790],[41.8880,12.4793],[41.8920,12.4807],[41.8957,12.4830],[41.9068,12.4960],[41.8957,12.5017],[41.8885,12.4885]]
+  source: "Livy 6.32.1; Platner-Ashby s.v. Murus Servii Tullii"
+- period: "250-100 BC"
+  text: "Growth outside the wall: Campus Martius (Circus Flaminius, porticoes), Emporium and Aventine riverside, Trastevere. Concrete tenements (insulae) and the first horrea."
+  points: [[41.9000,12.4700],[41.8795,12.4765],[41.8825,12.4695]]
+  source: "Livy 35.10.12; Livy 41.27.8; Platner-Ashby s.v. Roma"
+- period: "100-27 BC"
+  text: "Built-up area spills well beyond the Servian Wall: Campus Martius (Theatre of Pompey, Saepta), Trastevere, Esquiline and Via Appia. Roughly 1,300-1,800 ha continuously built by the end of the period (modern estimate); the Aurelian Wall (AD 271) later encloses 1,373 ha."
+  points: [[41.9060,12.4770],[41.8760,12.4780],[41.9090,12.4950],[41.8700,12.4980]]
+  source: "Modern estimates, Platner-Ashby s.v. Roma; the Aurelian Wall area is documented in Lanciani Forma Urbis"
