@@ -1,0 +1,1447 @@
+schema_version: 1
+# Rome and Carthage, 264 BC: the deep successor of punic_wars.yaml (which stays until the lead retires it).
+# Map: provinces_italy.yaml (it_*, si_*, sa_*, co_*) for Italy, Sicily, Sardinia and Corsica.
+#
+# HOW THE ITALIAN ALLIES ARE MODELLED (decision, see the report):
+# The schema has no "ally" or lower-loyalty status for a province, only owners. Rome's Italian
+# *socii* kept their own laws, magistrates and armies and were bound by treaty (Polybius 2.24 lists their
+# levies separately from the Romans and Campanians), so they are modelled as separate civs in alliance
+# with Rome: Samnites, Central Italics, Etruscans, Umbrians, Southern Italics, Greek cities. Rome itself
+# owns only the ager Romanus, its citizen and Latin colonies and the peoples whose land it annexed
+# (Latium, Volsci, Hernici, Aequi, Sabines, Aurunci, Campania, Picenum, Senones, Caere, Veii).
+# A civ-per-people lets an ally defect after Cannae, as Capua, Tarentum and the Bruttians did (Polybius 3.118).
+# Grouping is approximate: Latin colonies lie inside allied provinces and cannot be drawn at this grain.
+# Sicily: Carthage holds the west (Lilybaeum, Panormus, Akragas, Enna); Hiero II holds Syracuse and Catana;
+# the Mamertines hold Messana; Gela and Halaesa are unowned (their allegiance in 264 BC is not
+# recorded in the sources read) # unverified. Carthage holds Sardinia (Polybius 1.10.5, 1.88) and Corsica.
+# Scripts of the eastern states and the common tech baseline are carried over from punic_wars.yaml.
+scenarios:
+  - id: rome_264
+    name: "Rome and Carthage, 264 BC"
+    description: >-
+      264 BC. Rome leads a mosaic of Italian allies from the Arno to the toe of Italy, and has never fought beyond the peninsula. Carthage rules the western sea. A quarrel over Messana in Sicily, where Hiero of Syracuse is also watching, is about to become the First Punic War. The consuls are Appius Claudius Caudex and Marcus Fulvius Flaccus. North of the Apennines the Gauls of the Po and the Ligurians are still unconquered.
+    start_year: -264
+    years_per_turn: 10
+    campaign_years_per_turn: 2
+    player_civ: rome
+    map: europe
+    music: roman  # the client plays client/music/<name>.mp3 (D-208)
+    cost_scale: 10
+    confidence: medium
+    sources:
+      - "Polybius 1.7-1.12 (the Mamertines, Hiero and the crossing to Messana)"
+      - "Polybius 2.17-24 (peoples of Italy and the levies of Rome and her allies in 225 BC)"
+      - "Polybius 1.10.5 (Carthage holds the islands of the Sardinian and Tyrrhenian seas)"
+      - "Fasti Capitolini (consuls of 264 BC) # unverified"
+    # what every state of the age knows, where it has the prerequisites (Rome's Twelve Tables, Greek city laws, Carthage's constitution)
+    common_techs: {written_law: widespread}
+    civs:
+      rome:
+        # Rome here is the ager Romanus and its citizen and Latin colonies, plus the peoples whose land
+        # Rome had annexed outright (Sabines 290/268, Picentes 268, Senones 283). The allies (socii) are separate civs.
+        # source for the consuls of 264 BC: Fasti Capitolini (Appius Claudius Caudex and Marcus Fulvius Flaccus).
+        navy_bp: 500
+        disposition: aggressive
+        scripts:
+          - {id: "first_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -266}, note: "Rome crosses to Sicily and the First Punic War begins (264-241 BC). Polybius 1.11-1.63."}
+          - {id: "seize_sardinia", goal: "conquer", target: "carthage", preconditions: {after_year: -240, before_year: -232}, depends_on: ["first_punic_war"], note: "Rome takes Sardinia from a Carthage crippled by the Mercenary War and adds 1,200 talents (238 BC). Polybius 1.88.8-12."}
+          - {id: "first_illyrian_war", goal: "conquer", target: "e2_illyrians", preconditions: {after_year: -231}, depends_on: ["first_punic_war"], note: "Rome sends fleet and legions across the Adriatic against Queen Teuta (229 BC). Polybius 2.8-12."}
+          - {id: "gallic_war_telamon", goal: "conquer", target: "e2_boii", preconditions: {after_year: -227}, depends_on: ["first_punic_war"], note: "Rome crushes the Gauls at Telamon (225 BC) and enters the lands of the Boii. Polybius 2.27-31."}
+          - {id: "conquest_of_the_insubres", goal: "conquer", target: "e2_insubres", preconditions: {after_year: -224}, depends_on: ["gallic_war_telamon"], note: "Rome besieges Acerrae and wins at Clastidium (222 BC). Polybius 2.34."}
+          - {id: "second_illyrian_war", goal: "conquer", target: "e2_illyrians", preconditions: {after_year: -221}, depends_on: ["first_illyrian_war"], note: "Rome drives Demetrius of Pharos from Illyria (219 BC). Polybius 3.16, 3.18-19."}
+          - {id: "first_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Philip V allies with Hannibal (215 BC); Rome keeps him busy in Greece. Polybius 7.9 (treaty); Livy 23.33-38 and 26.24."}
+          - {id: "conquest_of_syracuse", goal: "conquer", target: "syracuse", preconditions: {after_year: -214}, depends_on: ["hannibals_war"], note: "Syracuse, gone over to Carthage after Hiero died, is stormed by Marcellus (212 BC). Polybius 8.3-7 (siege); Livy 25.23-31."}
+          - {id: "scipio_in_africa", goal: "conquer", target: "carthage", preconditions: {after_year: -206}, depends_on: ["hannibals_war"], note: "Scipio crosses to Africa and defeats Hannibal at Zama (202 BC). Livy 30.29-35; Polybius 15.5."}
+          - {id: "second_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -201}, depends_on: ["scipio_in_africa"], note: "Flamininus defeats Philip V at Cynoscephalae (197 BC) and proclaims the freedom of Greece at the Isthmus. Polybius 18.19-27; Livy 33.7-10, 33.32."}
+          - {id: "rome_vs_antiochus", goal: "conquer", target: "seleucid", preconditions: {after_year: -195}, depends_on: ["second_macedonian_war"], note: "The Scipios defeat Antiochus III at Magnesia (190 BC); treaty of Apamea 188. Livy 37.37-44, 38.38."}
+          - {id: "third_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -173}, depends_on: ["rome_vs_antiochus"], note: "Aemilius Paullus defeats Perseus at Pydna (168 BC); Macedon is cut into four republics. Livy 44.40-42, 45.29-32."}
+          - {id: "numantine_war", goal: "conquer", target: "e2_celtiberians", preconditions: {after_year: -145}, depends_on: ["third_macedonian_war"], note: "Scipio Aemilianus starves Numantia into surrender (133 BC). Appian, Iberica 97 (unverified); Livy, Periochae 59 (unverified)."}
+          - {id: "third_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -151}, depends_on: ["scipio_in_africa"], note: "Rome demands the surrender of Carthage and destroys it (149-146 BC). Polybius 36.9 (opinions in Greece); Appian, Punica 74-135 (unverified)."}
+          - {id: "achaean_war", goal: "conquer", target: "achaea", preconditions: {after_year: -149}, depends_on: ["third_macedonian_war"], note: "Mummius defeats the Achaean League and sacks Corinth (146 BC). Polybius 38.10-18 and 39.2."}
+        capital: it_roma
+        leader: Consul Appius Claudius Caudex
+        leader_age: 45
+        generals: [{name: "Manius Valerius Maximus", skill: 3, trait: siege, note: "Consul in 263 BC (Polybius 1.16.1); took the Sicilian towns."}, {name: "Marcus Fulvius Flaccus", skill: 2, note: "Colleague of Appius Claudius, consul 264 BC (Fasti Capitolini)."}, {name: "Gaius Duilius", skill: 2, trait: shield, note: "Victor of Mylae, Rome's first sea battle (Polybius 1.22-23)."}, {name: "Marcus Atilius Regulus", skill: 3, trait: bold, note: "Consul who carries the war to Africa (Polybius 1.25-34)."}]
+        pitch: "Two consuls, a Senate of families and a federation of allies bound by treaty rather than conquest. Carthage rules the western sea; the question is what Rome does with Sicily."
+        provinces:
+          it_roma: 256000
+          it_latium: 192000
+          it_veii: 48000
+          it_volsci: 104000
+          it_hernici: 52000
+          it_aequi: 36000
+          it_sabina: 88000
+          it_caere: 48000
+          it_aurunci: 44000
+          it_campania: 240000
+          it_picenum: 104000
+          it_senones: 44000
+        stockpiles: {food: 2009, materials: 502, wealth: 628, knowledge: 314}
+        stats: {literacy_bp: 500, unrest_bp: 800, legitimacy_bp: 7000}
+        influence: {clergy: 2500, nobility: 5500, guilds: 2000}
+        techs:
+          republic: widespread
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: concept
+          schools: concept
+          roads: adopted
+          piston_bellows: adopted
+          aqueduct: adopted
+          concrete: concept
+      e2_samnites:
+        # Allied to Rome by treaty since 290 BC (Livy 10.45, unverified). Polybius 2.24.10 gives 70,000 foot and 7,000 horse in 225 BC.
+        navy_bp: 0
+        disposition: cautious
+        capital: it_samnium
+        leader: The Samnite League
+        leader_age: 45
+        pitch: "Three wars lost, one alliance kept. Samnium has thousands of spearmen and a long memory."
+        provinces:
+          it_samnium: 120000
+          it_hirpini: 52000
+        stockpiles: {food: 275, materials: 68, wealth: 68, knowledge: 34}
+        stats: {literacy_bp: 300, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          republic: widespread
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          piston_bellows: adopted
+      e2_central_italics:
+        # Marsi and Frentani, allied since 304 BC (Livy 9.45, unverified); Polybius 2.24.12 lists their levy.
+        navy_bp: 0
+        disposition: cautious
+        capital: it_marsi
+        leader: The Marsi and their neighbours
+        leader_age: 45
+        pitch: "Mountain farmers who march with the legions as socii."
+        provinces:
+          it_marsi: 68000
+          it_frentani: 28000
+        stockpiles: {food: 153, materials: 38, wealth: 38, knowledge: 19}
+        stats: {literacy_bp: 200, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5000, guilds: 1500}
+        techs:
+          republic: widespread
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          piston_bellows: adopted
+      e2_etruscans:
+        # Each Etruscan city had its own treaty with Rome; here they are one civ. Volsinii falls to Rome in 264 (Zonaras 8.7, unverified); Falerii revolts in 241.
+        navy_bp: 1500
+        disposition: cautious
+        capital: it_tarquinii
+        leader: The city magistrates of Etruria
+        leader_age: 45
+        pitch: "Rich old cities that remember being a great power, and know they are not one now."
+        provinces:
+          it_tarquinii: 80000
+          it_volsinii: 72000
+          it_populonia: 48000
+          it_arretium: 72000
+          it_etruria_n: 72000
+          it_falisci: 32000
+        stockpiles: {food: 601, materials: 150, wealth: 150, knowledge: 75}
+        stats: {literacy_bp: 600, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 4000, nobility: 5000, guilds: 1000}
+        techs:
+          republic: widespread
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          roads: adopted
+          piston_bellows: adopted
+          aqueduct: adopted
+      e2_umbrians:
+        # Polybius 2.24.7: the Umbrians and Sarsinates raise about 20,000 in 225 BC.
+        navy_bp: 0
+        disposition: cautious
+        capital: it_umbria
+        leader: The Umbrian cantons
+        leader_age: 45
+        pitch: "Highland farmers between Etruria and the Adriatic, allied to Rome."
+        provinces:
+          it_umbria: 76000
+        stockpiles: {food: 121, materials: 30, wealth: 30, knowledge: 15}
+        stats: {literacy_bp: 200, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5000, guilds: 1500}
+        techs:
+          republic: widespread
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          piston_bellows: adopted
+      e2_southern_italics:
+        # Latin colonies (Venusia, Luceria, Paestum) lie inside these provinces but cannot be separated at this grain.
+        navy_bp: 2000
+        disposition: cautious
+        capital: it_lucania
+        leader: The Italic chiefs of the south
+        leader_age: 45
+        pitch: "Lucanians, Bruttians, Apulians and Messapians: allies since Pyrrhus, and the first to waver if Rome falters."
+        provinces:
+          it_lucania: 96000
+          it_bruttium: 132000
+          it_apulia: 80000
+          it_peucetia: 56000
+          it_messapia: 88000
+          it_picentini: 32000
+        stockpiles: {food: 774, materials: 193, wealth: 193, knowledge: 96}
+        stats: {literacy_bp: 250, unrest_bp: 1100, legitimacy_bp: 5500}
+        influence: {clergy: 3500, nobility: 5500, guilds: 1000}
+        techs:
+          republic: widespread
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          piston_bellows: adopted
+      e2_italiote_greeks:
+        # Tarentum fell to Rome in 272 BC (Polybius 1.6-7 for Rhegium; Tarentum: Livy Per. 14, unverified).
+        navy_bp: 8000
+        disposition: mercantile
+        capital: it_tarentum
+        leader: The magistrates of the Greek cities
+        leader_age: 45
+        pitch: "Naples, Tarentum and Rhegium: Greek harbours that supply ships and keep their own laws."
+        provinces:
+          it_neapolis: 64000
+          it_tarentum: 80000
+          it_rhegium: 28000
+        stockpiles: {food: 275, materials: 68, wealth: 68, knowledge: 34}
+        stats: {literacy_bp: 1200, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 2500, nobility: 3500, guilds: 4000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: widespread
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: concept
+      e2_boii:
+        # Polybius 2.20-21: peace with Rome for forty-five years after Vadimon, then renewed war.
+        navy_bp: 0
+        disposition: aggressive
+        scripts:
+          - {id: "gauls_invade_etruria", goal: "conquer", target: "rome", preconditions: {after_year: -227}, note: "The Insubres and Boii bring the Gaesatae over the Alps and march into Etruria (225 BC). Polybius 2.22-23."}
+        capital: it_boii
+        leader: The Council of the Boii
+        leader_age: 45
+        pitch: "Defeated at Vadimon, resentful, and growing a new generation that never saw it."
+        provinces:
+          it_boii: 76000
+        stockpiles: {food: 121, materials: 30, wealth: 38, knowledge: 2}
+        stats: {literacy_bp: 30, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          coinage: concept
+      e2_insubres:
+        navy_bp: 0
+        disposition: aggressive
+        scripts:
+          - {id: "insubres_hannibal", goal: "ally", target: "carthage", preconditions: {after_year: -219}, note: "Hannibal wins over the Po Gauls after crossing the Alps (218 BC). Polybius 3.44, 3.60-65."}
+        capital: it_insubres
+        leader: The Chiefs of the Insubres
+        leader_age: 45
+        pitch: "The largest tribe of the Po plain, and no friend of Rome."
+        provinces:
+          it_insubres: 112000
+        stockpiles: {food: 179, materials: 44, wealth: 56, knowledge: 3}
+        stats: {literacy_bp: 30, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          coinage: concept
+      e2_cenomani:
+        navy_bp: 0
+        disposition: cautious
+        scripts:
+          - {id: "cenomani_with_rome", goal: "ally", target: "rome", preconditions: {after_year: -227}, note: "The Cenomani and Veneti decline to join their kinsmen and support Rome (225 BC). Polybius 2.23.2."}
+        capital: it_cenomani
+        leader: The Chiefs of the Cenomani
+        leader_age: 45
+        pitch: "Celts who chose Rome over their cousins."
+        provinces:
+          it_cenomani: 68000
+        stockpiles: {food: 108, materials: 27, wealth: 34, knowledge: 2}
+        stats: {literacy_bp: 30, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          coinage: concept
+      e2_veneti:
+        navy_bp: 3000
+        disposition: cautious
+        capital: it_veneti
+        leader: The Venetic chiefs
+        leader_age: 45
+        pitch: "A people of horses and the Adriatic marshes, in no hurry to choose a side."
+        provinces:
+          it_veneti: 96000
+        stockpiles: {food: 153, materials: 38, wealth: 48, knowledge: 2}
+        stats: {literacy_bp: 100, unrest_bp: 800, legitimacy_bp: 6000}
+        influence: {clergy: 4000, nobility: 5000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          coinage: concept
+      e2_ligurians:
+        navy_bp: 0
+        disposition: aggressive
+        capital: it_liguria
+        leader: The Ligurian tribes
+        leader_age: 45
+        pitch: "Mountain raiders who will cost Rome more lives than any richer enemy."
+        provinces:
+          it_liguria: 72000
+          it_ligures_apuani: 28000
+        stockpiles: {food: 160, materials: 40, wealth: 50, knowledge: 3}
+        stats: {literacy_bp: 30, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 4000, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          coinage: concept
+      e2_mamertines:
+        # Polybius 1.10-11: a Carthaginian garrison stands in the citadel when the Roman consul arrives.
+        navy_bp: 1000
+        disposition: aggressive
+        scripts:
+          - {id: "mamertines_appeal", goal: "ally", target: "rome", preconditions: {after_year: -266}, note: "The Mamertines divide: some call on Carthage, others on Rome (264 BC). Polybius 1.10.1-2."}
+        capital: si_messana
+        leader: The Mamertine council
+        leader_age: 45
+        pitch: "Mercenary murderers holding the gate of Sicily, and you must choose whose side to be on."
+        provinces:
+          si_messana: 40000
+        stockpiles: {food: 64, materials: 16, wealth: 16, knowledge: 8}
+        stats: {literacy_bp: 100, unrest_bp: 1500, legitimacy_bp: 4000}
+        influence: {clergy: 1500, nobility: 6500, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          piston_bellows: adopted
+      e2_illyrians:
+        # Polybius 2.2-12: King Agron rules until his death (231 BC), then his widow Teuta; no ruler of 264 BC is named, so the slot is unnamed.
+        navy_bp: 5000
+        disposition: aggressive
+        capital: illyria
+        leader: The Ardiaean king
+        leader_age: 45
+        pitch: "Pirate kingdom of the Adriatic."
+        provinces:
+          illyria: 250000
+        stockpiles: {food: 400, materials: 100, wealth: 125, knowledge: 7}
+        stats: {literacy_bp: 50, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 3000, nobility: 6000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          coinage: concept
+      e2_celtiberians:
+        navy_bp: 0
+        disposition: aggressive
+        capital: celtiberia
+        leader: The Celtiberian chiefs
+        leader_age: 45
+        pitch: "Hill fortresses and iron swords in the Spanish interior."
+        provinces:
+          celtiberia: 400000
+        stockpiles: {food: 640, materials: 160, wealth: 200, knowledge: 12}
+        stats: {literacy_bp: 30, unrest_bp: 1000, legitimacy_bp: 5500}
+        influence: {clergy: 3500, nobility: 5500, guilds: 500}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          coinage: concept
+      carthage:
+        navy_bp: 40000
+        disposition: mercantile
+        scripts:
+          - {id: "carthage_defends_sicily", goal: "conquer", target: "rome", preconditions: {after_year: -266}, note: "Carthage, holding western Sicily, goes to war with Rome over Messana (264-241 BC). Polybius 1.11-1.63."}
+          - {id: "barcid_spain", goal: "conquer", target: "e2_celtiberians", preconditions: {after_year: -239}, depends_on: ["first_punic_war"], note: "Hamilcar Barca builds a new empire in Spain from 237 BC. Polybius 2.1.5-9, 2.13."}
+          - {id: "hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["first_punic_war"], note: "Saguntum falls (219); Hannibal crosses the Alps and wins at the Ticinus, Trebia, Trasimene and Cannae (218-216). Polybius 3.17, 3.56, 3.66-74, 3.82-84, 3.107-117."}
+        capital: car_carthage
+        music: near_east
+        generals: [{name: "Hanno", skill: 2, trait: quartermaster, note: "Relieves Agrigentum with fifty elephants and loses the battle (262 BC). Polybius 1.18-19."}, {name: "Hannibal, besieged at Agrigentum", skill: 2, trait: shield, note: "Carthaginian commander shut in Agrigentum (Polybius 1.19)."}, {name: "Hamilcar Barca", skill: 5, trait: bold, note: "Undefeated in Sicily; father of Hannibal."}, {name: "Xanthippus", skill: 4, trait: horse, note: "Spartan mercenary who crushed Regulus in 255 BC."}, {name: "Hanno the Great", skill: 2, trait: quartermaster, note: "Leader of Carthage's landed party, who fights the Mercenary War (Polybius 1.67, 1.82)."}]
+        pitch: "The richest city in the west, and its sea. But Rome is looking at Sicily. Buy, build and out-think them."
+        provinces:
+          car_carthage: 700000
+          car_byzacena: 400000
+          car_emporia: 150000
+          si_lilybaeum: 48000
+          si_panormus: 60000
+          si_akragas: 68000
+          si_enna: 44000
+          sa_sardinia: 112000
+          co_corsica: 48000
+          car_gades: 300000
+        stockpiles: {food: 3360, materials: 840, wealth: 1050, knowledge: 850}
+        stats: {literacy_bp: 800, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 4000, guilds: 3500}
+        techs:
+          republic: widespread
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: concept
+          piston_bellows: adopted
+          canals: adopted
+      syracuse:
+        disposition: cautious
+        scripts:
+          - {id: "hieronymus_to_carthage", goal: "ally", target: "carthage", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Hieronymus breaks with Rome and allies with Carthage (215 BC). Livy 24.4-6, 24.21-33 (unverified)."}
+          - {id: "hiero_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -265}, depends_on: ["first_punic_war"], note: "Hiero II switches sides and becomes Rome's loyal ally (263 BC)."}
+        capital: si_syracuse
+        leader: Hiero II
+        leader_age: 41
+        # Hiero b. about 305 BC (a ninety-year life ending in 215): Polybius 7.8 (unverified), so about 41 in 264.
+        leader_died: -215
+        successors: [{name: "Hieronymus", age: 15, disposition: "aggressive", died: -214, ends: "is assassinated at Leontini"}, {name: "General Epicydes", age: 40, until: -212}]
+        pitch: "One city, two giants, and Archimedes. Survive by ingenuity alone."
+        provinces:
+          si_syracuse: 136000
+          si_catana: 64000
+        stockpiles: {food: 640, materials: 160, wealth: 200, knowledge: 230}
+        stats: {literacy_bp: 1100, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 2500, nobility: 4000, guilds: 3500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: widespread
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+          water_wheel: concept
+      numidia:
+        navy_bp: 0
+        disposition: aggressive
+        scripts:
+          - {id: "masinissa_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -206}, depends_on: ["scipio_in_africa"], note: "Masinissa leaves Carthage for Scipio and fights at Zama (206-202 BC). Livy 28.35, 30.29-35."}
+          - {id: "masinissa_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -170}, note: "Masinissa's Numidia nibbles at Carthage's lands (from 160 BC)."}
+        capital: num_massyli
+        music: near_east
+        leader: Gala
+        leader_age: 45
+        leader_died: -207
+        # Dates approximate (D-XXX). Gala (king of the Massyli) d. c. 207; his brother Oezalces and
+        # Oezalces' son Capussa are passed over before Masinissa (c. 238-148) wins the kingdom. Micipsa
+        # reigned 148-118; Jugurtha seized power 118-117 and fell in 105; Gauda (Mastanabal's son) followed.
+        successors: [{name: "Masinissa", age: 32, disposition: "aggressive", died: -148}, {name: "Micipsa", age: 37, died: -118}, {name: "Jugurtha", age: 42, disposition: "aggressive", until: -104}, {name: "Gauda", age: 45, until: -94}]
+        pitch: "The best horsemen in the world, between Carthage and the desert."
+        provinces:
+          num_massyli: 400000
+          num_masaesyli: 350000
+        stockpiles: {food: 1200, materials: 300, wealth: 375, knowledge: 28}
+        stats: {literacy_bp: 50, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 6000, guilds: 500}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: adopted
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: adopted
+          fortification: adopted
+          sailing: adopted
+          composite_bow: adopted
+      macedon:
+        disposition: aggressive
+        scripts:
+          - {id: "chremonidean_war", goal: "conquer", target: "athens", preconditions: {after_year: -266}, note: "Antigonus Gonatas besieges Athens, which surrenders in 261 BC."}
+          - {id: "macedon_vs_achaea", goal: "conquer", target: "achaea", preconditions: {after_year: -245}, note: "Macedon and the Achaean League struggle for the Peloponnese."}
+        capital: mac_macedonia
+        leader: Antigonus II Gonatas
+        leader_age: 55
+        leader_died: -239
+        successors: [{name: "Demetrius II", age: 38, died: -229}, {name: "Antigonus III Doson", age: 36, disposition: "cautious", died: -221}, {name: "Philip V", age: 17, disposition: "aggressive", died: -179}, {name: "Perseus", age: 33, until: -168}]
+        pitch: "Hold Greece, rebuild Alexander's kingdom, and keep the Ptolemies out of the Aegean."
+        provinces:
+          mac_macedonia: 700000
+          mac_thessaly: 400000
+          mac_corinth: 150000
+        stockpiles: {food: 2000, materials: 500, wealth: 625, knowledge: 447}
+        stats: {literacy_bp: 700, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 6000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      athens:
+        disposition: scholarly
+        capital: ath_attica
+        leader: Chremonides
+        leader_age: 45
+        leader_until: -260
+        # Athens had no king: the ruler is the leading man of each period (as for early Rome). Chremonides
+        # (the war of 267-261), then the assembly under the Macedonian garrison until it is bought out in
+        # 229, Eurycleides and Micion (approximate: their influence waned by about 205), then the Assembly.
+        successors: [{name: "The Assembly under the garrison", age: 50, died: -230}, {name: "Eurycleides", age: 40, disposition: "cautious", died: -206}, {name: "The Assembly of Athens", age: 50, until: -100}]
+        pitch: "The schools of Plato and Aristotle, the silver of Laurion - and a Macedonian army outside the walls."
+        provinces:
+          ath_attica: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 235}
+        stats: {literacy_bp: 1500, unrest_bp: 1100, legitimacy_bp: 5500}
+        influence: {clergy: 2500, nobility: 3000, guilds: 4500}
+        techs:
+          republic: widespread
+          citizen_assembly: adopted
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+      sparta:
+        disposition: aggressive
+        capital: spa_laconia
+        leader: Acrotatus II
+        leader_age: 35
+        leader_died: -262
+        # Sparta had two kings at once; the ruler here is the king whose story each chapter tells
+        # (Eurypontid Eudamidas II and Agis IV, then Agiad Leonidas II and Cleomenes III).
+        # Dates adjusted a year or two to the turn grid (Eudamidas II, Agis IV, Cleomenes, Nabis) and approximate: Acrotatus' death at Megalopolis c. 262, Lycurgus c. 211, the ephors
+        # (rule under Macedonian protection) to Lycurgus's accession in 219.
+        successors: [{name: "Eudamidas II", age: 40, died: -246}, {name: "Agis IV", age: 20, disposition: "cautious", died: -240, ends: "is strangled in prison by the ephors"}, {name: "Leonidas II", age: 60, died: -235}, {name: "Cleomenes III", age: 25, disposition: "aggressive", until: -220}, {name: "The Ephors", age: 45, died: -219}, {name: "King Lycurgus", age: 30, died: -211}, {name: "Machanidas", age: 40, disposition: "aggressive", died: -207, ends: "is killed by Philopoemen at Mantinea"}, {name: "Nabis", age: 45, disposition: "aggressive", died: -191, ends: "is murdered by an Aetolian guest at Sparta"}, {name: "The Ephors", age: 45, until: -186}]
+        pitch: "Few citizens, iron discipline. Can Sparta reform before it withers away?"
+        provinces:
+          spa_laconia: 180000
+        stockpiles: {food: 288, materials: 72, wealth: 90, knowledge: 82}
+        stats: {literacy_bp: 800, unrest_bp: 1200, legitimacy_bp: 5500}
+        influence: {clergy: 3000, nobility: 6000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+      aetolia:
+        disposition: aggressive
+        leader: The General of the Aetolians
+        leader_age: 45
+        leader_died: -222
+        # The League chose a general (strategos) each year, so the ruler is the leading man of each
+        # chapter. Before 222 no single name is safe, hence the unnamed general; the dates of the others
+        # are the chapter years, and each leaves office in his chapter.
+        successors: [{name: "Scopas", age: 40, disposition: "aggressive", until: -218}, {name: "Agelaus of Naupactus", age: 45, disposition: "cautious", until: -216}, {name: "Scopas", age: 46, disposition: "aggressive", until: -210}, {name: "Pyrrhias", age: 40, until: -206}, {name: "Phaeneas", age: 45, until: -198}, {name: "Thoas", age: 45, disposition: "aggressive", until: -192}, {name: "Phaeneas", age: 52, disposition: "cautious", until: -150}]
+        scripts:
+          - {id: "aetolian_raids", goal: "conquer", target: "achaea", preconditions: {after_year: -230}, note: "The Aetolian League raids the Peloponnese (220s BC)."}
+        capital: aet_aetolia
+        pitch: "Mountain warriors and a federal league: lead Greece your own way."
+        provinces:
+          aet_aetolia: 200000
+        stockpiles: {food: 320, materials: 80, wealth: 100, knowledge: 70}
+        stats: {literacy_bp: 600, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          piston_bellows: adopted
+      achaea:
+        disposition: cautious
+        leader: Margos of Caryneia
+        leader_age: 40
+        leader_died: -254
+        # The League chose a general (strategos) each year; the ruler is its leading man in each chapter.
+        # Margos, the first sole general (255), is a stand-in until Aratus; his death date is not recorded.
+        successors: [{name: "Aratus of Sicyon", age: 21, disposition: "cautious", died: -213, ends: "is poisoned, the story goes, on Philip's orders"}, {name: "Philopoemen", age: 40, disposition: "aggressive", until: -206}, {name: "Aristaenus of Megalopolis", age: 50, until: -198}, {name: "Philopoemen", age: 60, disposition: "aggressive", died: -184, ends: "is made to drink poison at Messene"}, {name: "Callicrates of Leontion", age: 40, until: -166}, {name: "Diaeus of Megalopolis", age: 45, disposition: "aggressive", until: -140}]
+        capital: ach_achaea
+        pitch: "A small federation with big ambitions: unite the Peloponnese."
+        provinces:
+          ach_achaea: 250000
+        stockpiles: {food: 400, materials: 100, wealth: 125, knowledge: 160}
+        stats: {literacy_bp: 1200, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 3500, guilds: 4000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      epirus:
+        disposition: aggressive
+        capital: epi_epirus
+        leader: Alexander II
+        leader_age: 30
+        leader_died: -242
+        # Dates approximate (D-XXX). Olympias II ruled as regent for her sons Pyrrhus II (r. c. 242-238)
+        # and Ptolemy (c. 238-235); Pyrrhus II is passed over, as no chapter falls in his years. Deidameia
+        # (c. 235-232) is the last Aeacid; the League then rules through its annual strategos and
+        # assembly, here "The Epirote Assembly".
+        successors: [{name: "Olympias II (regent)", age: 45, died: -237}, {name: "Ptolemy", age: 20, died: -235}, {name: "Deidameia", age: 25, until: -230}, {name: "The Epirote Assembly", age: 45, until: -94}]
+        pitch: "Pyrrhus won battles and lost wars. Win the peace this time."
+        provinces:
+          epi_epirus: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 85}
+        stats: {literacy_bp: 500, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          roads: adopted
+          piston_bellows: adopted
+      rhodes:
+        navy_bp: 30000
+        disposition: mercantile
+        capital: rho_rhodes
+        # Rhodes was a republic: the ruler is the board of prytaneis, who changed every six months.
+        leader: The Prytaneis of Rhodes
+        leader_age: 45
+        leader_until: -100
+        pitch: "The richest harbour of the east and its best sailors. Rule by trade, not conquest."
+        provinces:
+          rho_rhodes: 150000
+        stockpiles: {food: 240, materials: 60, wealth: 75, knowledge: 100}
+        stats: {literacy_bp: 1200, unrest_bp: 800, legitimacy_bp: 6500}
+        influence: {clergy: 2000, nobility: 3000, guilds: 5000}
+        techs:
+          republic: adopted
+          citizen_assembly: adopted
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+      pergamon:
+        disposition: scholarly
+        capital: per_pergamon
+        leader: Philetaerus
+        leader_age: 79
+        leader_died: -263
+        # Ages are at accession and approximate for Eumenes I (b. c. 300?) and Attalus III.
+        successors: [{name: "Eumenes I", age: 40, died: -241}, {name: "Attalus I Soter", age: 28, disposition: "aggressive", died: -197}, {name: "Eumenes II", age: 24, disposition: "scholarly", died: -159}, {name: "Attalus II Philadelphus", age: 61, died: -138}, {name: "Attalus III", age: 33, died: -133}]
+        pitch: "A fortress, a fortune and a founding dynasty. Build a great library, and more."
+        provinces:
+          per_pergamon: 200000
+        stockpiles: {food: 320, materials: 80, wealth: 100, knowledge: 110}
+        stats: {literacy_bp: 1000, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 4500, guilds: 3000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+      bithynia:
+        disposition: cautious
+        capital: bit_bithynia
+        leader: Nicomedes I
+        pitch: "Guard the gateway between Europe and Asia."
+        provinces:
+          bit_bithynia: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 70}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      pontus:
+        disposition: cautious
+        capital: pon_pontus
+        leader: Ariobarzanes
+        leader_age: 45
+        leader_died: -250
+        # Reign dates approximate (D-XXX): Ariobarzanes c. 266-250, Mithridates II c. 250-220,
+        # Mithridates III c. 220-185, Pharnaces I c. 185-170, Mithridates IV c. 170-150,
+        # Mithridates V c. 150-120 (murdered at Sinope), Mithridates VI 120-63 (a boy until he seized power c. 113-112).
+        successors: [{name: "Mithridates II", age: 25, died: -220}, {name: "Mithridates III", age: 30, died: -186}, {name: "Pharnaces I", age: 35, disposition: "aggressive", died: -170}, {name: "Mithridates IV Philopator", age: 30, died: -151}, {name: "Mithridates V Euergetes", age: 40, died: -120, ends: "is murdered at a banquet in Sinope"}, {name: "Mithridates VI Eupator", age: 14, disposition: "aggressive", until: -94}]
+        pitch: "Iron, timber and Persian royal blood on the Black Sea."
+        provinces:
+          pon_pontus: 300000
+        stockpiles: {food: 480, materials: 120, wealth: 150, knowledge: 70}
+        stats: {literacy_bp: 400, unrest_bp: 1000, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 5000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      ptolemaic:
+        navy_bp: 15000
+        disposition: scholarly
+        scripts:
+          - {id: "third_syrian_war", goal: "conquer", target: "seleucid", preconditions: {after_year: -248}, depends_on: ["second_syrian_war"], note: "Ptolemy III marches to Babylon to avenge his sister (246 BC)."}
+        capital: pto_delta
+        music: near_east
+        leader: Ptolemy II Philadelphus
+        leader_age: 45
+        leader_died: -247
+        successors: [{name: "Ptolemy III", age: 38, disposition: "aggressive", died: -222}, {name: "Ptolemy IV", age: 23, disposition: "cautious", died: -204}, {name: "Ptolemy V", age: 6, died: -180}]
+        pitch: "The Library of Alexandria, the grain of the Nile and the best scholars alive. What could they build ahead of time?"
+        provinces:
+          pto_delta: 1800000
+          pto_middle: 1000000
+          pto_thebaid: 1200000
+          pto_cyrenaica: 250000
+          pto_coele_syria: 800000
+          pto_cyprus: 200000
+        stockpiles: {food: 8400, materials: 2100, wealth: 2625, knowledge: 2110}
+        stats: {literacy_bp: 800, unrest_bp: 1000, legitimacy_bp: 6500}
+        influence: {clergy: 4500, nobility: 4000, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: widespread
+          roads: adopted
+          piston_bellows: adopted
+          canals: widespread
+          alchemy: concept
+          water_wheel: concept
+      seleucid:
+        disposition: aggressive
+        scripts:
+          - {id: "second_syrian_war", goal: "conquer", target: "ptolemaic", preconditions: {after_year: -262}, note: "Antiochus II fights Ptolemy II for Syria (260-253 BC)."}
+          - {id: "seleucids_vs_pergamon", goal: "conquer", target: "pergamon", preconditions: {after_year: -240}, note: "Attalus I defeats the Seleucids and Galatians (c. 230 BC)."}
+        capital: sel_syria
+        music: near_east
+        leader: Antiochus I Soter
+        leader_age: 60
+        leader_died: -261
+        successors: [{name: "Antiochus II", age: 25, disposition: "aggressive", died: -247}, {name: "Seleucus II", age: 20, died: -225, ends: "is killed in a fall from his horse"}, {name: "Seleucus III", age: 20, died: -223, ends: "is murdered by his own officers"}, {name: "Antiochus III", age: 18, disposition: "aggressive", until: -186}, {name: "Seleucus IV", age: 30, died: -175, ends: "is murdered by his minister Heliodorus"}]
+        pitch: "The biggest empire in the west, stretched thin from Sardis to Persia. Hold it together."
+        provinces:
+          sel_syria: 1200000
+          sel_upper_mesopotamia: 600000
+          sel_babylonia: 2000000
+          sel_cilicia: 300000
+          sel_asia: 1000000
+          sel_media: 700000
+          sel_susiana: 400000
+          sel_persis: 500000
+        stockpiles: {food: 10720, materials: 2680, wealth: 3350, knowledge: 2020}
+        stats: {literacy_bp: 600, unrest_bp: 1100, legitimacy_bp: 6000}
+        influence: {clergy: 3000, nobility: 5500, guilds: 1500}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+          canals: adopted
+          postal_relay: adopted
+      massalia:
+        navy_bp: 20000
+        disposition: mercantile
+        capital: mas_massalia
+        # Massalia was ruled by the Six Hundred (timouchoi), who served for life (Strabo 4.1.5).
+        leader: The Six Hundred of Massalia
+        leader_age: 45
+        leader_until: -90
+        pitch: "A small Greek city on the edge of the Celtic world: trade your way to greatness."
+        provinces:
+          mas_massalia: 100000
+        stockpiles: {food: 160, materials: 40, wealth: 50, knowledge: 70}
+        stats: {literacy_bp: 1200, unrest_bp: 900, legitimacy_bp: 6000}
+        influence: {clergy: 2500, nobility: 3500, guilds: 4000}
+        techs:
+          republic: adopted
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: adopted
+          schools: adopted
+          roads: adopted
+          piston_bellows: adopted
+      kush:
+        disposition: pious
+        capital: kus_meroe
+        # Kings of Kush, dates approximate (D-XXX): Arkamani I (Ergamenes), Amanislo, Arnekhamani, Arqamani II, Adikhalamani.
+        leader: Arkamani I (Ergamenes)
+        leader_age: 45
+        leader_died: -258
+        successors: [{name: "Amanislo", age: 35, died: -236}, {name: "Arnekhamani", age: 35, died: -218}, {name: "Arqamani II", age: 30, died: -206}, {name: "Adikhalamani", age: 30, died: -186}]
+        music: near_east
+        pitch: "Iron, gold and your own script on the upper Nile, far from the Greek quarrels."
+        provinces:
+          kus_meroe: 400000
+        stockpiles: {food: 640, materials: 160, wealth: 200, knowledge: 50}
+        stats: {literacy_bp: 200, unrest_bp: 900, legitimacy_bp: 6500}
+        influence: {clergy: 5000, nobility: 4000, guilds: 1000}
+        techs:
+          agriculture: widespread
+          ox_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          horse_riding: widespread
+          chariot: adopted
+          masonry: widespread
+          fortification: adopted
+          sailing: adopted
+          irrigation: adopted
+          writing: adopted
+          astronomy_calendar: adopted
+    unowned:
+      it_taurini: 44000
+      it_salassi: 28000
+      sa_barbagia: 72000
+      si_halaesa: 36000
+      si_gela: 28000
+      southern_gaul: 300000
+      central_gaul: 700000
+      belgic_gaul: 450000
+      britain: 600000
+      germania: 500000
+      east_iberia: 300000
+      lusitania: 250000
+      mauretania: 300000
+      garamantes: 100000
+      dacia: 300000
+      thrace: 500000
+      scythia: 300000
+      bosporus: 150000
+      colchis: 100000
+      armenia: 300000
+      galatia: 150000
+      cappadocia: 300000
+      nabataea: 100000
+      arabia: 200000
+    relations:
+      - {a: "carthage", b: "syracuse", status: "allied", note: "Carthage and Hiero have joined against the Mamertines. Polybius 1.11.7-9."}
+      - {a: "carthage", b: "e2_mamertines", status: "allied", note: "A Carthaginian garrison holds the citadel of Messana. Polybius 1.11.4."}
+      - {a: "syracuse", b: "e2_mamertines", status: "war", grievance_bp: 5000, note: "Hiero beat the Mamertines at the Longanus and means to expel them. Polybius 1.9, 1.11.7."}
+      - {a: "rome", b: "massalia", status: "allied", note: "Massalia is Rome's old friend in the west (Justin 43.5, unverified)."}
+      - {a: "rome", b: "e2_samnites", status: "allied", note: "Treaty allies (socii) of Rome. Polybius 2.24.10 counts their levy."}
+      - {a: "rome", b: "e2_central_italics", status: "allied", note: "Treaty allies of Rome. Polybius 2.24.12."}
+      - {a: "rome", b: "e2_etruscans", status: "allied", note: "Etruscan cities bound to Rome by separate treaties. Polybius 2.24.5."}
+      - {a: "rome", b: "e2_umbrians", status: "allied", note: "Umbrians allied to Rome. Polybius 2.24.7."}
+      - {a: "rome", b: "e2_southern_italics", status: "allied", note: "Lucanians, Apulians and Messapians in Rome's alliance. Polybius 2.24.11-12."}
+      - {a: "rome", b: "e2_italiote_greeks", status: "allied", note: "Naples, Tarentum and Rhegium as allies. Polybius 2.24.13 (Tarentum garrisoned)."}
+      - {a: "rome", b: "e2_boii", status: "neutral", note: "Peace since the treaty after Vadimon, about forty-five years. Polybius 2.20.5-21.1."}
+      - {a: "rome", b: "e2_insubres", status: "neutral", note: "Peace with the Gauls of the plain. Polybius 2.21.1."}
+      - {a: "seleucid", b: "ptolemaic", status: "hostile", grievance_bp: 4000, note: "The First Syrian War (274-271 BC) settled nothing."}
+      - {a: "macedon", b: "athens", status: "war", grievance_bp: 3500, note: "The Chremonidean War: Athens and Sparta rose against Macedon (267 BC)."}
+      - {a: "macedon", b: "sparta", status: "war", grievance_bp: 3000, note: "Sparta fights in the Chremonidean War."}
+      - {a: "ptolemaic", b: "athens", status: "allied", note: "Ptolemy II backs Athens against Macedon."}
+      - {a: "rhodes", b: "ptolemaic", status: "trading", note: "Rhodes grows rich on Egyptian grain."}
+      - {a: "carthage", b: "numidia", status: "tributary", note: "Numidian princes serve Carthage."}
+      - {a: "rome", b: "carthage", status: "trading", note: "Old treaties have kept the peace between Rome and Carthage. Polybius 3.22-26."}
+      - {a: "pergamon", b: "seleucid", status: "hostile", grievance_bp: 2000, note: "Pergamon has broken away from the Seleucids."}
+    faiths:
+      - {id: olympians, name: "The Olympian gods", followers: [macedon, athens, achaea, aetolia, sparta, epirus, syracuse, rhodes, massalia, pergamon, bithynia, pontus, seleucid, ptolemaic, e2_italiote_greeks], spreads: true, note: "Greek gods, carried by Alexander's heirs from Egypt to Bactria."}
+      - {id: roman_gods, name: "The gods of Rome", followers: [rome], spreads: false, note: "Jupiter, Juno and Minerva on the Capitol - soon to meet their Greek cousins."}
+      - {id: italic_gods, name: "The gods of the Italic and Etruscan peoples", followers: [e2_samnites, e2_central_italics, e2_etruscans, e2_umbrians, e2_southern_italics, e2_mamertines], spreads: false, note: "Local cults of Italy beside Rome's own."}
+      - {id: punic_gods, name: "The gods of Carthage", followers: [carthage, numidia], spreads: false, note: "Baal Hammon and Tanit."}
+      - {id: celtic_gods, name: "The Celtic gods and druids", followers: [e2_boii, e2_insubres, e2_cenomani, e2_ligurians, e2_celtiberians], spreads: false}
+      - {id: kushite_gods, name: "Amun of Napata", followers: [kush], spreads: false}
