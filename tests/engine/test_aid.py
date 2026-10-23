@@ -18,7 +18,7 @@ from anachronism.engine.save import dumps, loads
 from anachronism.engine.state import Army, GameState
 from anachronism.tools.view import build_view
 
-ME, FRIEND, FOE = "qin", "han", "wei"
+ME, FRIEND, FOE = "rome", "cisalpine_gauls", "carthage"
 
 
 def log(state: GameState) -> EventLog:
@@ -27,8 +27,8 @@ def log(state: GameState) -> EventLog:
 
 @pytest.fixture
 def attacked(content: Content) -> GameState:
-    """Wei has attacked Han; Qin (the player) is neutral to both."""
-    state = new_game(content, "warring_states", seed=1, player_civ=ME)
+    """Carthage has attacked the Gauls; Rome (the player) is neutral to both."""
+    state = new_game(content, "punic_wars", seed=1, player_civ=ME)
     set_status(state, ME, FRIEND, RelationStatus.NEUTRAL)
     set_status(state, ME, FOE, RelationStatus.NEUTRAL)
     declare_war(state, FOE, FRIEND, log(state))
@@ -48,7 +48,7 @@ def test_coming_to_aid_joins_the_war_and_opens_the_road(attacked: GameState) -> 
 
 
 def test_aid_needs_a_friend_at_war(attacked: GameState) -> None:
-    _, logged = apply_action(attacked, ComeToAid(civ=ME, target=FRIEND, against="chu"))
+    _, logged = apply_action(attacked, ComeToAid(civ=ME, target=FRIEND, against="pergamon"))
     assert not logged.ok
     _, logged = apply_action(attacked, ComeToAid(civ=ME, target=FOE, against=FOE))
     assert not logged.ok
@@ -109,7 +109,7 @@ def test_a_real_battle_earns_gratitude(attacked: GameState) -> None:
 def test_a_friends_city_retaken_goes_back_to_it(attacked: GameState) -> None:
     state, _ = apply_action(attacked, ComeToAid(civ=ME, target=FRIEND, against=FOE))
     city = next(p for p in state.owned_provinces(FRIEND) if p != state.civs[FRIEND].capital)
-    state.provinces[city].owner = FOE  # Wei took it from Han
+    state.provinces[city].owner = FOE  # Carthage took it from the Gauls
     assert state.provinces[city].people == FRIEND
     army = Army(id="m", owner=ME, name="Relief", province=city, troops={"spearmen": 80_000})
     army.siege_bp = 10**6
@@ -125,17 +125,17 @@ def test_a_friends_city_retaken_goes_back_to_it(attacked: GameState) -> None:
 
 def test_a_separate_peace_is_a_betrayal(attacked: GameState) -> None:
     state, _ = apply_action(attacked, ComeToAid(civ=ME, target=FRIEND, against=FOE))
-    rel = state.relations["han|qin"]
+    rel = state.relations["cisalpine_gauls|rome"]
     before = rel.grievance.get(FRIEND, 0)
-    rel_war = state.relations["qin|wei"]
-    rel_war.weariness[FOE] = 10**6  # Wei is glad of any peace
+    rel_war = state.relations["carthage|rome"]
+    rel_war.weariness[FOE] = 10**6  # Carthage is glad of any peace
     state, logged = apply_action(state, MakePeace(civ=ME, target=FOE))
     assert logged.ok
     events = log(state)
     aid_turn(state, events)
     assert key(ME, FRIEND, FOE) not in state.pledges
     assert any(e.kind == "aid_abandoned" for e in events.items)
-    assert state.relations["han|qin"].grievance.get(FRIEND, 0) > before
+    assert state.relations["cisalpine_gauls|rome"].grievance.get(FRIEND, 0) > before
 
 
 def test_the_pledge_ends_with_the_friends_war(attacked: GameState) -> None:
@@ -148,18 +148,18 @@ def test_the_pledge_ends_with_the_friends_war(attacked: GameState) -> None:
 
 def test_view_and_saves(attacked: GameState) -> None:
     view = build_view(attacked)
-    han = next(c for c in view["civs"] if c["id"] == FRIEND)
-    assert [f["id"] for f in han["attacked_by"]] == [FOE]
-    assert han["aid"] == []
+    friend = next(c for c in view["civs"] if c["id"] == FRIEND)
+    assert [f["id"] for f in friend["attacked_by"]] == [FOE]
+    assert friend["aid"] == []
     state, _ = apply_action(attacked, ComeToAid(civ=ME, target=FRIEND, against=FOE))
-    han = next(c for c in build_view(state)["civs"] if c["id"] == FRIEND)
-    assert han["aid"][0]["against"] == FOE
-    assert han["gratitude_bp"] > 0
+    friend = next(c for c in build_view(state)["civs"] if c["id"] == FRIEND)
+    assert friend["aid"][0]["against"] == FOE
+    assert friend["gratitude_bp"] > 0
     assert loads(dumps(state)).pledges == state.pledges
 
 
 def test_the_player_hears_a_neighbour_is_attacked(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=1, player_civ=ME)
+    state = new_game(content, "punic_wars", seed=1, player_civ=ME)
     set_status(state, ME, FRIEND, RelationStatus.NEUTRAL)
     events = log(state)
     declare_war(state, FOE, FRIEND, events)

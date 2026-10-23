@@ -25,7 +25,7 @@ from anachronism.engine.state import Army, GameState
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    return new_game(content, "warring_states", seed=1, player_civ="qin")
+    return new_game(content, "punic_wars", seed=1, player_civ="rome")
 
 
 def log(state: GameState) -> EventLog:
@@ -41,36 +41,36 @@ def test_every_state_starts_with_an_army_at_its_capital(warring: GameState) -> N
 
 
 def test_soldiers_need_their_advancements_and_resources(warring: GameState) -> None:
-    kinds = {u.id for u in available_units(warring, "qin")}
+    kinds = {u.id for u in available_units(warring, "rome")}
     assert "levy" in kinds
     assert "musketeers" not in kinds  # nobody has muskets in 350 BC
-    for pid in warring.owned_provinces("qin"):
+    for pid in warring.owned_provinces("rome"):
         warring.provinces[pid].resources.pop("horses", None)
-    assert "cavalry" not in {u.id for u in available_units(warring, "qin")}
+    assert "cavalry" not in {u.id for u in available_units(warring, "rome")}
 
 
 def test_raising_takes_men_and_stores(warring: GameState) -> None:
-    capital = warring.civs["qin"].capital
+    capital = warring.civs["rome"].capital
     people = warring.provinces[capital].population
-    wealth = warring.civs["qin"].stockpiles.wealth
-    state, logged = apply_action(warring, RaiseArmy(civ="qin", province=capital, size="small"))
+    wealth = warring.civs["rome"].stockpiles.wealth
+    state, logged = apply_action(warring, RaiseArmy(civ="rome", province=capital, size="small"))
     assert logged.ok
     assert state.provinces[capital].population < people
-    assert state.civs["qin"].stockpiles.wealth <= wealth
+    assert state.civs["rome"].stockpiles.wealth <= wealth
     # men raised where an army stands join it rather than form a new one
-    assert len([a for a in state.armies.values() if a.owner == "qin"]) == 1
+    assert len([a for a in state.armies.values() if a.owner == "rome"]) == 1
 
 
 def test_armies_may_not_march_into_neutral_land(warring: GameState) -> None:
     from anachronism.engine.rivals import frontier
 
-    army = next(a for a in warring.armies.values() if a.owner == "qin")
-    target = frontier(warring, "qin", "wei")[0]
-    _, logged = apply_action(warring, MarchArmy(civ="qin", army=army.id, target=target))
+    army = next(a for a in warring.armies.values() if a.owner == "rome")
+    target = frontier(warring, "rome", "carthage")[0]
+    _, logged = apply_action(warring, MarchArmy(civ="rome", army=army.id, target=target))
     assert not logged.ok
-    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
-    assert route(state, "qin", army.province, target)
-    state, logged = apply_action(state, MarchArmy(civ="qin", army=army.id, target=target))
+    state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
+    assert route(state, "rome", army.province, target)
+    state, logged = apply_action(state, MarchArmy(civ="rome", army=army.id, target=target))
     assert logged.ok
 
 
@@ -86,28 +86,28 @@ def test_spears_stop_horse_and_chariots_founder_in_the_hills(content: Content) -
 
 
 def test_the_stronger_side_wins_and_the_loser_falls_back(warring: GameState) -> None:
-    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
-    field = state.civs["wei"].capital
-    behind = state.civs["qin"].capital
+    state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
+    field = state.civs["carthage"].capital
+    behind = state.civs["rome"].capital
     big = Army(
-        id="q", owner="qin", name="Big", province=field, came_from=behind, troops={"levy": 50_000}
+        id="q", owner="rome", name="Big", province=field, came_from=behind, troops={"levy": 50_000}
     )
-    small = Army(id="w", owner="wei", name="Small", province=field, troops={"levy": 2_000})
+    small = Army(id="w", owner="carthage", name="Small", province=field, troops={"levy": 2_000})
     state.armies = {"q": big, "w": small}
     winner = battle(state, field, [big], [small], GameRng(state.rng), log(state))
-    assert winner == "qin"
+    assert winner == "rome"
     assert big.men < 50_000  # nobody wins for free
     assert "w" not in state.armies or state.armies["w"].province != field
 
 
 def test_a_beaten_attacker_falls_back_the_way_it_came(warring: GameState) -> None:
-    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
-    field = state.civs["wei"].capital
-    behind = state.civs["qin"].capital
+    state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
+    field = state.civs["carthage"].capital
+    behind = state.civs["rome"].capital
     weak = Army(
-        id="q", owner="qin", name="Weak", province=field, came_from=behind, troops={"levy": 1_000}
+        id="q", owner="rome", name="Weak", province=field, came_from=behind, troops={"levy": 1_000}
     )
-    strong = Army(id="w", owner="wei", name="Strong", province=field, troops={"spearmen": 60_000})
+    strong = Army(id="w", owner="carthage", name="Strong", province=field, troops={"spearmen": 60_000})
     state.armies = {"q": weak, "w": strong}
     battle(state, field, [weak], [strong], GameRng(state.rng), log(state))
     if "q" in state.armies:
@@ -115,12 +115,12 @@ def test_a_beaten_attacker_falls_back_the_way_it_came(warring: GameState) -> Non
 
 
 def test_a_siege_takes_the_province_in_time(warring: GameState) -> None:
-    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
-    target = next(p for p in state.owned_provinces("wei") if p != state.civs["wei"].capital)
+    state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
+    target = next(p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital)
     state.armies = {
         "q": Army(
             id="q",
-            owner="qin",
+            owner="rome",
             name="Siege",
             province=target,
             troops={"levy": 80_000, "siege_engines": 5_000},
@@ -129,23 +129,23 @@ def test_a_siege_takes_the_province_in_time(warring: GameState) -> None:
     assert siege_progress(state, state.armies["q"]) > 0
     for _ in range(10):
         sieges(state, log(state))
-        if state.provinces[target].owner == "qin":
+        if state.provinces[target].owner == "rome":
             break
-    assert state.provinces[target].owner == "qin"
+    assert state.provinces[target].owner == "rome"
 
 
 def test_disbanding_sends_the_men_home(warring: GameState) -> None:
-    army = next(a for a in warring.armies.values() if a.owner == "qin")
+    army = next(a for a in warring.armies.values() if a.owner == "rome")
     people = warring.provinces[army.province].population
-    state, logged = apply_action(warring, DisbandArmy(civ="qin", army=army.id))
+    state, logged = apply_action(warring, DisbandArmy(civ="rome", army=army.id))
     assert logged.ok
     assert state.provinces[army.province].population == people + army.men
     assert army.id not in state.armies
 
 
 def test_holding_and_defending(warring: GameState) -> None:
-    army = next(a for a in warring.armies.values() if a.owner == "qin")
-    state, logged = apply_action(warring, ArmyStance(civ="qin", army=army.id, stance="hold"))
+    army = next(a for a in warring.armies.values() if a.owner == "rome")
+    state, logged = apply_action(warring, ArmyStance(civ="rome", army=army.id, stance="hold"))
     assert logged.ok
     assert state.armies[army.id].stance == "hold"
 
@@ -153,30 +153,30 @@ def test_holding_and_defending(warring: GameState) -> None:
 def test_wars_of_armies_replay_identically(warring: GameState) -> None:
     from anachronism.engine.save import dumps
 
-    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
-    capital = state.civs["qin"].capital
+    state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
+    capital = state.civs["rome"].capital
     state, _ = apply_action(
-        state, RaiseArmy(civ="qin", province=capital, size="large", style="mounted")
+        state, RaiseArmy(civ="rome", province=capital, size="large", style="mounted")
     )
     a, b = state, state.model_copy(deep=True)
     for _ in range(4):
         a, _ = end_turn(a)
         b, _ = end_turn(b)
     assert dumps(a) == dumps(b)
-    assert status(a, "qin", "wei") in (RelationStatus.WAR, RelationStatus.HOSTILE)
+    assert status(a, "rome", "carthage") in (RelationStatus.WAR, RelationStatus.HOSTILE)
     for army in a.armies.values():
         assert army.men > 0
         assert army.province in a.provinces
 
 
 def test_raise_army_respects_the_cap(warring: GameState) -> None:
-    capital = warring.civs["qin"].capital
-    army, _ = raise_army(warring, "qin", capital, 10**9, free=True)
+    capital = warring.civs["rome"].capital
+    army, _ = raise_army(warring, "rome", capital, 10**9, free=True)
     assert army is not None
-    total = sum(a.men for a in warring.armies.values() if a.owner == "qin")
+    total = sum(a.men for a in warring.armies.values() if a.owner == "rome")
     from anachronism.engine.armies import mobilisation_cap
 
-    assert total <= mobilisation_cap(warring, "qin") + 1
+    assert total <= mobilisation_cap(warring, "rome") + 1
 
 
 def test_new_armies_take_the_next_general(content: Content) -> None:
@@ -202,10 +202,10 @@ def test_new_armies_take_the_next_general(content: Content) -> None:
 def test_a_horse_master_makes_cavalry_fight_harder(warring: GameState) -> None:
     from anachronism.engine.armies import side_power
 
-    field = warring.civs["qin"].capital
-    plain = Army(id="a", owner="qin", name="A", province=field, troops={"cavalry": 10_000})
+    field = warring.civs["rome"].capital
+    plain = Army(id="a", owner="rome", name="A", province=field, troops={"cavalry": 10_000})
     gifted = plain.model_copy(update={"id": "b", "trait": "horse"})
-    foe = [Army(id="c", owner="wei", name="C", province=field, troops={"levy": 10_000})]
+    foe = [Army(id="c", owner="carthage", name="C", province=field, troops={"levy": 10_000})]
     assert (
         side_power(warring, [gifted], foe, True, field)[0]
         > side_power(warring, [plain], foe, True, field)[0]
@@ -215,88 +215,88 @@ def test_a_horse_master_makes_cavalry_fight_harder(warring: GameState) -> None:
 def test_mercenaries_serve_their_contract_then_leave(warring: GameState) -> None:
     from anachronism.engine.actions import HireMercenaries
 
-    warring.civs["qin"].stockpiles.wealth = 100_000
-    people = warring.population("qin")
-    state, logged = apply_action(warring, HireMercenaries(civ="qin"))
+    warring.civs["rome"].stockpiles.wealth = 100_000
+    people = warring.population("rome")
+    state, logged = apply_action(warring, HireMercenaries(civ="rome"))
     assert logged.ok
-    company = [a for a in state.armies.values() if a.owner == "qin" and a.contract]
+    company = [a for a in state.armies.values() if a.owner == "rome" and a.contract]
     assert len(company) == 1
-    assert state.population("qin") == people  # not our own men
+    assert state.population("rome") == people  # not our own men
     for _ in range(state.world.rules.rivals.mercenary_turns):
         state, _ = end_turn(state)
-    assert not [a for a in state.armies.values() if a.owner == "qin" and a.contract]
+    assert not [a for a in state.armies.values() if a.owner == "rome" and a.contract]
 
 
 def test_a_losing_enemy_cedes_the_land_we_hold(warring: GameState) -> None:
     from anachronism.engine.actions import MakePeace
     from anachronism.engine.rivals import frontier, relation
 
-    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
-    held = frontier(state, "qin", "wei")[0]
-    state.armies["q"] = Army(id="q", owner="qin", name="Q", province=held, troops={"levy": 5000})
-    rel = relation(state, "qin", "wei")
+    state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
+    held = frontier(state, "rome", "carthage")[0]
+    state.armies["q"] = Army(id="q", owner="rome", name="Q", province=held, troops={"levy": 5000})
+    rel = relation(state, "rome", "carthage")
     assert rel is not None
-    _, logged = apply_action(state, MakePeace(civ="qin", target="wei", terms="cede"))
+    _, logged = apply_action(state, MakePeace(civ="rome", target="carthage", terms="cede"))
     assert not logged.ok  # they have lost nothing yet
-    rel.losses["wei"] = 3
-    rel.weariness["wei"] = 9000
-    state, logged = apply_action(state, MakePeace(civ="qin", target="wei", terms="cede"))
+    rel.losses["carthage"] = 3
+    rel.weariness["carthage"] = 9000
+    state, logged = apply_action(state, MakePeace(civ="rome", target="carthage", terms="cede"))
     assert logged.ok
-    assert state.provinces[held].owner == "qin"
-    assert status(state, "qin", "wei") is not RelationStatus.WAR
+    assert state.provinces[held].owner == "rome"
+    assert status(state, "rome", "carthage") is not RelationStatus.WAR
 
 
 def test_walls_make_a_province_harder_to_take(warring: GameState) -> None:
     from anachronism.engine.actions import Fortify
     from anachronism.engine.war import defence_bp
 
-    province = warring.civs["qin"].capital
-    before = defence_bp(warring, "qin", province)
-    warring.civs["qin"].stockpiles.materials = 100_000
-    warring.civs["qin"].stockpiles.wealth = 100_000
-    state, logged = apply_action(warring, Fortify(civ="qin", province=province))
+    province = warring.civs["rome"].capital
+    before = defence_bp(warring, "rome", province)
+    warring.civs["rome"].stockpiles.materials = 100_000
+    warring.civs["rome"].stockpiles.wealth = 100_000
+    state, logged = apply_action(warring, Fortify(civ="rome", province=province))
     assert logged.ok, logged.message
     assert state.provinces[province].walls == 1
-    assert defence_bp(state, "qin", province) > before
-    enemy = state.civs["wei"].capital
-    _, logged = apply_action(state, Fortify(civ="qin", province=enemy))
+    assert defence_bp(state, "rome", province) > before
+    enemy = state.civs["carthage"].capital
+    _, logged = apply_action(state, Fortify(civ="rome", province=enemy))
     assert not logged.ok
 
 
 def test_pillage_ravages_loots_and_feeds_the_army(warring: GameState) -> None:
-    state, _ = apply_action(warring, DeclareWar(civ="qin", target="wei"))
-    target = next(p for p in state.owned_provinces("wei") if p != state.civs["wei"].capital)
+    state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
+    target = next(p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital)
     state.armies = {
         "q": Army(
             id="q",
-            owner="qin",
+            owner="rome",
             name="Raiders",
             province=target,
             troops={"cavalry": 20_000},
             stance="pillage",
         )
     }
-    state.civs["wei"].stockpiles.wealth = 50_000
+    state.civs["carthage"].stockpiles.wealth = 50_000
     people = state.provinces[target].population
-    qin_wealth = state.civs["qin"].stockpiles.wealth
+    qin_wealth = state.civs["rome"].stockpiles.wealth
     events = log(state)
     sieges(state, events)
     assert state.provinces[target].population < people
-    assert state.provinces[target].owner == "wei"  # ravaged, not taken
+    assert state.provinces[target].owner == "carthage"  # ravaged, not taken
     assert state.provinces[target].ravaged > 0
-    assert state.civs["qin"].stockpiles.wealth > qin_wealth
+    assert state.civs["rome"].stockpiles.wealth > qin_wealth
     assert any(e.kind == "pillaged" for e in events.items)
 
 
 def test_levies_breed_unrest(warring: GameState) -> None:
-    capital = warring.civs["qin"].capital
-    unrest = warring.civs["qin"].stats.unrest_bp
-    warring.civs["qin"].stockpiles.wealth = 100_000
-    warring.civs["qin"].stockpiles.food = 100_000
-    warring.civs["qin"].stockpiles.materials = 100_000
-    state, logged = apply_action(warring, RaiseArmy(civ="qin", province=capital, size="large"))
+    capital = warring.civs["rome"].capital
+    unrest = warring.civs["rome"].stats.unrest_bp
+    warring.civs["rome"].stockpiles.wealth = 100_000
+    warring.civs["rome"].stockpiles.food = 100_000
+    warring.civs["rome"].stockpiles.materials = 100_000
+    state, logged = apply_action(warring, RaiseArmy(civ="rome", province=capital, size="large"))
     assert logged.ok
-    assert state.civs["qin"].stats.unrest_bp > unrest
+    assert state.civs["rome"].stats.unrest_bp > unrest
 
 
 def test_battles_are_told_to_fit(warring: GameState) -> None:

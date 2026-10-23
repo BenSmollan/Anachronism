@@ -24,26 +24,26 @@ def effects(**values: int) -> Effects:
 
 
 def test_happenings_strike_only_where_they_fit(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=1, player_civ="qin")
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
     flood = state.world.happenings["flood"]
-    for pid in _places(state, state.civs["qin"], flood):
+    for pid in _places(state, state.civs["rome"], flood):
         assert state.world.geography[pid].river
 
 
 def test_health_softens_plague(content: Content) -> None:
     def deaths(health: int) -> int:
-        state = new_game(content, "warring_states", seed=1, player_civ="qin")
-        capital = state.civs["qin"].capital
+        state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+        capital = state.civs["rome"].capital
         before = state.provinces[capital].population
-        _apply(state, state.civs["qin"], PLAGUE, capital, effects(health=health), EventLog(0, 0))
+        _apply(state, state.civs["rome"], PLAGUE, capital, effects(health=health), EventLog(0, 0))
         return before - state.provinces[capital].population
 
     assert 0 < deaths(2000) < deaths(0)
 
 
 def test_events_happen_in_long_games_and_replay(content: Content) -> None:
-    a: GameState = new_game(content, "warring_states", seed=6)
-    b: GameState = new_game(content, "warring_states", seed=6)
+    a: GameState = new_game(content, "punic_wars", seed=6)
+    b: GameState = new_game(content, "punic_wars", seed=6)
     kinds: set[str] = set()
     for _ in range(15):
         a, events = end_turn(a)
@@ -60,18 +60,18 @@ def test_consequences_follow_their_advancement(content: Content) -> None:
     from anachronism.engine.state import TechState
 
     pamphlets = content.happenings["pamphlet_wars"]
-    state = new_game(content, "warring_states", seed=1, player_civ="qin")
-    qin = state.civs["qin"]
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    rome = state.civs["rome"]
     only = {"pamphlet_wars": pamphlets.model_copy(update={"chance_bp": 10_000})}
     state.world = state.world.model_copy(update={"happenings": only})
     log = EventLog(0, 0)
-    strike(state, qin, effects(), GameRng.from_seed(1), log)
+    strike(state, rome, effects(), GameRng.from_seed(1), log)
     assert not log.items  # no printing press, no pamphlets
-    qin.tech["printing_press"] = TechState(stage=Stage.ADOPTED)
-    clergy = qin.influence[SocialGroup.CLERGY]
-    strike(state, qin, effects(), GameRng.from_seed(1), log)
+    rome.tech["printing_press"] = TechState(stage=Stage.ADOPTED)
+    clergy = rome.influence[SocialGroup.CLERGY]
+    strike(state, rome, effects(), GameRng.from_seed(1), log)
     assert [e.kind for e in log.items] == ["consequence"]
-    assert qin.influence[SocialGroup.CLERGY] == max(0, clergy - 800)
+    assert rome.influence[SocialGroup.CLERGY] == max(0, clergy - 800)
 
 
 def test_a_consequence_must_name_its_cause() -> None:

@@ -21,13 +21,13 @@ MIXED = {"levy": 5000, "spearmen": 3000, "archers": 2000}
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    state = new_game(content, "warring_states", seed=1, player_civ="qin")
-    state, _ = apply_action(state, DeclareWar(civ="qin", target="wei"))
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state, _ = apply_action(state, DeclareWar(civ="rome", target="carthage"))
     return state
 
 
 def field(state: GameState) -> str:
-    return state.civs["wei"].capital
+    return state.civs["carthage"].capital
 
 
 def pair(
@@ -40,16 +40,16 @@ def pair(
     place = field(state)
     a = Army(
         id="q",
-        owner="qin",
+        owner="rome",
         name="Attackers",
         province=place,
-        came_from=state.civs["qin"].capital,
+        came_from=state.civs["rome"].capital,
         troops=dict(troops_a or MIXED),
         plan="line",
     )
     d = Army(
         id="w",
-        owner="wei",
+        owner="carthage",
         name="Defenders",
         province=place,
         troops=dict(troops_d or MIXED),
@@ -111,15 +111,15 @@ def test_a_general_answers_what_he_expects(warring: GameState) -> None:
 
 
 def test_the_formation_order(warring: GameState) -> None:
-    mine = next(a for a in warring.armies.values() if a.owner == "qin")
+    mine = next(a for a in warring.armies.values() if a.owner == "rome")
     state, logged = apply_action(
-        warring, ArmyFormation(civ="qin", army=mine.id, formation="wide_line")
+        warring, ArmyFormation(civ="rome", army=mine.id, formation="wide_line")
     )
     assert logged.ok
     assert state.armies[mine.id].formation == "wide_line"
-    _, logged = apply_action(state, ArmyFormation(civ="qin", army=mine.id, formation="phalanx9"))
+    _, logged = apply_action(state, ArmyFormation(civ="rome", army=mine.id, formation="phalanx9"))
     assert not logged.ok
-    state, logged = apply_action(state, ArmyFormation(civ="qin", army=mine.id, formation="auto"))
+    state, logged = apply_action(state, ArmyFormation(civ="rome", army=mine.id, formation="auto"))
     assert logged.ok
     assert state.armies[mine.id].formation == "auto"
 
@@ -131,7 +131,7 @@ def wins(state: GameState, form_a: str, form_d: str, seeds: int = 12) -> int:
         a, d = pair(trial)
         a.formation, d.formation = form_a, form_d
         winner, _ = fight(trial, a, d, seed)
-        won += winner == "qin"
+        won += winner == "rome"
     return won
 
 
@@ -186,7 +186,7 @@ def test_a_shaken_side_breaks_in_the_skirmish(warring: GameState) -> None:
     a, d = pair(warring, {"levy": 10_000}, {"archers": 10_000})
     a.morale_bp = 2000
     winner, events = fight(warring, a, d)
-    assert winner == "wei"
+    assert winner == "carthage"
     names = [p["name"] for p in events[0].phases]
     assert names == ["Skirmish", "Pursuit"]  # a short battle: no clash
     assert "breaks" in events[0].phases[-1]["text"]
@@ -197,7 +197,7 @@ def test_a_line_that_gives_way_in_the_clash_breaks(warring: GameState) -> None:
     a, d = pair(warring, {"levy": 30_000}, {"levy": 6000})
     d.morale_bp = 4000
     winner, events = fight(warring, a, d)
-    assert winner == "qin"
+    assert winner == "rome"
     pursuit = events[0].phases[-1]
     assert pursuit["name"] == "Pursuit"
     assert "breaks" in pursuit["text"]
@@ -235,10 +235,10 @@ def test_a_cautious_army_withdraws_from_a_hopeless_battle(warring: GameState) ->
     a.engage = "cautious"
     morale = a.morale_bp
     winner, events = fight(warring, a, d)
-    assert winner == "wei"
+    assert winner == "carthage"
     assert [e.kind for e in events] == ["withdrawal", "withdrawal"]
     assert not any(e.kind == "battle_lost" for e in events)
-    assert a.province == warring.civs["qin"].capital  # fell back the way it came
+    assert a.province == warring.civs["rome"].capital  # fell back the way it came
     assert a.morale_bp == morale  # keeps its nerve
     assert 1900 <= a.men < 2000  # a small rear-guard loss
     assert d.men == 30_000
@@ -283,8 +283,8 @@ def test_the_last_man_loses_far_more_if_beaten(warring: GameState) -> None:
 
 
 def test_the_engagement_order(warring: GameState) -> None:
-    mine = next(a for a in warring.armies.values() if a.owner == "qin")
-    state, logged = apply_action(warring, ArmyEngage(civ="qin", army=mine.id, engage="cautious"))
+    mine = next(a for a in warring.armies.values() if a.owner == "rome")
+    state, logged = apply_action(warring, ArmyEngage(civ="rome", army=mine.id, engage="cautious"))
     assert logged.ok
     assert state.armies[mine.id].engage == "cautious"
 
@@ -293,7 +293,7 @@ def test_the_engagement_order(warring: GameState) -> None:
 
 
 def test_a_still_army_digs_in_and_loses_it_on_the_march(warring: GameState) -> None:
-    mine = next(a for a in warring.armies.values() if a.owner == "qin")
+    mine = next(a for a in warring.armies.values() if a.owner == "rome")
     mine.stance = "hold"
     mine.raised_turn = -1
     assert not mine.dug_in
@@ -321,18 +321,18 @@ def test_a_fortified_camp_strengthens_the_defence(warring: GameState) -> None:
 
 
 def test_a_forced_march_goes_further_at_a_cost(warring: GameState) -> None:
-    mine = next(a for a in warring.armies.values() if a.owner == "qin")
+    mine = next(a for a in warring.armies.values() if a.owner == "rome")
     base = mobility(warring, mine)
-    mine.target, mine.forced = warring.civs["qin"].capital, True
+    mine.target, mine.forced = warring.civs["rome"].capital, True
     assert mobility(warring, mine) == base + 1
     mine.target = None
     far = next(
         p
         for p in sorted(warring.provinces)
-        if p != mine.province and warring.provinces[p].owner == "qin"
+        if p != mine.province and warring.provinces[p].owner == "rome"
     )
     state, logged = apply_action(
-        warring, MarchArmy(civ="qin", army=mine.id, target=far, forced=True)
+        warring, MarchArmy(civ="rome", army=mine.id, target=far, forced=True)
     )
     assert logged.ok
     assert "forced" in logged.message
@@ -350,7 +350,7 @@ def test_a_forced_march_goes_further_at_a_cost(warring: GameState) -> None:
 
 def test_the_view_carries_the_new_army_data(warring: GameState) -> None:
     view = build_view(warring)
-    mine = next(a for a in view["armies"] if a["owner"] == "qin")
+    mine = next(a for a in view["armies"] if a["owner"] == "rome")
     assert mine["formation"] == "auto"
     assert mine["engage"] == "fight"
     assert mine["dug_in"] is False
@@ -366,7 +366,7 @@ def test_the_view_carries_the_new_army_data(warring: GameState) -> None:
 def test_distant_rival_armies_are_seen_roughly(warring: GameState) -> None:
     view = build_view(warring)
     for army in view["armies"]:
-        if army["owner"] == "qin":
+        if army["owner"] == "rome":
             assert army["men_exact"]
     far = [a for a in view["armies"] if not a["men_exact"]]
     assert far, "some rival army should be out of sight at the start"
@@ -376,7 +376,7 @@ def test_distant_rival_armies_are_seen_roughly(warring: GameState) -> None:
 
 
 def test_formation_and_odds_in_view_for_a_nearby_enemy(warring: GameState) -> None:
-    set_status(warring, "qin", "wei", RelationStatus.WAR)
+    set_status(warring, "rome", "carthage", RelationStatus.WAR)
     _, d = pair(warring)
     view = build_view(warring)
     mine = next(x for x in view["armies"] if x["id"] == "q")
@@ -398,6 +398,6 @@ def test_battle_phases_reach_the_view(warring: GameState) -> None:
 
 def test_old_armies_load_with_defaults() -> None:
     old = Army.model_validate(
-        {"id": "x", "owner": "qin", "name": "Old", "province": "p", "troops": {"levy": 500}}
+        {"id": "x", "owner": "rome", "name": "Old", "province": "p", "troops": {"levy": 500}}
     )
     assert (old.formation, old.engage, old.dug_in, old.forced) == ("auto", "fight", False, False)

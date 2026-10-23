@@ -24,7 +24,7 @@ def event(kind: str, civ: str, subject: str = "") -> Event:
 
 
 def test_the_ruler_opens_the_game(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=1)
+    state = new_game(content, "punic_wars", seed=1)
     voice = speak(content, state, "game_start")
     assert voice is not None
     assert voice["name"] == "Duke Xiao"
@@ -41,12 +41,12 @@ def test_the_steward_briefs_a_new_game_on_its_moment(content: Content) -> None:
 
 
 def test_worst_news_first_and_at_most_two(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=1)
+    state = new_game(content, "punic_wars", seed=1)
     events = [
-        event("widespread", "qin", "Coinage"),
-        event("adopted", "qin", "Paper"),
-        event("riot", "qin"),
-        event("setback", "qin", "Roads"),
+        event("widespread", "rome", "Coinage"),
+        event("adopted", "rome", "Paper"),
+        event("riot", "rome"),
+        event("setback", "rome", "Roads"),
     ]
     voices = voices_for_turn(content, state, events)
     assert [v["moment"] for v in voices] == ["riot", "adopted"]
@@ -55,7 +55,7 @@ def test_worst_news_first_and_at_most_two(content: Content) -> None:
 
 
 def test_a_rival_boasts_about_ideas_ahead_of_their_time(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=1)
+    state = new_game(content, "punic_wars", seed=1)
     voices = voices_for_turn(content, state, [event("adopted", "chu", "Paper")])
     assert [v["moment"] for v in voices] == ["rival_adopted"]
     assert voices[0]["name"] == "King Xuan"
@@ -67,7 +67,7 @@ def test_a_rival_boasts_about_ideas_ahead_of_their_time(content: Content) -> Non
 
 
 def test_lines_are_chosen_deterministically(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=4)
+    state = new_game(content, "punic_wars", seed=4)
     first = [speak(content, state, "adopted", "Paper") for _ in range(3)]
     assert first[0] == first[1] == first[2]
 
@@ -87,30 +87,30 @@ def test_bad_dialogue_is_reported(packs: Path) -> None:  # noqa: F811
 
 
 def test_a_rival_who_declares_war_says_so(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=1)
-    wei = state.civs["wei"].name
+    state = new_game(content, "punic_wars", seed=1)
+    carthage = state.civs["carthage"].name
     war = Event(
-        turn=1, year=-340, civ="qin", kind="war",
-        message=f"The Wei court has declared war on {state.civs['qin'].name}.", subject=wei,
+        turn=1, year=-340, civ="rome", kind="war",
+        message=f"The Wei court has declared war on {state.civs['rome'].name}.", subject=carthage,
     )  # fmt: skip
     voices = voices_for_turn(content, state, [war])
     rival = [v for v in voices if v["speaker"] == "rival"]
     assert len(rival) == 1
-    assert rival[0]["civ"] == "wei"
+    assert rival[0]["civ"] == "carthage"
     assert rival[0]["moment"] == "rival_war"
     assert voices[0]["speaker"] != "rival"  # the court speaks first
 
 
 def test_a_rival_makes_peace(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=1)
-    voices = voices_for_turn(content, state, [event("peace", "qin", state.civs["zhao"].name)])
+    state = new_game(content, "punic_wars", seed=1)
+    voices = voices_for_turn(content, state, [event("peace", "rome", state.civs["zhao"].name)])
     assert any(v["moment"] == "rival_peace" and v["civ"] == "zhao" for v in voices)
 
 
 def test_the_court_mourns_the_old_ruler_and_turns_to_the_new(content: Content) -> None:
-    state = new_game(content, "warring_states", seed=1)
-    state.civs["qin"].ruler = "King Huiwen"
-    voices = voices_for_turn(content, state, [event("ruler_died", "qin", "Duke Xiao")])
+    state = new_game(content, "punic_wars", seed=1)
+    state.civs["rome"].ruler = "King Huiwen"
+    voices = voices_for_turn(content, state, [event("ruler_died", "rome", "Duke Xiao")])
     assert voices[0]["moment"] == "ruler_died"
     assert "Duke Xiao" in voices[0]["text"]
     assert "King Huiwen" in voices[0]["text"]

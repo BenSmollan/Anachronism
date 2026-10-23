@@ -21,15 +21,15 @@ from anachronism.engine.save import dumps, loads
 from anachronism.engine.state import Army, GameState
 from anachronism.tools.view import build_view
 
-TOWN = "wei_shang"  # a small Wei province (not the capital)
-CITY = "wei_hedong"  # a large one
-SEAT = "wei_daliang"  # Wei's capital
+TOWN = "car_emporia"  # a small Carthaginian province (not the capital)
+CITY = "car_byzacena"  # a large one
+SEAT = "car_carthage"  # Carthage itself, the capital
 
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    state = new_game(content, "warring_states", seed=1, player_civ="qin")
-    state, _ = apply_action(state, DeclareWar(civ="qin", target="wei"))
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state, _ = apply_action(state, DeclareWar(civ="rome", target="carthage"))
     state.armies = {}  # the field is clear: only the armies a test places
     return state
 
@@ -39,7 +39,7 @@ def log(state: GameState) -> EventLog:
 
 
 def besiege(state: GameState, where: str, men: int, **orders: object) -> Army:
-    army = Army(id="q", owner="qin", name="Eastern Army", province=where, troops={"levy": men})
+    army = Army(id="q", owner="rome", name="Eastern Army", province=where, troops={"levy": men})
     for key, value in orders.items():
         setattr(army, key, value)
     state.armies = {"q": army}
@@ -78,7 +78,7 @@ def test_a_small_army_is_thrown_back_from_the_walls(warring: GameState) -> None:
     besiege(warring, CITY, 3_000, assault="now")
     events = log(warring)
     sieges(warring, events, GameRng(warring.rng))
-    assert warring.provinces[CITY].owner == "wei"
+    assert warring.provinces[CITY].owner == "carthage"
     assert any(e.kind == "battle_lost" and "storming" in e.message for e in events.items)
     assert all(not a.garrison for a in warring.armies.values())
     army = warring.armies.get("q")
@@ -89,19 +89,19 @@ def test_a_small_army_is_thrown_back_from_the_walls(warring: GameState) -> None:
 def test_a_strong_army_storms_the_breach_and_takes_the_spoils(warring: GameState) -> None:
     army = besiege(warring, TOWN, 60_000)
     army.siege_bp = 10**6  # the walls are down
-    warring.civs["wei"].stockpiles.wealth = 100_000
-    wealth = warring.civs["qin"].stockpiles.wealth
-    prestige = warring.civs["qin"].stats.legitimacy_bp
+    warring.civs["carthage"].stockpiles.wealth = 100_000
+    wealth = warring.civs["rome"].stockpiles.wealth
+    prestige = warring.civs["rome"].stats.legitimacy_bp
     people = warring.provinces[TOWN].population
     events = log(warring)
     sieges(warring, events, GameRng(warring.rng))
-    assert warring.provinces[TOWN].owner == "qin"
+    assert warring.provinces[TOWN].owner == "rome"
     spoils = next(e for e in events.items if e.kind == "spoils")
-    assert spoils.civ == "qin"
+    assert spoils.civ == "rome"
     assert spoils.spoils["stormed"]
     assert spoils.spoils["wealth"] > 0
-    assert warring.civs["qin"].stockpiles.wealth == wealth + spoils.spoils["wealth"]
-    assert warring.civs["qin"].stats.legitimacy_bp > prestige
+    assert warring.civs["rome"].stockpiles.wealth == wealth + spoils.spoils["wealth"]
+    assert warring.civs["rome"].stats.legitimacy_bp > prestige
     assert warring.provinces[TOWN].population < people  # the city was sacked
     taker = warring.armies["q"]
     assert taker.veterancy_bp > 0
@@ -117,7 +117,7 @@ def test_a_starved_city_opens_its_gates_without_a_storm(warring: GameState) -> N
         events = log(warring)
         sieges(warring, events, GameRng(warring.rng))
         assert not any(e.kind.startswith("battle") for e in events.items)
-        if warring.provinces[CITY].owner == "qin":
+        if warring.provinces[CITY].owner == "rome":
             taken_on = turn
             assert any(e.kind == "surrender" for e in events.items)
             spoils = next(e for e in events.items if e.kind == "spoils")
@@ -146,10 +146,10 @@ def test_a_cautious_general_will_not_storm_a_hopeless_breach(warring: GameState)
 
 def test_the_assault_order(warring: GameState) -> None:
     besiege(warring, CITY, 20_000)
-    state, logged = apply_action(warring, ArmyAssault(civ="qin", army="q", assault="starve"))
+    state, logged = apply_action(warring, ArmyAssault(civ="rome", army="q", assault="starve"))
     assert logged.ok
     assert state.armies["q"].assault == "starve"
-    _, logged = apply_action(warring, ArmyAssault(civ="wei", army="q", assault="now"))
+    _, logged = apply_action(warring, ArmyAssault(civ="carthage", army="q", assault="now"))
     assert not logged.ok
 
 
