@@ -13,7 +13,9 @@ from anachronism.engine.war import capture
 
 def conquered(content: Content) -> tuple[GameState, str]:
     state = new_game(content, "punic_wars", seed=1, player_civ="rome")
-    target = next(p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital)
+    target = next(
+        p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital
+    )
     capture(state, "rome", target, EventLog(0, 0))
     state.armies = {}
     rules = state.world.rules.armies.model_copy(update={"uprising_bp": 10_000})

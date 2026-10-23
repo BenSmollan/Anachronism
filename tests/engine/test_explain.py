@@ -41,7 +41,9 @@ def test_a_doubted_ruler_only_quiets_the_talk(suspected: GameState) -> None:
 
 def test_foreign_sages_quiet_more_but_rivals_hear_at_once(suspected: GameState) -> None:
     suspected.news.append(
-        NewsInTransit(to_civ="carthage", about="rome", node_id="paper", arrives_turn=9, garbled=False)
+        NewsInTransit(
+            to_civ="carthage", about="rome", node_id="paper", arrives_turn=9, garbled=False
+        )
     )
     state, logged = apply_action(suspected, Explain(civ="rome", story="sages"))
     assert logged.ok

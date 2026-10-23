@@ -69,7 +69,10 @@ def test_counsel_returns_a_guarded_move_and_a_line(game: GameState) -> None:
     for reply in (ProviderError("down"), {"move": "conquer the world", "line": "x"}):
         pipeline = IdeaPipeline(ONLINE, FakeProvider(reply), use_files=False)
         assert pipeline.counsel(game, "carthage") == (None, "")
-    assert IdeaPipeline(LlmConfig(offline=True), use_files=False).counsel(game, "carthage") == (None, "")
+    assert IdeaPipeline(LlmConfig(offline=True), use_files=False).counsel(game, "carthage") == (
+        None,
+        "",
+    )
 
 
 def test_a_court_that_marches_is_recorded_and_speaks(tmp_path: Path, game: GameState) -> None:

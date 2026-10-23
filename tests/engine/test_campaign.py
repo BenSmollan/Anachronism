@@ -124,7 +124,7 @@ def put_chapter(state: GameState, chapter_id: str, civ: str, **deeds: object) ->
         year=state.year,
         title="A test chapter",
         story="Something happens.",
-        choices=(ChapterChoice(label="Do it", outcome="It is done.", deeds=Deeds(**deeds)),),  # type: ignore[arg-type]
+        choices=(ChapterChoice(label="Do it", outcome="It is done.", deeds=Deeds(**deeds)),),
     )
     state.world = state.world.model_copy(
         update={"chapters": {**state.world.chapters, chapter_id: chapter}}

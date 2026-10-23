@@ -126,7 +126,7 @@ class Scenario(Frozen):
     unowned: dict[Identifier, NonNegative] = Field(default_factory=dict)
     """Provinces nobody controls, with their populations."""
     map: Identifier | None = None
-    """Real-Earth map region the client draws (e.g. ``east_asia``); ``None`` means a map
+    """Real-Earth map region the client draws (e.g. ``europe``); ``None`` means a map
     generated from province positions. On a real map every province needs a ``latlon``."""
     music: Identifier | None = None
     """Music track the client plays in this scenario (``roman``, ``asian``, ``medieval``,

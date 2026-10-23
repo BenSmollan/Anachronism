@@ -107,7 +107,9 @@ def test_a_beaten_attacker_falls_back_the_way_it_came(warring: GameState) -> Non
     weak = Army(
         id="q", owner="rome", name="Weak", province=field, came_from=behind, troops={"levy": 1_000}
     )
-    strong = Army(id="w", owner="carthage", name="Strong", province=field, troops={"spearmen": 60_000})
+    strong = Army(
+        id="w", owner="carthage", name="Strong", province=field, troops={"spearmen": 60_000}
+    )
     state.armies = {"q": weak, "w": strong}
     battle(state, field, [weak], [strong], GameRng(state.rng), log(state))
     if "q" in state.armies:
@@ -116,7 +118,9 @@ def test_a_beaten_attacker_falls_back_the_way_it_came(warring: GameState) -> Non
 
 def test_a_siege_takes_the_province_in_time(warring: GameState) -> None:
     state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
-    target = next(p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital)
+    target = next(
+        p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital
+    )
     state.armies = {
         "q": Army(
             id="q",
@@ -265,7 +269,9 @@ def test_walls_make_a_province_harder_to_take(warring: GameState) -> None:
 
 def test_pillage_ravages_loots_and_feeds_the_army(warring: GameState) -> None:
     state, _ = apply_action(warring, DeclareWar(civ="rome", target="carthage"))
-    target = next(p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital)
+    target = next(
+        p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital
+    )
     state.armies = {
         "q": Army(
             id="q",

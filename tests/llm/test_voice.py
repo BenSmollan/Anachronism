@@ -47,7 +47,9 @@ def test_the_model_rewrites_the_line_and_it_is_cached(game: GameState) -> None:
 
 def test_the_message_holds_facts_not_player_text(game: GameState) -> None:
     fake = FakeProvider({"line": "So be it."})
-    IdeaPipeline(ONLINE, fake, use_files=False).voice_rival(game, "carthage", "rival_war", "Wei", LINE)
+    IdeaPipeline(ONLINE, fake, use_files=False).voice_rival(
+        game, "carthage", "rival_war", "Wei", LINE
+    )
     system, user = fake.calls[0]
     assert VOICE_TOOL in system
     assert game.civs["carthage"].name in user

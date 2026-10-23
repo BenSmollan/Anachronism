@@ -1,7 +1,7 @@
 """Drafting new library ideas with a language model, for human review (brief §9.2, §10).
 
     uv run anachronism-draft --region "East Asia" --era classical --count 8
-    uv run anachronism-draft --promote drafts/east_asia_classical.yaml --pack east_asia
+    uv run anachronism-draft --promote drafts/europe_classical.yaml --pack europe
 
 ``--region`` drafts candidate advancements into ``drafts/`` (git-ignored until reviewed).
 Nothing there reaches the game: the model's memory is never the only source for shipped
@@ -144,7 +144,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--count", type=int, default=8)
     parser.add_argument("--out", type=Path, default=Path("drafts"))
     parser.add_argument("--promote", type=Path, help="a reviewed draft file to move into a pack")
-    parser.add_argument("--pack", help="pack id to promote into (e.g. core, east_asia)")
+    parser.add_argument("--pack", help="pack id to promote into (e.g. core, europe)")
     args = parser.parse_args(argv)
     content = load_content()
     if args.promote:

@@ -91,7 +91,8 @@ def test_a_rival_who_declares_war_says_so(content: Content) -> None:
     carthage = state.civs["carthage"].name
     war = Event(
         turn=1, year=-340, civ="rome", kind="war",
-        message=f"The Carthaginian court has declared war on {state.civs['rome'].name}.", subject=carthage,
+        message=f"The Carthaginian court has declared war on {state.civs['rome'].name}.",
+        subject=carthage,
     )  # fmt: skip
     voices = voices_for_turn(content, state, [war])
     rival = [v for v in voices if v["speaker"] == "rival"]
@@ -110,7 +111,9 @@ def test_a_rival_makes_peace(content: Content) -> None:
 def test_the_court_mourns_the_old_ruler_and_turns_to_the_new(content: Content) -> None:
     state = new_game(content, "punic_wars", seed=1)
     state.civs["rome"].ruler = "Consul Gaius Duilius"
-    voices = voices_for_turn(content, state, [event("ruler_died", "rome", "Consul Appius Claudius Caudex")])
+    voices = voices_for_turn(
+        content, state, [event("ruler_died", "rome", "Consul Appius Claudius Caudex")]
+    )
     assert voices[0]["moment"] == "ruler_died"
     assert "Consul Appius Claudius Caudex" in voices[0]["text"]
     assert "Consul Gaius Duilius" in voices[0]["text"]

@@ -26,7 +26,9 @@ def choice_order(state: GameState, chapter: Chapter) -> list[int]:
     """
 
     def key(i: int) -> tuple[bool, int]:
-        mixed = int.from_bytes(hashlib.sha256(f"{state.seed}:{chapter.id}:{i}".encode()).digest()[:8])
+        mixed = int.from_bytes(
+            hashlib.sha256(f"{state.seed}:{chapter.id}:{i}".encode()).digest()[:8]
+        )
         return bool(chapter.choices[i].needs_adopted), mixed
 
     return sorted(range(len(chapter.choices)), key=key)

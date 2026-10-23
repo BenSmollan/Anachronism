@@ -39,7 +39,9 @@ def test_sealed_borders_stop_trade_then_reopen(rome: GameState) -> None:
 def test_rumours_garble_news_on_the_road(rome: GameState) -> None:
     assert not apply_action(rome, SpreadRumours(civ="rome"))[1].ok  # nothing to garble
     rome.news.append(
-        NewsInTransit(to_civ="carthage", about="rome", node_id="paper", arrives_turn=3, garbled=False)
+        NewsInTransit(
+            to_civ="carthage", about="rome", node_id="paper", arrives_turn=3, garbled=False
+        )
     )
     state, logged = apply_action(rome, SpreadRumours(civ="rome"))
     assert logged.ok
