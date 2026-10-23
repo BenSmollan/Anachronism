@@ -2520,3 +2520,17 @@ matters. Engine only: the client screens for it come in a later step.
   branch holds it instead.
 - The plan, its sources and its phases (R0-R6, each a gate): `docs/plans/rome.md`. Every
   historical fact will carry its source, and the linter will enforce that.
+
+## D-287 Rome's Italian allies are separate civs bound by treaty — DELEGATED (2026-10-23)
+- The *socii* kept their own laws and armies and served under treaty; Polybius 2.24 lists their
+  levies apart from the Romans. So in the 264 BC start (`rome_264`) the allies (Samnites,
+  Etruscans, Umbrians, Italiote Greeks and others) are their own civs, allied to Rome, and can
+  defect as Capua and Tarentum did after Cannae (Polybius 3.118). Rome itself holds the ager
+  Romanus and the lands of the Latins, Volsci, Hernici, Aequi, Sabines, Caere, Aurunci,
+  Campania, Picenum and the Senones.
+- Latin colonies inside allied land cannot be drawn at this map grain; R3 adds a real alliance
+  and citizenship system.
+- Facts the agents could not read in a source are marked `# unverified` and wait for the R6
+  checking pass.
+- The test port (all old-scenario tests now use `punic_wars`) found that the Aegean no longer
+  links to the Levantine sea since the other packs were removed; to be restored.
