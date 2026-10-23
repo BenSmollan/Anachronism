@@ -16,7 +16,7 @@ from anachronism.tools.server import Session
 
 
 def played(turns: int) -> GameState:
-    state = new_game(load_content(), "alexander", seed=2)
+    state = new_game(load_content(), "punic_wars", seed=2)
     bots = {civ: make_bot("growth") for civ in state.civs}
     for _ in range(turns):
         state, _ = play_turn(state, bots)
@@ -27,23 +27,23 @@ def test_chapters_cover_the_game_in_order() -> None:
     state = played(CHAPTER_TURNS * 2 + 2)
     told = chapters(state)
     assert [c.finished for c in told] == [True, True, False]
-    assert told[0].start_year == -336
+    assert told[0].start_year == -264
     assert told[0].end_year == told[1].start_year
     assert told[-1].end_year == state.year
     assert all(c.text for c in told)
-    assert "Macedon" in told[0].facts["realm"]
+    assert "Rome" in told[0].facts["realm"]
     assert "million" in told[0].facts["people"]
 
 
 def test_a_new_game_has_no_chapters() -> None:
-    assert chapters(new_game(load_content(), "alexander", seed=2)) == []
+    assert chapters(new_game(load_content(), "punic_wars", seed=2)) == []
 
 
 def test_finished_chapters_are_told_by_the_model_and_cached(tmp_path: Path) -> None:
-    fake = FakeProvider({"line": "In those years Macedon grew wise and quarrelsome."})
+    fake = FakeProvider({"line": "In those years Rome grew wise and quarrelsome."})
     online = IdeaPipeline(LlmConfig(api_key="k", model="m"), fake, use_files=False)
     session = Session(load_content(), tmp_path, online)
-    session.new_game({"scenario": "alexander", "seed": 2})
+    session.new_game({"scenario": "punic_wars", "seed": 2})
     session.state = played(CHAPTER_TURNS + 1)
     reply = session.chronicle({})
     told = reply["chapters"]
@@ -62,13 +62,16 @@ def test_history_is_not_always_the_first_choice_shown() -> None:
     content = load_content()
     state = new_game(content, "punic_wars", seed=1, chronicle=True)
     firsts = []
-    for chapter in content.chapters.values():
-        order = choice_order(state, chapter)
-        assert sorted(order) == list(range(len(chapter.choices)))
-        assert order == choice_order(state, chapter), "the order must not change between frames"
-        ideas = [bool(chapter.choices[i].needs_adopted) for i in order]
-        assert ideas == sorted(ideas), "choices needing an idea stay last"
-        firsts.append(chapter.choices[order[0]].historical)
+    # few chapters, so the share is pooled over many games to be a fair sample
+    for seed in range(1, 21):
+        game = new_game(content, "punic_wars", seed=seed, chronicle=True)
+        for chapter in content.chapters.values():
+            order = choice_order(game, chapter)
+            assert sorted(order) == list(range(len(chapter.choices)))
+            assert order == choice_order(game, chapter), "the order must not change between frames"
+            ideas = [bool(chapter.choices[i].needs_adopted) for i in order]
+            assert ideas == sorted(ideas), "choices needing an idea stay last"
+            firsts.append(chapter.choices[order[0]].historical)
     share = sum(firsts) / len(firsts)
     assert 0.25 < share < 0.6, f"history's choice is shown first in {share:.0%} of chapters"
     other = new_game(content, "punic_wars", seed=2, chronicle=True)

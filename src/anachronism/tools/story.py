@@ -6,7 +6,7 @@ history so far.
 
 from __future__ import annotations
 
-import zlib
+import hashlib
 from typing import Any
 
 from anachronism.content.loader import Content
@@ -26,7 +26,7 @@ def choice_order(state: GameState, chapter: Chapter) -> list[int]:
     """
 
     def key(i: int) -> tuple[bool, int]:
-        mixed = zlib.crc32(f"{state.seed}:{chapter.id}:{i}".encode())
+        mixed = int.from_bytes(hashlib.sha256(f"{state.seed}:{chapter.id}:{i}".encode()).digest()[:8])
         return bool(chapter.choices[i].needs_adopted), mixed
 
     return sorted(range(len(chapter.choices)), key=key)

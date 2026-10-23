@@ -114,24 +114,24 @@ def test_scenario_catalog_and_playing_any_civ(tmp_path: Path) -> None:
     replies = talk(
         [
             {"id": 1, "cmd": "scenarios"},
-            {"id": 2, "cmd": "new_game", "args": {"scenario": "punic_wars", "civ": "chu"}},
-            {"id": 3, "cmd": "new_game", "args": {"scenario": "punic_wars", "civ": "rome"}},
+            {"id": 2, "cmd": "new_game", "args": {"scenario": "punic_wars", "civ": "carthage"}},
+            {"id": 3, "cmd": "new_game", "args": {"scenario": "punic_wars", "civ": "veyra"}},
         ],
         tmp_path,
     )
     catalog = {s["id"]: s for s in replies[0]["result"]["scenarios"]}
     warring = catalog["punic_wars"]
-    assert warring["map"] == "east_asia"
+    assert warring["map"] == "europe"
     assert warring["default_civ"] == "rome"
     rome = next(c for c in warring["civs"] if c["id"] == "rome")
-    assert rome["leader"] == "Duke Xiao"
-    assert rome["capital"] == "Guanzhong (Wei valley)"
+    assert rome["leader"] == "Consul Appius Claudius Caudex"
+    assert rome["capital"] == "Latium"
     assert rome["pitch"]
-    assert warring["civs"][0]["id"] == "chu", "largest state first"
-    assert replies[1]["result"]["player"] == "chu"
-    assert replies[1]["result"]["status"]["name"] == "Chu"
+    assert warring["civs"][0]["id"] == "seleucid", "largest state first"
+    assert replies[1]["result"]["player"] == "carthage"
+    assert replies[1]["result"]["status"]["name"] == "Carthage"
     assert not replies[2]["ok"]
-    assert "'rome' is not a civilisation in warring_states" in replies[2]["error"]
+    assert "'veyra' is not a civilisation in punic_wars" in replies[2]["error"]
 
 
 def test_ideas_through_the_bridge(tmp_path: Path) -> None:
@@ -167,13 +167,13 @@ def test_ideas_through_the_bridge(tmp_path: Path) -> None:
 def test_menu_commands(tmp_path: Path) -> None:
     replies = talk(
         [
-            {"id": 1, "cmd": "new_game", "args": {"scenario": "year_1000", "civ": "england"}},
+            {"id": 1, "cmd": "new_game", "args": {"scenario": "punic_wars", "civ": "rome"}},
             {"id": 2, "cmd": "save", "args": {"name": "first"}},
             {"id": 3, "cmd": "end_turn"},
             {"id": 4, "cmd": "saves"},
             {"id": 5, "cmd": "chronicle"},
             {"id": 6, "cmd": "tree"},
-            {"id": 7, "cmd": "act", "args": {"action": {"kind": "envoy", "target": "normandy"}}},
+            {"id": 7, "cmd": "act", "args": {"action": {"kind": "envoy", "target": "syracuse"}}},
             {"id": 8, "cmd": "history"},
         ],
         tmp_path,
@@ -190,7 +190,7 @@ def test_menu_commands(tmp_path: Path) -> None:
     assert replies[6]["result"]["accepted"]
     view = replies[6]["result"]["view"]
     assert "victory" in view
-    assert any(c["relation"] == "trading" for c in view["civs"] if c["id"] == "normandy")
+    assert any(c["relation"] == "trading" for c in view["civs"] if c["id"] == "syracuse")
     history = replies[7]["result"]
     assert len(history["player"]) == 2
-    assert len(history["populations"]["england"]) == 2
+    assert len(history["populations"]["rome"]) == 2

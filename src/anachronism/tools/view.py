@@ -40,6 +40,8 @@ from anachronism.engine.effects import civ_effects
 from anachronism.engine.fixed import BP
 from anachronism.engine.formations import final as final_formation
 from anachronism.engine.formations import lacks as formation_lacks
+from anachronism.engine.formations import natural as formation_natural
+from anachronism.engine.formations import ordered as formation_ordered
 from anachronism.engine.navies import SIZES, best_ship, sea_links, sea_route, seas_of
 from anachronism.engine.navies import power as sea_power
 from anachronism.engine.occupation import garrisoned, restless
@@ -760,7 +762,10 @@ def _deployment(state: GameState, army: Army) -> dict[str, Any]:
         return out
     foe = _foe(state, army)
     terrain = state.world.geography[army.province].terrain
-    form = final_formation(state, [army], [foe] if foe is not None else [], terrain)
+    if foe is not None:
+        form = final_formation(state, [army], [foe], terrain)
+    else:  # nobody to read: the ruler's order, or what the general would naturally draw up
+        form = formation_ordered(state, [army]) or formation_natural(state, [army], [], terrain)
     deployment: dict[str, Any] = {}
     for kind in sorted(men):
         order = deploy_order(army, kind)
