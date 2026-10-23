@@ -1,13 +1,13 @@
 schema_version: 1
 # Seas of Europe, the Mediterranean and the Near East. latlon: roughly each sea's middle.
 seas:
-  - {id: tyrrhenian, name: Tyrrhenian Sea, latlon: [40.0, 12.0], neighbours: [car_byzacena, car_carthage, car_lilybaeum, car_sardinia, co_corsica, corsica, gau_boii, it_aurunci, it_bruttium, it_caere, it_campania, it_etruria_n, it_ligures_apuani, it_liguria, it_lucania, it_rhegium, it_roma, it_tarquinii, it_volsci, liguria, mas_massalia, messana, rom_bruttium, rom_campania, rom_etruria, rom_latium, sa_sardinia, si_messana, si_panormus, si_syracuse, syr_syracuse]}
-  - {id: ionian, name: Ionian Sea, latlon: [38.0, 18.5], neighbours: [ach_achaea, aet_aetolia, epi_epirus, illyria, it_bruttium, it_lucania, it_messapia, it_rhegium, it_tarentum, messana, rom_bruttium, rom_tarentum, si_akragas, si_messana, si_syracuse, spa_laconia, syr_syracuse]}
-  - {id: adriatic, name: Adriatic Sea, latlon: [43.0, 15.5], neighbours: [gau_boii, illyria, it_apulia, it_frentani, it_messapia, it_picenum, it_senones, it_veneti, rom_apulia, rom_samnium, rom_tarentum, rom_umbria]}
+  - {id: tyrrhenian, name: Tyrrhenian Sea, latlon: [40.0, 12.0], neighbours: [car_byzacena, car_carthage, car_lilybaeum, car_sardinia, co_corsica, corsica, gau_boii, it_aurunci, it_bruttium, it_caere, it_campania, it_etruria_n, it_ligures_apuani, it_liguria, it_lucania, it_neapolis, it_picentini, it_populonia, it_roma, it_tarquinii, it_volsci, liguria, mas_massalia, messana, rom_bruttium, rom_campania, rom_etruria, rom_latium, sa_barbagia, sa_sardinia, si_akragas, si_gela, si_halaesa, si_lilybaeum, si_messana, si_panormus, syr_syracuse]}
+  - {id: ionian, name: Ionian Sea, latlon: [38.0, 18.5], neighbours: [ach_achaea, aet_aetolia, epi_epirus, illyria, it_bruttium, it_lucania, it_messapia, it_rhegium, it_tarentum, messana, rom_bruttium, rom_tarentum, si_catana, si_gela, si_messana, si_syracuse, spa_laconia, syr_syracuse]}
+  - {id: adriatic, name: Adriatic Sea, latlon: [43.0, 15.5], neighbours: [gau_boii, illyria, it_apulia, it_boii, it_frentani, it_peucetia, it_picenum, it_senones, it_veneti, rom_apulia, rom_samnium, rom_tarentum, rom_umbria]}
   - {id: aegean, name: Aegean Sea, latlon: [38.5, 25.0], neighbours: [ath_attica, mac_corinth, mac_macedonia, mac_thessaly, per_pergamon, rho_rhodes, spa_laconia, thrace]}
   - {id: levantine, name: Levantine Sea, latlon: [34.0, 32.5], neighbours: [pto_coele_syria, pto_cyprus, pto_delta, sel_asia, sel_cilicia, sel_syria]}
-  - {id: libyan_sea, name: Libyan Sea, latlon: [33.5, 18.0], neighbours: [car_byzacena, car_emporia, pto_cyrenaica, si_akragas, si_panormus]}
-  - {id: balearic, name: Balearic Sea, latlon: [38.5, 4.5], neighbours: [car_carthage, car_gades, car_sardinia, co_corsica, east_iberia, it_liguria, mas_massalia, mauretania, num_masaesyli, num_massyli, sa_sardinia, southern_gaul]}
+  - {id: libyan_sea, name: Libyan Sea, latlon: [33.5, 18.0], neighbours: [car_byzacena, car_emporia, pto_cyrenaica, si_akragas, si_gela, si_lilybaeum]}
+  - {id: balearic, name: Balearic Sea, latlon: [38.5, 4.5], neighbours: [car_carthage, car_gades, car_sardinia, co_corsica, east_iberia, it_liguria, mas_massalia, mauretania, num_masaesyli, num_massyli, sa_barbagia, sa_sardinia, southern_gaul]}
   - {id: atlantic, name: Atlantic Ocean, latlon: [40.0, -10.5], neighbours: [car_gades, lusitania, mauretania]}
   - {id: black_sea, name: Black Sea, latlon: [43.5, 34.0], neighbours: [bit_bithynia, bosporus, colchis, pon_pontus, scythia, thrace]}
   - {id: red_sea, name: Red Sea, latlon: [24.5, 36.5], neighbours: [nabataea, pto_delta, pto_middle, pto_thebaid]}
