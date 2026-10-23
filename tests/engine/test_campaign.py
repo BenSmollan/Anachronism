@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from anachronism.content.loader import Content
-from anachronism.content.schema import RelationStatus, Stage
+from anachronism.content.schema import Chapter, ChapterChoice, Deeds, RelationStatus, Stage
 from anachronism.engine.actions import ChooseChapter
 from anachronism.engine.campaign import PASSED_OVER, historical_index
 from anachronism.engine.game import apply_action, end_turn, new_game
@@ -110,121 +110,144 @@ def test_chronicle_games_save_and_replay(chronicle: GameState) -> None:
 
 
 @pytest.fixture
-def qin(content: Content) -> GameState:
-    return new_game(content, "warring_states", seed=1, player_civ="qin", chronicle=True)
+def rome(chronicle: GameState) -> GameState:
+    return chronicle
 
 
-def test_reforms_last_and_conquered_land_comes_with_a_garrison(qin: GameState) -> None:
+def put_chapter(state: GameState, chapter_id: str, civ: str, **deeds: object) -> None:
+    """Add a made-up chapter whose only choice does ``deeds`` (for engine features that the
+    scenario's own chapters need not use), and make it the one waiting."""
+    chapter = Chapter(
+        id=chapter_id,
+        scenario="punic_wars",
+        civ=civ,
+        year=state.year,
+        title="A test chapter",
+        story="Something happens.",
+        choices=(ChapterChoice(label="Do it", outcome="It is done.", deeds=Deeds(**deeds)),),
+    )
+    state.world = state.world.model_copy(
+        update={"chapters": {**state.world.chapters, chapter_id: chapter}}
+    )
+    state.chapter = chapter_id
+
+
+def test_reforms_last_and_conquered_land_comes_with_a_garrison(rome: GameState) -> None:
     from anachronism.engine.occupation import garrisoned
 
-    assert qin.chapter == "qin_xianyang"
-    before = qin.civs["qin"].martial_bp
-    state, _ = apply_action(qin, ChooseChapter(civ="qin", chapter="qin_xianyang", choice=0))
-    assert state.civs["qin"].martial_bp > before
-    # jump to Sima Cuo's march on Shu: Ba falls whole, Chengdu is taken and held
-    state.chapter = "qin_shu_or_han"
-    state, _ = apply_action(state, ChooseChapter(civ="qin", chapter="qin_shu_or_han", choice=0))
-    assert state.civs["ba"].collapsed
-    for pid in ("ba_jiangzhou", "shu_chengdu"):
-        assert state.provinces[pid].owner == "qin"
-        assert garrisoned(state, pid)
+    before = rome.civs["rome"].martial_bp
+    put_chapter(rome, "test_reform", "rome", martial_bp=5000)
+    state, _ = apply_action(rome, ChooseChapter(civ="rome", chapter="test_reform", choice=0))
+    assert state.civs["rome"].martial_bp > before
+    # Syracuse falls whole: its only province is taken and held
+    put_chapter(state, "test_conquest", "rome", conquer=("syracuse",))
+    state, _ = apply_action(state, ChooseChapter(civ="rome", chapter="test_conquest", choice=0))
+    assert state.civs["syracuse"].collapsed
+    assert state.provinces["syr_syracuse"].owner == "rome"
+    assert garrisoned(state, "syr_syracuse")
     # a garrison keeps apart from a host passing through
     state, _ = end_turn(state)
-    assert garrisoned(state, "shu_chengdu")
+    assert garrisoned(state, "syr_syracuse")
 
 
-def test_a_conquest_waits_until_the_state_is_strong_enough(qin: GameState) -> None:
+def test_a_conquest_waits_until_the_state_is_strong_enough(rome: GameState) -> None:
     from anachronism.engine.campaign import fits
 
-    han_falls = qin.world.chapters["qin_han_falls"]
-    assert not fits(qin, han_falls)  # Qin is nowhere near half as strong again as Han
-    qin.civs["han"].stockpiles.food = 0
-    for pid in qin.owned_provinces("han"):
-        qin.provinces[pid].population = 1_000
-    assert fits(qin, han_falls)
+    chapter = Chapter(
+        id="test_carthage_falls",
+        scenario="punic_wars",
+        civ="rome",
+        year=rome.year,
+        title="Carthage is ripe",
+        story="The city lies open.",
+        needs_stronger_than={"carthage": 30_000},
+        choices=(ChapterChoice(label="Strike", outcome="Done."),),
+    )
+    assert not fits(rome, chapter)  # Rome is nowhere near three times as strong as Carthage
+    rome.civs["carthage"].stockpiles.food = 0
+    for pid in rome.owned_provinces("carthage"):
+        rome.provinces[pid].population = 1_000
+    assert fits(rome, chapter)
 
 
 @pytest.fixture
-def oda(content: Content) -> GameState:
-    return new_game(content, "sengoku", seed=1, player_civ="oda", chronicle=True)
+def syracuse(content: Content) -> GameState:
+    return new_game(content, "punic_wars", seed=1, player_civ="syracuse", chronicle=True)
 
 
-def test_nobunaga_is_spared_old_age_until_honnoji(oda: GameState, content: Content) -> None:
-    """The chronicle, not the dice, ends Nobunaga's reign (D-130)."""
+def test_hiero_is_spared_old_age_until_history_ends_his_reign(
+    syracuse: GameState, content: Content
+) -> None:
+    """The chronicle, not the dice, ends Hiero's reign (D-130): he really died in 215 BC."""
     from anachronism.engine.rulers import spared
 
-    assert oda.world.years_per_turn == 1
-    assert oda.chapter == "oda_okehazama"
-    civ = oda.civs["oda"]
+    assert syracuse.world.years_per_turn == 2
+    civ = syracuse.civs["syracuse"]
     civ.ruler_age = 80  # old enough to die any year
-    assert spared(oda, civ)
-    oda.year = 1583
-    assert not spared(oda, civ)
-    free = new_game(content, "sengoku", seed=1, player_civ="oda")
-    assert not spared(free, free.civs["oda"])  # in free play the dice decide
+    assert spared(syracuse, civ)
+    syracuse.year = -214
+    assert not spared(syracuse, civ)
+    free = new_game(content, "punic_wars", seed=1, player_civ="syracuse")
+    assert not spared(free, free.civs["syracuse"])  # in free play the dice decide
 
 
-def test_a_chapter_can_end_the_reign(oda: GameState) -> None:
-    """At Honno-ji the historical choice kills Nobunaga and loses Kyoto."""
-    oda.provinces["j_kyoto"].owner = "oda"
-    oda.chapter = "oda_honnoji"
-    state, _ = apply_action(oda, ChooseChapter(civ="oda", chapter="oda_honnoji", choice=0))
-    civ = state.civs["oda"]
-    assert civ.ruler == "Oda Nobutada"
+def test_a_chapter_can_end_the_reign(syracuse: GameState) -> None:
+    """A chapter's choice can end a reign the way history did, and the heir takes over."""
+    put_chapter(syracuse, "test_leontini", "syracuse", ruler_falls="is assassinated at Leontini")
+    state, _ = apply_action(
+        syracuse, ChooseChapter(civ="syracuse", chapter="test_leontini", choice=0)
+    )
+    civ = state.civs["syracuse"]
+    assert civ.ruler == "Hieronymus"
     assert civ.rulers == 2
-    assert state.provinces["j_kyoto"].owner is None
     assert state.chapter_result is not None
 
 
 def test_the_court_can_move_and_a_tributary_can_break_away(content: Content) -> None:
-    """Jangsu moves to Pyongyang (427); Silla slips out of Goguryeo's orbit (433)."""
-    state = new_game(content, "three_kingdoms", seed=1, player_civ="goguryeo", chronicle=True)
-    assert status(state, "goguryeo", "silla") is RelationStatus.TRIBUTARY
-    state.chapter = "gog_pyongyang"
-    state, _ = apply_action(state, ChooseChapter(civ="goguryeo", chapter="gog_pyongyang", choice=0))
-    assert state.civs["goguryeo"].capital == "k4_pyongyang"
-    state.chapter = "gog_naje"
-    state, _ = apply_action(state, ChooseChapter(civ="goguryeo", chapter="gog_naje", choice=0))
-    assert status(state, "goguryeo", "silla") is RelationStatus.HOSTILE
+    """Carthage's court moves to another province, and Numidia slips out of its orbit."""
+    state = new_game(content, "punic_wars", seed=1, player_civ="carthage", chronicle=True)
+    assert status(state, "carthage", "numidia") is RelationStatus.TRIBUTARY
+    put_chapter(state, "test_move", "carthage", capital="car_byzacena", break_away=("numidia",))
+    state, _ = apply_action(state, ChooseChapter(civ="carthage", chapter="test_move", choice=0))
+    assert state.civs["carthage"].capital == "car_byzacena"
+    assert status(state, "carthage", "numidia") is RelationStatus.HOSTILE
 
 
-def test_heirs_are_spared_until_their_reigns_really_ended(content: Content) -> None:
-    """Jangsu died in 491; in the chronicle old age does not take him first."""
+def test_heirs_are_spared_until_their_reigns_really_ended(syracuse: GameState) -> None:
+    """Hieronymus died in 214 BC; in the chronicle old age does not take him first."""
     from anachronism.engine.events import EventLog
     from anachronism.engine.rulers import spared, succeed
 
-    state = new_game(content, "three_kingdoms", seed=1, player_civ="goguryeo", chronicle=True)
-    civ = state.civs["goguryeo"]
-    succeed(state, civ, EventLog(state.turn, state.year), how="dies")
-    assert civ.ruler == "King Jangsu"
-    state.year = 480
-    assert spared(state, civ)
-    state.year = 491
-    assert not spared(state, civ)
+    civ = syracuse.civs["syracuse"]
+    succeed(syracuse, civ, EventLog(syracuse.turn, syracuse.year), how="dies")
+    assert civ.ruler == "Hieronymus"
+    syracuse.year = -220
+    assert spared(syracuse, civ)
+    syracuse.year = -214
+    assert not spared(syracuse, civ)
 
 
-def test_a_reign_can_end_as_history_says_not_only_by_death(content: Content) -> None:
-    """Isaac Komnenos abdicated in 1059; the chronicle says so, and the court gives no eulogy."""
+def test_a_reign_can_end_as_history_says_not_only_by_death(syracuse: GameState) -> None:
+    """Hieronymus was assassinated at Leontini; the chronicle says so, and gives no eulogy."""
     from anachronism.engine.events import EventLog
     from anachronism.engine.rng import GameRng
     from anachronism.engine.rulers import age_and_succeed
 
-    state = new_game(content, "year_1000", seed=1, player_civ="byzantium", chronicle=True)
-    civ = state.civs["byzantium"]
-    civ.rulers = 9  # Isaac I Komnenos, eighth in the line after Basil
-    civ.ruler = "Isaac I Komnenos"
-    state.year = 1060
-    events = EventLog(state.turn, state.year)
-    age_and_succeed(state, civ, GameRng(state.rng), events)
-    assert civ.ruler == "Constantine X Doukas"
+    civ = syracuse.civs["syracuse"]
+    civ.rulers = 2  # Hieronymus, first heir after Hiero
+    civ.ruler = "Hieronymus"
+    syracuse.year = -213
+    events = EventLog(syracuse.turn, syracuse.year)
+    age_and_succeed(syracuse, civ, GameRng(syracuse.rng), events)
+    assert civ.ruler == "General Epicydes"
     assert [e.kind for e in events.items] == ["ruler_fell"]
-    assert "abdicates" in events.items[0].message
+    assert "assassinated" in events.items[0].message
 
 
 def test_every_chronicle_starts_and_its_chapters_are_in_its_age(content: Content) -> None:
     """Each state with a chronicle can start one; its chapters fall within its moment."""
     chronicles = sorted({(c.scenario, c.civ) for c in content.chapters.values()})
-    assert len(chronicles) >= 20
+    assert len(chronicles) >= 1
     for scenario_id, civ in chronicles:
         state = new_game(content, scenario_id, seed=1, player_civ=civ, chronicle=True)
         start = content.scenarios[scenario_id].start_year
@@ -238,7 +261,7 @@ def test_every_chronicle_starts_and_its_chapters_are_in_its_age(content: Content
                     assert node in state.tech_nodes, (chapter.id, node)
 
 
-def test_a_coup_does_not_happen_once_history_has_turned(content: Content) -> None:
+def test_a_coup_does_not_happen_once_history_has_turned(syracuse: GameState) -> None:
     """If the player's last answer turned from history, a scheduled murder or deposition
     does not follow; natural deaths still keep their dates (D-153)."""
     from anachronism.engine.events import EventLog
@@ -246,12 +269,11 @@ def test_a_coup_does_not_happen_once_history_has_turned(content: Content) -> Non
     from anachronism.engine.rulers import age_and_succeed
     from anachronism.engine.state import ChapterResult
 
-    state = new_game(content, "year_1000", seed=1, player_civ="byzantium", chronicle=True)
-    civ = state.civs["byzantium"]
-    civ.rulers, civ.ruler, civ.ruler_age = 9, "Isaac I Komnenos", 30
-    state.year = 1060
-    state.chapter_result = ChapterResult(
-        chapter="byz_schism", choice=1, outcome="", history="", historical=False, benchmark=""
+    civ = syracuse.civs["syracuse"]
+    civ.rulers, civ.ruler, civ.ruler_age = 2, "Hieronymus", 30
+    syracuse.year = -213
+    syracuse.chapter_result = ChapterResult(
+        chapter="rome_hiero", choice=1, outcome="", history="", historical=False, benchmark=""
     )
-    age_and_succeed(state, civ, GameRng(state.rng), EventLog(state.turn, state.year))
-    assert civ.ruler == "Isaac I Komnenos"
+    age_and_succeed(syracuse, civ, GameRng(syracuse.rng), EventLog(syracuse.turn, syracuse.year))
+    assert civ.ruler == "Hieronymus"

@@ -36,7 +36,7 @@ def problems(root: Path) -> list[str]:
 def test_real_packs_load_cleanly() -> None:
     content = load_content()
     assert isinstance(content, Content)
-    assert [pack.id for pack in content.packs] == ["core", "east_asia", "europe", "testworld"]
+    assert [pack.id for pack in content.packs] == ["core", "europe", "testworld"]
     assert content.scenarios["bronze_dawn"].player_civ == "veyra"
     assert content.techs["iron_working"].prerequisites == ("bronze_working", "charcoal_burning")
     assert content.scenarios["bronze_dawn"].civs["veyra"].techs["writing"] is Stage.ADOPTED
@@ -154,7 +154,7 @@ def test_lint_cli_reports_success_and_failure(
     packs: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     assert lint_main([]) == 0
-    assert "OK: core v1, east_asia v1, europe v1, testworld v1" in capsys.readouterr().out
+    assert "OK: core v1, europe v1, testworld v1" in capsys.readouterr().out
     edit(packs / "core" / "eras.yaml", "ends: 500}", "ends: -600}")
     assert lint_main(["--root", str(packs)]) == 1
     output = capsys.readouterr().out
@@ -184,19 +184,21 @@ def test_scenario_provinces_need_map_positions(packs: Path) -> None:
 
 
 def test_real_map_provinces_need_a_latlon(packs: Path) -> None:
-    edit(packs / "east_asia" / "provinces.yaml", "    latlon: [34.4, 108.9]\n", "")
+    edit(packs / "europe" / "provinces_ancient.yaml", "    latlon: [41.9, 12.5]\n", "")
     assert any(
-        "province 'qin_guanzhong' has no latlon for the east_asia map" in p for p in problems(packs)
+        "province 'rom_latium' has no latlon for the europe map" in p for p in problems(packs)
     )
 
 
 def test_latlon_must_be_on_earth(packs: Path) -> None:
-    edit(packs / "east_asia" / "provinces.yaml", "latlon: [34.4, 108.9]", "latlon: [108.9, 34.4]")
+    edit(
+        packs / "europe" / "provinces_ancient.yaml", "latlon: [41.9, 12.5]", "latlon: [125.0, 41.9]"
+    )
     assert any("is not a place on Earth" in p for p in problems(packs))
 
 
 def test_sea_zone_needs_a_place(packs: Path) -> None:
-    edit(packs / "east_asia" / "seas.yaml", " latlon: [38.8, 119.8],", "")
+    edit(packs / "europe" / "seas.yaml", " latlon: [40.0, 12.0],", "")
     assert any("a sea zone needs a position or a latlon" in p for p in problems(packs))
 
 

@@ -27,15 +27,15 @@ from anachronism.engine.wings import Line, contest
 from anachronism.tools.view import build_view
 
 MIXED = {"levy": 5000, "spearmen": 3000, "archers": 2000}
-RIVER = "wei_daliang"  # river plains, with a river
-PLAIN = "song_shangqiu"  # plains, no river
-HILLS = "han_shangdang"  # hills, no river
+RIVER = "gau_boii"  # river plains, with a river
+PLAIN = "car_byzacena"  # plains, no river
+HILLS = "car_sardinia"  # hills, no river
 
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    state = new_game(content, "warring_states", seed=1, player_civ="qin")
-    state, _ = apply_action(state, DeclareWar(civ="qin", target="wei"))
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state, _ = apply_action(state, DeclareWar(civ="rome", target="carthage"))
     return state
 
 
@@ -45,20 +45,20 @@ def pair(
     troops_a: dict[str, int] | None = None,
     troops_d: dict[str, int] | None = None,
 ) -> tuple[Army, Army]:
-    """A Qin attacker and a Wei defender standing in ``place``, and nothing else."""
+    """A Roman attacker and a Carthaginian defender standing in ``place``, and nothing else."""
     a = Army(
         id="q",
-        owner="qin",
+        owner="rome",
         name="Attackers",
         province=place,
-        came_from=state.civs["qin"].capital,
+        came_from=state.civs["rome"].capital,
         troops=dict(troops_a or MIXED),
         plan="line",
         formation="balanced",
     )
     d = Army(
         id="w",
-        owner="wei",
+        owner="carthage",
         name="Defenders",
         province=place,
         troops=dict(troops_d or MIXED),
@@ -184,7 +184,7 @@ def test_armies_arriving_from_two_directions_make_a_flank_attack(warring: GameSt
     a, d = pair(warring, PLAIN, {"levy": 8000}, {"levy": 8000})
     second = Army(
         id="q2",
-        owner="qin",
+        owner="rome",
         name="Second army",
         province=PLAIN,
         came_from="qin_shang",
@@ -214,32 +214,32 @@ def test_armies_arriving_from_two_directions_make_a_flank_attack(warring: GameSt
 
 
 def test_the_deploy_order(warring: GameState) -> None:
-    mine = next(a for a in warring.armies.values() if a.owner == "qin")
+    mine = next(a for a in warring.armies.values() if a.owner == "rome")
     state, logged = apply_action(
-        warring, ArmyDeploy(civ="qin", army=mine.id, unit_kind="mounted", place="left")
+        warring, ArmyDeploy(civ="rome", army=mine.id, unit_kind="mounted", place="left")
     )
     assert logged.ok
     assert state.armies[mine.id].deployment == {"mounted": "left"}
     _, logged = apply_action(
-        state, ArmyDeploy(civ="qin", army=mine.id, unit_kind="mounted", place="up")
+        state, ArmyDeploy(civ="rome", army=mine.id, unit_kind="mounted", place="up")
     )
     assert not logged.ok
     _, logged = apply_action(
-        state, ArmyDeploy(civ="qin", army=mine.id, unit_kind="ghosts", place="left")
+        state, ArmyDeploy(civ="rome", army=mine.id, unit_kind="ghosts", place="left")
     )
     assert not logged.ok
     _, logged = apply_action(
-        state, ArmyDeploy(civ="qin", army=mine.id, unit_kind="siege", place="left")
+        state, ArmyDeploy(civ="rome", army=mine.id, unit_kind="siege", place="left")
     )
     assert not logged.ok
     assert "camp" in logged.message
     state, logged = apply_action(
-        state, ArmyDeploy(civ="qin", army=mine.id, unit_kind="mounted", place="auto")
+        state, ArmyDeploy(civ="rome", army=mine.id, unit_kind="mounted", place="auto")
     )
     assert logged.ok
     assert state.armies[mine.id].deployment == {}
     _, logged = apply_action(
-        state, ArmyDeploy(civ="qin", army="nobody", unit_kind="mounted", place="left")
+        state, ArmyDeploy(civ="rome", army="nobody", unit_kind="mounted", place="left")
     )
     assert not logged.ok
 
@@ -355,7 +355,7 @@ def test_hills_favour_the_defenders_archers_and_blunt_a_charge(warring: GameStat
 
 def test_forest_and_marsh_weaken_horse_and_forbid_the_wide_line(warring: GameState) -> None:
     rules = warring.world.rules.armies
-    forest = ground_of(warring, "chu_qianzhong")
+    forest = ground_of(warring, "germania")
     units = warring.world.units
     assert forest.rough
     assert adjust(rules, forest, units["cavalry"], False, "left", 0) < 0
@@ -378,7 +378,7 @@ def test_open_plains_favour_horse_on_the_wings(warring: GameState) -> None:
     a.deployment = {"mounted": "left"}
     lines = _lines(warring, PLAIN, [a], [d])
     wide_open = lines.line_a.first["left"]
-    rough = _lines(warring, "chu_qianzhong", [a], [d]).line_a.first["left"]
+    rough = _lines(warring, "germania", [a], [d]).line_a.first["left"]
     assert wide_open > rough
 
 
@@ -454,19 +454,19 @@ def test_the_view_carries_deployment_odds_wings_and_ground(warring: GameState) -
         "split",
     ]
     assert all({"id", "name", "note"} <= set(p) for p in view["deploy_places"])
-    mine = next(a for a in view["armies"] if a["owner"] == "qin")
+    mine = next(a for a in view["armies"] if a["owner"] == "rome")
     assert mine["kinds"]
     assert {k["kind"] for k in mine["kinds"]} == set(mine["deployment"])
     for entry in mine["deployment"].values():
         assert entry["auto"] is True
         assert entry["place"] in (*PLACES, "split", "camp")
         assert sum(entry["shares"].values()) in (0, 10_000)
-    rival = next(a for a in view["armies"] if a["owner"] != "qin")
+    rival = next(a for a in view["armies"] if a["owner"] != "rome")
     assert "deployment" not in rival
     assert rival["kinds"]
     # an order shows, with auto off
     state, _ = apply_action(
-        warring, ArmyDeploy(civ="qin", army=mine["id"], unit_kind="infantry", place="reserve")
+        warring, ArmyDeploy(civ="rome", army=mine["id"], unit_kind="infantry", place="reserve")
     )
     after = next(a for a in build_view(state)["armies"] if a["id"] == mine["id"])
     assert after["deployment"]["infantry"]["place"] == "reserve"
@@ -489,7 +489,7 @@ def test_the_odds_preview_names_each_wing_and_the_ground(warring: GameState) -> 
 
 def test_old_armies_load_without_a_deployment() -> None:
     old = Army.model_validate(
-        {"id": "x", "owner": "qin", "name": "Old", "province": "p", "troops": {"levy": 500}}
+        {"id": "x", "owner": "rome", "name": "Old", "province": "p", "troops": {"levy": 500}}
     )
     assert old.deployment == {}
     assert old.arrived_turn == -1

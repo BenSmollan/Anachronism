@@ -16,61 +16,61 @@ from anachronism.engine.state import GameState, Offer
 
 
 @pytest.fixture
-def qin(content: Content) -> GameState:
-    state = new_game(content, "warring_states", seed=1, player_civ="qin")
+def rome(content: Content) -> GameState:
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
     state.turn = 5  # past the opening grace
     return state
 
 
-def test_a_beaten_weary_enemy_sues_for_peace(qin: GameState) -> None:
-    state, _ = apply_action(qin, DeclareWar(civ="qin", target="wei"))
-    rel = relation(state, "qin", "wei")
+def test_a_beaten_weary_enemy_sues_for_peace(rome: GameState) -> None:
+    state, _ = apply_action(rome, DeclareWar(civ="rome", target="syracuse"))
+    rel = relation(state, "rome", "syracuse")
     assert rel is not None
-    rel.losses["wei"] = 2
-    rel.weariness["wei"] = 9000
-    assert any(o.kind == "peace" and o.from_civ == "wei" for o in _candidates(state))
-    state.offer = Offer(kind="peace", from_civ="wei")
-    state, logged = apply_action(state, AnswerEnvoy(civ="qin", accept=True))
+    rel.losses["syracuse"] = 2
+    rel.weariness["syracuse"] = 9000
+    assert any(o.kind == "peace" and o.from_civ == "syracuse" for o in _candidates(state))
+    state.offer = Offer(kind="peace", from_civ="syracuse")
+    state, logged = apply_action(state, AnswerEnvoy(civ="rome", accept=True))
     assert logged.ok
-    assert status(state, "qin", "wei") is not RelationStatus.WAR
+    assert status(state, "rome", "syracuse") is not RelationStatus.WAR
 
 
-def test_defying_an_ultimatum_means_war(qin: GameState) -> None:
-    qin.offer = Offer(kind="ultimatum", from_civ="wei")
-    state, logged = apply_action(qin, AnswerEnvoy(civ="qin", accept=False))
+def test_defying_an_ultimatum_means_war(rome: GameState) -> None:
+    rome.offer = Offer(kind="ultimatum", from_civ="syracuse")
+    state, logged = apply_action(rome, AnswerEnvoy(civ="rome", accept=False))
     assert logged.ok
-    assert status(state, "qin", "wei") is RelationStatus.WAR
+    assert status(state, "rome", "syracuse") is RelationStatus.WAR
 
 
-def test_paying_tribute_keeps_the_peace_at_a_price(qin: GameState) -> None:
-    qin.offer = Offer(kind="ultimatum", from_civ="wei")
-    wealth = qin.civs["qin"].stockpiles.wealth
-    state, logged = apply_action(qin, AnswerEnvoy(civ="qin", accept=True))
+def test_paying_tribute_keeps_the_peace_at_a_price(rome: GameState) -> None:
+    rome.offer = Offer(kind="ultimatum", from_civ="syracuse")
+    wealth = rome.civs["rome"].stockpiles.wealth
+    state, logged = apply_action(rome, AnswerEnvoy(civ="rome", accept=True))
     assert logged.ok
-    assert state.civs["qin"].stockpiles.wealth < wealth
-    assert status(state, "qin", "wei") is RelationStatus.TRIBUTARY
+    assert state.civs["rome"].stockpiles.wealth < wealth
+    assert status(state, "rome", "syracuse") is RelationStatus.TRIBUTARY
 
 
-def test_unanswered_envoys_are_refused(qin: GameState) -> None:
-    qin.offer = Offer(kind="trade", from_civ="wei")
-    state, events = end_turn(qin)
+def test_unanswered_envoys_are_refused(rome: GameState) -> None:
+    rome.offer = Offer(kind="trade", from_civ="syracuse")
+    state, events = end_turn(rome)
     assert any(e.kind == "envoy_declined" for e in events)
-    assert status(state, "qin", "wei") is not RelationStatus.TRADING
+    assert status(state, "rome", "syracuse") is not RelationStatus.TRADING
 
 
-def test_a_merchant_court_proposes_trade(qin: GameState) -> None:
-    qin.civs["wei"].disposition = Disposition.MERCANTILE
-    rel = relation(qin, "qin", "wei")
+def test_a_merchant_court_proposes_trade(rome: GameState) -> None:
+    rome.civs["syracuse"].disposition = Disposition.MERCANTILE
+    rel = relation(rome, "rome", "syracuse")
     assert rel is not None
     rel.status = RelationStatus.NEUTRAL
     rel.grievance = {}
-    override = qin.world.rules.rivals.model_copy(update={"envoy_offer_bp": 10_000})
-    qin.world = qin.world.model_copy(
-        update={"rules": qin.world.rules.model_copy(update={"rivals": override})}
+    override = rome.world.rules.rivals.model_copy(update={"envoy_offer_bp": 10_000})
+    rome.world = rome.world.model_copy(
+        update={"rules": rome.world.rules.model_copy(update={"rivals": override})}
     )
-    envoys(qin, GameRng(qin.rng), EventLog(qin.turn, qin.year))
-    assert qin.offer is not None
-    state, logged = apply_action(qin, AnswerEnvoy(civ="qin", accept=True))
-    if qin.offer.kind == "trade" and qin.offer.from_civ == "wei":
-        assert status(state, "qin", "wei") is RelationStatus.TRADING
+    envoys(rome, GameRng(rome.rng), EventLog(rome.turn, rome.year))
+    assert rome.offer is not None
+    state, logged = apply_action(rome, AnswerEnvoy(civ="rome", accept=True))
+    if rome.offer.kind == "trade" and rome.offer.from_civ == "syracuse":
+        assert status(state, "rome", "syracuse") is RelationStatus.TRADING
     assert logged.ok

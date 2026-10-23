@@ -11,7 +11,7 @@ from anachronism.tools.advisers import REACH_YEARS, counsel
 
 def test_each_adviser_recommends_a_distinct_idea_within_reach() -> None:
     content = load_content()
-    state = new_game(content, "alexander", seed=1)
+    state = new_game(content, "punic_wars", seed=1)
     advice = counsel(content, state)
     assert {a["role"] for a in advice} == {"steward", "general", "scholar", "diviner"}
     assert len({a["node_id"] for a in advice}) == len(advice)
@@ -23,8 +23,8 @@ def test_each_adviser_recommends_a_distinct_idea_within_reach() -> None:
 
 def test_war_makes_the_general_urgent_and_first() -> None:
     content = load_content()
-    state = new_game(content, "warring_states", seed=1, player_civ="qin")
-    state, _ = apply_action(state, DeclareWar(civ="qin", target="wei"))
+    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state, _ = apply_action(state, DeclareWar(civ="rome", target="carthage"))
     advice = counsel(content, state)
     assert advice[0]["role"] == "general"
     assert advice[0]["urgent"]
@@ -32,6 +32,6 @@ def test_war_makes_the_general_urgent_and_first() -> None:
 
 def test_counsel_is_deterministic() -> None:
     content = load_content()
-    a = counsel(content, new_game(content, "sengoku", seed=3))
-    b = counsel(content, new_game(content, "sengoku", seed=3))
+    a = counsel(content, new_game(content, "punic_wars", seed=3))
+    b = counsel(content, new_game(content, "punic_wars", seed=3))
     assert a == b

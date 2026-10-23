@@ -92,10 +92,10 @@ def test_sail_and_lay_up_orders(punic: GameState) -> None:
     mine = next(f for f in state.fleets.values() if f.owner == "rome")
     _, logged = apply_action(state, SailFleet(civ="rome", fleet=mine.id, sea="tyrrhenian"))
     assert not logged.ok  # already there
-    state, logged = apply_action(state, SailFleet(civ="rome", fleet=mine.id, sea="levantine"))
+    state, logged = apply_action(state, SailFleet(civ="rome", fleet=mine.id, sea="aegean"))
     assert logged.ok
-    assert state.fleets[mine.id].target == "levantine"
-    course = sea_route(state, "tyrrhenian", "levantine")
+    assert state.fleets[mine.id].target == "aegean"
+    course = sea_route(state, "tyrrhenian", "aegean")
     sail(state, GameRng.from_seed(1), log(state))
     assert state.fleets[mine.id].sea == course[min(1, len(course) - 1)]  # two seas a turn
     state, logged = apply_action(state, ScuttleFleet(civ="rome", fleet=mine.id))

@@ -1,6 +1,6 @@
 """Every real-map scenario: historical populations stay sound over long games.
 
-Scenario-specific facts are checked for the Warring States; the rest runs on every scenario
+Scenario-specific facts are checked for the Punic Wars; the rest runs on every scenario
 that sits on a real map, so new starting moments are tested as soon as they are written.
 """
 
@@ -20,15 +20,15 @@ from anachronism.engine.state import GameState
 from tests.engine.conftest import override_rules
 from tests.engine.test_simulation import check_invariants
 
-SCENARIO = "warring_states"
+SCENARIO = "punic_wars"
 REAL = sorted(s.id for s in load_content().scenarios.values() if s.map is not None)
 
 
 def test_scenario_sits_on_the_real_map(content: Content) -> None:
     state = new_game(content, SCENARIO, seed=1)
-    assert state.world.map == "east_asia"
-    assert state.player_civ == "qin"
-    assert state.year == -350
+    assert state.world.map == "europe"
+    assert state.player_civ == "rome"
+    assert state.year == content.scenarios[SCENARIO].start_year == -264
     assert all(g.latlon is not None for g in state.world.geography.values())
     assert state.world.seas, "seas touching the scenario's coasts are in play"
     assert 20_000_000 < sum(p.population for p in state.provinces.values()) < 40_000_000
@@ -77,20 +77,20 @@ def test_long_games_keep_every_invariant(
     assert dumps(loads(dumps(state))) == dumps(state)
 
 
-def test_careful_qin_is_stable_and_advances(content: Content) -> None:
+def test_careful_rome_is_stable_and_advances(content: Content) -> None:
     initial = new_game(content, SCENARIO, seed=3)
     bots = {civ_id: make_bot("idle") for civ_id in initial.civs}
-    bots["qin"] = make_bot("growth")
+    bots["rome"] = make_bot("growth")
     state = initial
     kinds: set[str] = set()
     for _ in range(30):
         state, events = play_turn(state, bots)
-        kinds |= {e.kind for e in events if e.civ == "qin"}
+        kinds |= {e.kind for e in events if e.civ == "rome"}
     assert not {"riot", "revolt", "famine", "collapse"} & kinds
-    adopted_now = sum(t.stage.is_adopted for t in state.civs["qin"].tech.values())
-    adopted_then = sum(t.stage.is_adopted for t in initial.civs["qin"].tech.values())
+    adopted_now = sum(t.stage.is_adopted for t in state.civs["rome"].tech.values())
+    adopted_then = sum(t.stage.is_adopted for t in initial.civs["rome"].tech.values())
     assert adopted_now >= adopted_then + 5
-    assert state.population("qin") > initial.population("qin")
+    assert state.population("rome") > initial.population("rome")
 
 
 def peaceful(state: GameState) -> GameState:

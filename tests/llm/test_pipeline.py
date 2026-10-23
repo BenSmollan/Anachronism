@@ -30,7 +30,7 @@ def content() -> Content:
 
 @pytest.fixture
 def game(content: Content) -> GameState:
-    return new_game(content, "warring_states", seed=4, player_civ="qin")
+    return new_game(content, "punic_wars", seed=4, player_civ="rome")
 
 
 def steam_engine(**overrides: Any) -> dict[str, Any]:
@@ -66,14 +66,14 @@ def pipeline(*replies: Any) -> tuple[IdeaPipeline, FakeProvider]:
 
 def test_a_new_idea_is_bounded_and_recorded(game: GameState) -> None:
     ideas, fake = pipeline(steam_engine())
-    outcome = ideas.consider(game, "qin", "a machine that boils water to push a piston")
+    outcome = ideas.consider(game, "rome", "a machine that boils water to push a piston")
     assert outcome.source == "model"
     assert len(outcome.rulings) == 1
     ruling = outcome.rulings[0]
     assert ruling.verdict is Verdict.BLOCKED
     assert ruling.new_node is not None
     assert [s.name for s in ruling.stubs] == ["Precision boring"]
-    state, logged = apply_action(game, RuleOnIdea(civ="qin", ruling=ruling))
+    state, logged = apply_action(game, RuleOnIdea(civ="rome", ruling=ruling))
     assert logged.ok
     node = state.tech_nodes["heat_engine"]
     caps = state.world.effect_caps
@@ -85,10 +85,10 @@ def test_a_new_idea_is_bounded_and_recorded(game: GameState) -> None:
     assert "precision_boring" in node.prerequisites  # the stub it named
     assert node.requires.materials == ("iron",)
     assert state.tech_nodes["precision_boring"].stub
-    assert state.civs["qin"].tech["precision_boring"].goal
+    assert state.civs["rome"].tech["precision_boring"].goal
     limits = state.world.rules.rulings
     assert (
-        state.civs["qin"].stats.unrest_bp - game.civs["qin"].stats.unrest_bp
+        state.civs["rome"].stats.unrest_bp - game.civs["rome"].stats.unrest_bp
         <= limits.adviser_unrest_bp
     )
     # the player's words reached the model inside the data tags, after the summary
@@ -101,18 +101,18 @@ def test_matching_an_existing_node_reuses_it(game: GameState) -> None:
     ideas, _ = pipeline(
         {"ideas": [{"text": "print books", "verdict": "blocked", "matches": "movable_type"}]}
     )
-    ruling = ideas.consider(game, "qin", "print books").rulings[0]
+    ruling = ideas.consider(game, "rome", "print books").rulings[0]
     assert ruling.node_id == "movable_type"
     assert ruling.new_node is None
-    state, logged = apply_action(game, RuleOnIdea(civ="qin", ruling=ruling))
+    state, logged = apply_action(game, RuleOnIdea(civ="rome", ruling=ruling))
     assert logged.ok
-    assert "movable_type" in state.civs["qin"].tech
+    assert "movable_type" in state.civs["rome"].tech
     assert len(state.tech_nodes) == len(game.tech_nodes)
 
 
 def test_a_new_node_named_like_an_existing_one_reuses_it(game: GameState) -> None:
     ideas, _ = pipeline(steam_engine(name="Paper", verdict="feasible"))
-    ruling = ideas.consider(game, "qin", "make paper").rulings[0]
+    ruling = ideas.consider(game, "rome", "make paper").rulings[0]
     assert ruling.node_id == "paper"
     assert ruling.new_node is None
 
@@ -124,7 +124,7 @@ def test_several_ideas_are_split_and_capped(game: GameState) -> None:
         ]
     }
     ideas, _ = pipeline(many)
-    rulings = ideas.consider(game, "qin", "six things").rulings
+    rulings = ideas.consider(game, "rome", "six things").rulings
     assert len(rulings) == game.world.rules.rulings.max_ideas_per_message
     assert len({r.node_id for r in rulings}) == len(rulings)
 
@@ -133,17 +133,17 @@ def test_a_vague_message_gets_one_question_then_a_ruling(game: GameState) -> Non
     ideas, fake = pipeline(
         {"clarify": "Water for the fields, or water for the mills?"}, steam_engine()
     )
-    first = ideas.consider(game, "qin", "make the river work for us")
+    first = ideas.consider(game, "rome", "make the river work for us")
     assert first.question
     assert not first.rulings
-    second = ideas.consider(game, "qin", "make the river work for us", answer="the fields")
+    second = ideas.consider(game, "rome", "make the river work for us", answer="the fields")
     assert second.rulings
     assert "<player_answer>the fields</player_answer>" in fake.calls[1][1]
 
 
 def test_a_malformed_reply_is_retried_once(game: GameState) -> None:
     ideas, fake = pipeline({"ideas": [{"verdict": "maybe"}]}, steam_engine())
-    outcome = ideas.consider(game, "qin", "steam")
+    outcome = ideas.consider(game, "rome", "steam")
     assert outcome.source == "model"
     assert outcome.rulings
     assert len(fake.calls) == 2
@@ -152,18 +152,18 @@ def test_a_malformed_reply_is_retried_once(game: GameState) -> None:
 
 def test_failures_fall_back_to_offline(game: GameState) -> None:
     ideas, _ = pipeline(ProviderError("boom"))
-    outcome = ideas.consider(game, "qin", "irrigation canals for the wei valley")
+    outcome = ideas.consider(game, "rome", "irrigation canals for the carthage valley")
     assert outcome.source == "offline"
     assert "could not agree" in outcome.note
     assert outcome.rulings[0].node_id in ("irrigation", "canals")
     ideas, _ = pipeline({"ideas": [{"verdict": "maybe"}]})
-    assert ideas.consider(game, "qin", "paper").source == "offline"
+    assert ideas.consider(game, "rome", "paper").source == "offline"
 
 
 def test_rulings_are_cached(game: GameState) -> None:
     ideas, fake = pipeline(steam_engine())
-    ideas.consider(game, "qin", "Steam  engine")
-    again = ideas.consider(game, "qin", "steam engine")
+    ideas.consider(game, "rome", "Steam  engine")
+    again = ideas.consider(game, "rome", "steam engine")
     assert again.source == "cache"
     assert len(fake.calls) == 1
 
@@ -173,15 +173,15 @@ def test_the_monthly_cap_stops_calls(game: GameState) -> None:
     ideas = IdeaPipeline(
         LlmConfig(api_key="k", model="m", monthly_tokens=100), fake, use_files=False
     )
-    ideas.consider(game, "qin", "steam engine")
+    ideas.consider(game, "rome", "steam engine")
     assert not ideas.online
-    assert ideas.consider(game, "qin", "paper").note == "monthly limit reached"
+    assert ideas.consider(game, "rome", "paper").note == "monthly limit reached"
 
 
 def test_replays_and_saves_keep_rulings_without_the_model(game: GameState) -> None:
     ideas, fake = pipeline(steam_engine(verdict="feasible", missing=[]))
-    ruling = ideas.consider(game, "qin", "steam engine").rulings[0]
-    state, _ = apply_action(game, RuleOnIdea(civ="qin", ruling=ruling))
+    ruling = ideas.consider(game, "rome", "steam engine").rulings[0]
+    state, _ = apply_action(game, RuleOnIdea(civ="rome", ruling=ruling))
     state, _ = end_turn(state)
     assert loads(dumps(state)) == state
     calls = len(fake.calls)
@@ -191,7 +191,7 @@ def test_replays_and_saves_keep_rulings_without_the_model(game: GameState) -> No
 
 
 def test_summary_stays_small(game: GameState) -> None:
-    text = build(game, "qin", "build a printing press so books spread everywhere")
+    text = build(game, "rome", "build a printing press so books spread everywhere")
     assert len(text) / 4 < 600  # roughly tokens
     assert "movable_type" in text
 
@@ -199,7 +199,7 @@ def test_summary_stays_small(game: GameState) -> None:
 def test_files_and_debug_log(game: GameState, tmp_path: Path) -> None:
     config = LlmConfig(api_key="secret-key", model="m", data_dir=tmp_path)
     ideas = IdeaPipeline(config, FakeProvider(steam_engine()))
-    ideas.consider(game, "qin", "steam engine")
+    ideas.consider(game, "rome", "steam engine")
     folder = tmp_path / "llm"
     assert json.loads((folder / "usage.json").read_text())
     assert (folder / "rulings.json").is_file()

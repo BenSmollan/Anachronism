@@ -31,7 +31,7 @@ def content() -> Content:
 
 @pytest.fixture
 def game(content: Content) -> GameState:
-    return new_game(content, "warring_states", seed=2, player_civ="qin")
+    return new_game(content, "punic_wars", seed=2, player_civ="rome")
 
 
 @pytest.mark.parametrize(
@@ -50,41 +50,41 @@ def game(content: Content) -> GameState:
     ],
 )
 def test_offline_matches_the_library(game: GameState, text: str, expected: str) -> None:
-    reply = offline.interpret(game, "qin", text)
+    reply = offline.interpret(game, "rome", text)
     assert reply.ideas[0].matches == expected
 
 
 def test_generic_words_alone_do_not_match(game: GameState) -> None:
-    reply = offline.interpret(game, "qin", "flying machines")
+    reply = offline.interpret(game, "rome", "flying machines")
     assert not reply.ideas[0].matches  # not "spinning machines"
     assert "library" in (reply.ideas[0].reason or "")  # says why, offline
 
 
 def test_offline_splits_several_ideas(game: GameState) -> None:
-    reply = offline.interpret(game, "qin", "paper; a compass, and gunpowder")
+    reply = offline.interpret(game, "rome", "paper; a compass, and gunpowder")
     assert [i.matches for i in reply.ideas] == ["paper", "compass", "gunpowder"]
 
 
 def test_offline_rules_from_feasibility(game: GameState) -> None:
-    reply = offline.interpret(game, "qin", "gunpowder")
+    reply = offline.interpret(game, "rome", "gunpowder")
     assert reply.ideas[0].verdict is Verdict.BLOCKED  # needs alchemy, charcoal, saltpetre...
-    mixed = offline.interpret(game, "qin", "paper and quantum teleportation")
+    mixed = offline.interpret(game, "rome", "paper and quantum teleportation")
     assert [i.verdict for i in mixed.ideas] == [Verdict.FEASIBLE, Verdict.IMPLAUSIBLE]
-    unknown = offline.interpret(game, "qin", "quantum teleportation")
+    unknown = offline.interpret(game, "rome", "quantum teleportation")
     assert unknown.ideas[0].verdict is Verdict.IMPLAUSIBLE
     assert unknown.ideas[0].hint.startswith("Perhaps begin with")
 
 
 def test_offline_pipeline_applies(game: GameState) -> None:
     ideas = IdeaPipeline(LlmConfig(), None, use_files=False)
-    outcome = ideas.consider(game, "qin", "paper and a compass")
+    outcome = ideas.consider(game, "rome", "paper and a compass")
     assert outcome.source == "offline"
     assert len(outcome.rulings) == 2
     state = game
     for ruling in outcome.rulings:
-        state, logged = apply_action(state, RuleOnIdea(civ="qin", ruling=ruling))
+        state, logged = apply_action(state, RuleOnIdea(civ="rome", ruling=ruling))
         assert logged.ok
-    assert {"paper", "compass"} <= set(state.civs["qin"].tech)
+    assert {"paper", "compass"} <= set(state.civs["rome"].tech)
 
 
 INJECTIONS = [
@@ -125,8 +125,8 @@ def test_a_model_fooled_by_injection_is_still_bounded(game: GameState) -> None:
         ]
     }
     ideas = IdeaPipeline(LlmConfig(api_key="k", model="m"), FakeProvider(evil), use_files=False)
-    ruling = ideas.consider(game, "qin", INJECTIONS[0]).rulings[0]
-    state, _ = apply_action(game, RuleOnIdea(civ="qin", ruling=ruling))
+    ruling = ideas.consider(game, "rome", INJECTIONS[0]).rulings[0]
+    state, _ = apply_action(game, RuleOnIdea(civ="rome", ruling=ruling))
     node = state.tech_nodes[ruling.node_id or ""]
     caps = state.world.effect_caps
     for effect in node.effects:
@@ -165,12 +165,12 @@ def test_the_engine_bounds_a_hand_made_ruling(game: GameState) -> None:
         unrest_bp=10_000,
         suspicion_bp=10_000,
     )
-    state, logged = apply_action(game, RuleOnIdea(civ="qin", ruling=ruling))
+    state, logged = apply_action(game, RuleOnIdea(civ="rome", ruling=ruling))
     limits = game.world.rules.rulings
     assert logged.ok
     assert (
-        state.civs["qin"].stats.unrest_bp
-        <= game.civs["qin"].stats.unrest_bp + limits.adviser_unrest_bp
+        state.civs["rome"].stats.unrest_bp
+        <= game.civs["rome"].stats.unrest_bp + limits.adviser_unrest_bp
     )
     assert state.tech_nodes["wonder"].provenance == "player_idea"
 
