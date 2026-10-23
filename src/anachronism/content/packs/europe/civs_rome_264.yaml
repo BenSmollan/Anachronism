@@ -1,0 +1,205 @@
+schema_version: 1
+# Peoples of the scenario rome_264 (Rome and Carthage, 264 BC) that civs_ancient.yaml lacks.
+# Ids carry the e2_ prefix. Every entry names its sources; passages marked "# unverified" in a
+# source string were not read in this session (only the author and work are given).
+# How the Italian allies (socii) are modelled is explained in scenarios/rome_264.yaml.
+civs:
+  - id: e2_mamertines
+    name: Mamertines
+    adjective: Mamertine
+    lineage: e2_mamertines
+    colour: "#8c5a3c"
+    symbol: helm
+    emblem: MAM
+    portrait: roman
+    description: >-
+      Campanian mercenaries of Agathocles who seized Messana by treachery and called themselves the sons of Mars. Beaten by Hiero, they begged help from both Carthage and Rome.
+    sources:
+      - "Polybius 1.7 (the Campanian mercenaries seize Messene and take the name Mamertines)"
+      - "Polybius 1.9 (Hiero defeats them at the Longanus)"
+      - "Polybius 1.10.1-2 (some appeal to Carthage, others to Rome)"
+    confidence: high
+  - id: e2_samnites
+    name: Samnite League
+    adjective: Samnite
+    lineage: e2_samnites
+    colour: "#a0522d"
+    symbol: boar
+    emblem: SAM
+    portrait: roman
+    description: >-
+      The hill cantons of Samnium and the Hirpini, beaten in three wars and now allies of Rome by treaty. Polybius counts 70,000 foot and 7,000 horse on their muster rolls in 225 BC.
+    sources:
+      - "Polybius 2.24.10 (Samnites: 70,000 foot and 7,000 horse in 225 BC)"
+      - "Livy 10.45 (Samnite wars end 290 BC; treaty of alliance) # unverified"
+    confidence: medium
+  - id: e2_central_italics
+    name: Central Italic Peoples
+    adjective: Central Italic
+    lineage: e2_central_italics
+    colour: "#7d6b3a"
+    symbol: wolf
+    emblem: MAR
+    portrait: roman
+    description: >-
+      The Marsi, Frentani and their neighbours of the Apennines, allies of Rome since the end of the Samnite wars, who fight beside the legions as socii.
+    sources:
+      - "Polybius 2.24.12 (Marsi, Marrucini, Frentani and Vestini: 20,000 foot and 4,000 horse)"
+      - "Livy 9.45 (treaties with the Marsi, Marrucini, Paeligni and Frentani, 304 BC) # unverified"
+    confidence: medium
+  - id: e2_etruscans
+    name: Etruscan and Faliscan Cities
+    adjective: Etruscan
+    lineage: e2_etruscans
+    colour: "#b8860b"
+    symbol: tower
+    emblem: ETR
+    portrait: roman
+    description: >-
+      The old city-states of Etruria, bound to Rome by separate treaties, with the Faliscans of Falerii. Volsinii will be taken in 264 BC; Falerii will rise and fall in 241.
+    sources:
+      - "Polybius 2.24.5 (Sabines and Etruscans: above 50,000 foot and 4,000 horse)"
+      - "Polybius 2.20 (Etruscans and Boii beaten by Rome at Lake Vadimon)"
+      - "Zonaras 8.7 (Volsinii taken 264 BC) # unverified"
+    confidence: medium
+  - id: e2_umbrians
+    name: Umbrians
+    adjective: Umbrian
+    lineage: e2_umbrians
+    colour: "#5f7f5f"
+    symbol: stag
+    emblem: UMB
+    portrait: roman
+    description: >-
+      The Apennine people of Umbria, allied to Rome; with the Sarsinates they muster some 20,000 men in 225 BC.
+    sources:
+      - "Polybius 2.24.7 (Umbrians and Sarsinates: about 20,000)"
+      - "Polybius 2.16.3 (Umbrians inhabit the Apennine slopes beyond the Etruscans)"
+    confidence: medium
+  - id: e2_southern_italics
+    name: Southern Italic Peoples
+    adjective: Italic
+    lineage: e2_southern_italics
+    colour: "#7f3b5b"
+    symbol: bull
+    emblem: LUC
+    portrait: roman
+    description: >-
+      Lucanians, Bruttians, Apulians and Messapians, who came into Rome's alliance after Pyrrhus and Tarentum, and whose loyalty Hannibal will test.
+    sources:
+      - "Polybius 2.24.11-12 (Iapygians and Messapians 50,000 foot and 16,000 horse; Lucanians 30,000 and 3,000)"
+      - "Livy 22.61 (Bruttians, Apulians and Lucanians go over to Hannibal after Cannae) # unverified"
+    confidence: medium
+  - id: e2_italiote_greeks
+    name: Greek Cities of Italy
+    adjective: Italiot
+    lineage: e2_italiote_greeks
+    colour: "#2f6f8f"
+    symbol: dolphin
+    emblem: ΙΤΑ
+    portrait: greek
+    description: >-
+      Naples, Tarentum and Rhegium: Greek cities that keep their own laws as allies of Rome and furnish ships rather than legions.
+    sources:
+      - "Polybius 1.7.6-13 (Rhegium, the Roman garrison, and its restoration)"
+      - "Polybius 3.118.2 (Tarentum surrenders to Hannibal after Cannae)"
+      - "Livy 9.20, 9.25 (Neapolis' treaty, 326 BC) # unverified"
+    confidence: medium
+  - id: e2_boii
+    name: Boii
+    adjective: Boian
+    lineage: e2_boii
+    colour: "#3d7a3d"
+    symbol: carnyx
+    emblem: BOI
+    portrait: celtic
+    description: >-
+      The Celtic people of the Po plain south of the river, beaten at Lake Vadimon and at peace with Rome since about 282 BC.
+    sources:
+      - "Polybius 2.17 (the Boii among the Celtic peoples of the plain)"
+      - "Polybius 2.20.1-6 (defeated at Lake Vadimon; treaty)"
+      - "Polybius 2.21.1 (the Gauls stay quiet forty-five years)"
+    confidence: high
+  - id: e2_insubres
+    name: Insubres
+    adjective: Insubrian
+    lineage: e2_insubres
+    colour: "#4f8f3d"
+    symbol: torc
+    emblem: INS
+    portrait: celtic
+    description: >-
+      The largest Celtic tribe of the Po plain, who will bring the Gaesatae over the Alps in 225 BC.
+    sources:
+      - "Polybius 2.17, 2.22 (the Insubres and Boii the two largest tribes)"
+      - "Polybius 2.34 (Insubres besieged at Acerrae; Clastidium, 222 BC)"
+    confidence: high
+  - id: e2_cenomani
+    name: Cenomani
+    adjective: Cenomanian
+    lineage: e2_cenomani
+    colour: "#7a9a3a"
+    symbol: horse
+    emblem: CEN
+    portrait: celtic
+    description: >-
+      Celts of the upper Po plain, near the Veneti, who will side with Rome against their kinsmen in 225 BC.
+    sources:
+      - "Polybius 2.17, 2.23.2 (Veneti and Cenomani support Rome in 225 BC)"
+    confidence: high
+  - id: e2_veneti
+    name: Veneti
+    adjective: Venetic
+    lineage: e2_veneti
+    colour: "#3a7a9a"
+    symbol: horse
+    emblem: VEN
+    portrait: greek
+    description: >-
+      An ancient people at the head of the Adriatic, differing from the Gauls in language and customs, who will take Rome's side in 225 BC.
+    sources:
+      - "Polybius 2.17.5-6 (the Veneti, an ancient people differing from the Celts only in speech and dress)"
+      - "Polybius 2.23.2 (the Veneti side with Rome, 225 BC)"
+    confidence: high
+  - id: e2_ligurians
+    name: Ligurians
+    adjective: Ligurian
+    lineage: e2_ligurians
+    colour: "#6b6b3a"
+    symbol: bear
+    emblem: LIG
+    portrait: celtic
+    description: >-
+      Hill tribes of the Apennines and the Riviera, raiders and good infantry, still unsubdued.
+    sources:
+      - "Polybius 2.16.1-2 (the Ligurians hold the Apennines to Pisa and Arretium)"
+      - "Polybius 2.31.4 (a consul traverses Liguria, 225 BC)"
+    confidence: medium
+  - id: e2_illyrians
+    name: Ardiaean Illyrians
+    adjective: Illyrian
+    lineage: e2_illyrians
+    colour: "#8f4f3a"
+    symbol: snake
+    emblem: ILL
+    portrait: celtic
+    description: >-
+      The Adriatic raiders of Queen Teuta, whose piracy and the murder of a Roman envoy will bring Roman arms across the sea in 229 BC.
+    sources:
+      - "Polybius 2.8 (Illyrian piracy; Roman envoys Gaius and Lucius Coruncanius)"
+      - "Polybius 2.12.3 (Teuta's treaty with Rome)"
+    confidence: high
+  - id: e2_celtiberians
+    name: Celtiberians
+    adjective: Celtiberian
+    lineage: e2_celtiberians
+    colour: "#9a6b3a"
+    symbol: ram
+    emblem: CEL
+    portrait: celtic
+    description: >-
+      Hill peoples of the Spanish interior whose last great stand will be at Numantia.
+    sources:
+      - "Polybius 3.14 (Hannibal against the Vaccaei and Carpetani of the Spanish interior)"
+      - "Appian, Iberica 97 (Numantia, 133 BC) # unverified"
+    confidence: low
