@@ -1,347 +1,569 @@
 schema_version: 1
-# Italy, Sicily, Sardinia and Corsica at the grain of their peoples, for the Roman Republic (D-286).
-# SKELETON by the lead: ids and rough centres are fixed (other files use them); the provinces
-# agent refines names, centres, terrain, capacity, resources, neighbours and coastal flags.
+# Italy, Sicily, Sardinia and Corsica at the grain of their peoples, for the Roman Republic, 509-27 BC (D-286).
+# Each province is one people or region, centred on its chief ancient town (latlon: degrees north, east).
+# Sources are in the `# source:` comment on each province: ancient authors first (Strabo book 5-6 for
+# the peoples and towns, Polybius 2 for the manpower of Italy in 225 BC, Livy for conquests and colonies).
+# capacity is about the free-and-slave population each region carried c. 225 BC (Polybius 2.24 gives
+# ~700,000 foot and ~70,000 horse for Rome and her allies, hence 3-5 million people in all): the
+# peninsula with Cisalpine Gaul sums to ~4.0 million, the islands to ~0.9 million.
+# Resources are only those an ancient source attests; grain and pasture come from the terrain.
+# Neighbours, coastal flags and centres are checked against the real map with client/tools/province_report.gd.
+# Provinces added to the lead's skeleton are marked ADDED with the reason; no skeleton id was dropped.
 provinces:
+
+  # --- Rome, Latium and the Latin-speaking south of the Tiber ---
+  # source: Livy (Ancus Marcius' salt-works at Ostia); Strabo 5.3.5 (Ostia, harbourless, silted by the Tiber); Polybius 2.24 (250,000 foot and 23,000 horse of Romans and Campanians in 225 BC)  # unverified: passage numbers not yet read and so withheld
   - id: it_roma
     name: "Rome and the Ager Romanus"
-    latlon: [41.9, 12.5]
+    latlon: [41.85, 12.42]
     terrain: plains
     coastal: true
     river: true
-    capacity: 600000
-    resources: {}
-    neighbours: [it_aequi, it_caere, it_latium, it_sabina, it_tarquinii, it_veii, it_volsci]
-  - id: it_latium
-    name: "Latium (Latin League)"
-    latlon: [41.8, 12.8]
-    terrain: hills
-    coastal: false
-    river: false
-    capacity: 520000
-    resources: {}
-    neighbours: [it_aequi, it_aurunci, it_caere, it_hernici, it_roma, it_sabina, it_veii, it_volsci]
-  - id: it_veii
-    name: "Veii and southern Etruria"
-    latlon: [42.1, 12.3]
-    terrain: hills
-    coastal: false
-    river: true
-    capacity: 360000
-    resources: {}
-    neighbours: [it_caere, it_latium, it_roma, it_sabina, it_tarquinii, it_umbria, it_volsinii]
-  - id: it_caere
-    name: "Caere and the Etruscan coast"
-    latlon: [42.0, 12.0]
-    terrain: plains
-    coastal: true
-    river: false
     capacity: 320000
+    resources: {salt: accessible, stone: accessible}
+    neighbours: [it_latium, it_veii]
+  # source: Livy (the Latin cities after 338 BC); Strabo 5.3.10(Gabii's quarry and 'red stone'); Polybius 2.24 (Latins 80,000 foot, 5,000 horse)  # unverified: passage numbers not yet read and so withheld
+  # note: Praeneste is the centre; the Alban hills (Tusculum, the old Latin League sanctuary) lie inside it, and Alba Longa, destroyed in legend (Livy), gets no separate province.  # unverified
+  - id: it_latium
+    name: "Latium (Praeneste, Tibur, Tusculum, the Alban hills, Lavinium)"
+    latlon: [41.84, 12.89]
+    terrain: hills
+    coastal: false
+    river: false
+    capacity: 240000
+    resources: {stone: accessible}
+    neighbours: [it_aequi, it_hernici, it_roma, it_veii, it_volsci]
+  # source: Livy (Corioli, Antium); (Antium taken 338 BC); Strabo 5.3.5 (Antium on rock)  # unverified: passage numbers not yet read and so withheld
+  # note: Centred inland on Setia and Privernum so the province borders Latium, Hernici and Aurunci as the real Volscian country did; Antium and the coast belong to it. The Rutuli of Ardea (Livy) are folded into Latium and Rome: Ardea is too small for its own province.  # unverified
+  - id: it_volsci
+    name: "Volsci (Setia, Privernum, Velitrae, Antium, the Pomptine plain)"
+    latlon: [41.48, 13.06]
+    terrain: plains
+    coastal: true
+    river: false
+    capacity: 130000
     resources: {}
-    neighbours: [it_latium, it_roma, it_sabina, it_tarquinii, it_veii, it_volsinii]
+    neighbours: [it_aurunci, it_hernici, it_latium]
+  # source: Livy (Hernici lose independence 306 BC, Anagnia their capital); Strabo 5.3.10 (Anagnia)  # unverified: passage numbers not yet read and so withheld
+  - id: it_hernici
+    name: "Hernici (Anagnia, Ferentinum, Aletrium)"
+    latlon: [41.74, 13.15]
+    terrain: hills
+    coastal: false
+    river: true
+    capacity: 65000
+    resources: {}
+    neighbours: [it_aequi, it_aurunci, it_latium, it_marsi, it_volsci]
+  # source: Livy (Aequi crushed 304 BC); (Alba Fucens colony 303 BC); (Carseoli colony 298 BC); Strabo 5.3.1  # unverified: passage numbers not yet read and so withheld
+  - id: it_aequi
+    name: "Aequi (Carseoli, Alba Fucens)"
+    latlon: [42.07, 13.07]
+    terrain: mountains
+    coastal: false
+    river: false
+    capacity: 45000
+    resources: {}
+    neighbours: [it_hernici, it_latium, it_marsi, it_sabina]
+  # source: Strabo 5.3.1 (Sabines, Reate and its mules, Cures); Livy, Cicero Rep. (Sabines); Dionysius; Velleius (Sabines given citizenship 268 BC)  # unverified: passage numbers not yet read and so withheld
+  # note: Varro RR praises Reate's asses and mules, but no resource id fits.  # unverified
+  - id: it_sabina
+    name: "Sabine country (Reate, Cures, Nomentum)"
+    latlon: [42.4, 12.86]
+    terrain: hills
+    coastal: false
+    river: true
+    capacity: 110000
+    resources: {}
+    neighbours: [it_aequi, it_falisci, it_picenum, it_umbria]
+
+  # --- Etruria and the Etruscan borderlands ---
+  # source: Livy (Falerii, the schoolmaster); (Falerii revolts 293 BC), Polybius (Falerian revolt 241 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: Faliscan, not Etruscan, in speech; Rome crushed Falerii in 241 BC (Polybius) and moved the town to the plain (Zonaras).  # unverified
+  - id: it_falisci
+    name: "Falisci (Falerii Veteres, Capena)"
+    latlon: [42.29, 12.41]
+    terrain: hills
+    coastal: false
+    river: false
+    capacity: 40000
+    resources: {}
+    neighbours: [it_caere, it_sabina, it_tarquinii, it_umbria, it_veii, it_volsinii]
+  # source: Livy (fall of Veii, traditionally 396 BC); (Sutrium and Nepet, Latin-style allies, 383 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+  - id: it_veii
+    name: "Veii and the Ager Veientanus (Sutrium, Nepet)"
+    latlon: [42.02, 12.4]
+    terrain: hills
+    coastal: false
+    river: false
+    capacity: 60000
+    resources: {}
+    neighbours: [it_falisci, it_latium, it_roma]
+  # source: Strabo (Caere, Pyrgi); Livy (Caere shelters the Roman sacra); (Caere makes peace 353 BC); (Caere supplies grain to Scipio)  # unverified: passage numbers not yet read and so withheld
+  - id: it_caere
+    name: "Caere (with Pyrgi and Alsium)"
+    latlon: [41.99, 12.1]
+    terrain: coast
+    coastal: true
+    river: false
+    capacity: 60000
+    resources: {}
+    neighbours: [it_falisci]
+  # source: Strabo (Tarquinii, Graviscae); Livy (war with Tarquinii 358 BC); (sailcloth for Scipio's fleet)  # unverified: passage numbers not yet read and so withheld
   - id: it_tarquinii
     name: "Tarquinii and Vulci"
-    latlon: [42.35, 11.7]
+    latlon: [42.25, 11.76]
     terrain: hills
     coastal: true
     river: true
-    capacity: 400000
+    capacity: 100000
     resources: {}
-    neighbours: [it_caere, it_etruria_n, it_roma, it_sabina, it_veii, it_volsinii]
+    neighbours: [it_falisci, it_populonia, it_volsinii]
+  # source: Livy 28.45.18 (Clusium, Rusellae and Perusia supply fir for ships and grain); (Volsinii), Zonaras (Volsinii taken 264 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+  # note: Orvieto is the Etruscan Velzna, the Volsinii of 264 BC.
   - id: it_volsinii
-    name: "Volsinii and Clusium"
-    latlon: [42.75, 11.95]
+    name: "Volsinii and Clusium (Perusia, Rusellae, Saturnia)"
+    latlon: [42.72, 12.11]
     terrain: hills
     coastal: false
     river: true
-    capacity: 440000
-    resources: {}
-    neighbours: [it_caere, it_etruria_n, it_sabina, it_tarquinii, it_umbria, it_veii]
+    capacity: 90000
+    resources: {timber: accessible}
+    neighbours: [it_arretium, it_falisci, it_tarquinii, it_umbria]
+  # source: Strabo 5.2.6 (Elba iron smelted at Populonia), Diodorus (iron of Ilva), Livy (Populonia gives iron to Scipio's fleet), Virgil Aeneid  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: the Etruscan metal coast is the strategic resource of the Tyrrhenian; Strabo says Populonia's own old mines were deserted by his day, so the iron is Elban ore smelted on the mainland.
+  - id: it_populonia
+    name: "Populonia, Vetulonia and Elba (Ilva)"
+    latlon: [42.99, 10.49]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 60000
+    resources: {iron: accessible}
+    neighbours: [it_arretium, it_etruria_n, it_tarquinii]
+  # source: Strabo 5.2.5-6 (Volaterrae, Pisae); Livy 28.45.16 (Volaterrae gives ship-timbers and grain), Polybius (Pisae, Roman landing 225 BC)  # unverified: passage numbers not yet read and so withheld
   - id: it_etruria_n
-    name: "Northern Etruria (Volaterrae, Arretium)"
-    latlon: [43.35, 11.2]
+    name: "Northern Etruria (Volaterrae, Pisae)"
+    latlon: [43.4, 10.86]
     terrain: hills
     coastal: true
     river: true
-    capacity: 520000
-    resources: {}
-    neighbours: [it_ligures_apuani, it_tarquinii, it_umbria, it_volsinii]
-  - id: it_sabina
-    name: "Sabine country"
-    latlon: [42.3, 12.85]
+    capacity: 90000
+    resources: {timber: accessible}
+    neighbours: [it_arretium, it_ligures_apuani, it_populonia]
+  # source: Livy 28.45.16 (Arretium's weapons, helmets, tools); Polybius (Faesulae and Arretium, Gallic raid 225 BC); Pliny NH (Arretine pottery)  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: upper Arno Etruria was the Roman advance post against the Gauls (Polybius; Livy Arretium and the army of Flaminius).  # unverified
+  - id: it_arretium
+    name: "Arretium, Cortona and Faesulae (upper Arno)"
+    latlon: [43.46, 11.88]
     terrain: hills
     coastal: false
     river: true
-    capacity: 300000
-    resources: {}
-    neighbours: [it_aequi, it_caere, it_latium, it_marsi, it_picenum, it_roma, it_tarquinii, it_umbria, it_veii, it_volsinii]
-  - id: it_aequi
-    name: "Aequi"
-    latlon: [42.05, 13.2]
-    terrain: mountains
-    coastal: false
-    river: false
-    capacity: 180000
-    resources: {}
-    neighbours: [it_frentani, it_hernici, it_latium, it_marsi, it_picenum, it_roma, it_sabina, it_volsci]
-  - id: it_hernici
-    name: "Hernici"
-    latlon: [41.72, 13.38]
-    terrain: hills
-    coastal: false
-    river: true
-    capacity: 180000
-    resources: {}
-    neighbours: [it_aequi, it_aurunci, it_campania, it_frentani, it_latium, it_marsi, it_volsci]
-  - id: it_volsci
-    name: "Volsci (Antium, Satricum)"
-    latlon: [41.5, 12.95]
-    terrain: plains
-    coastal: true
-    river: false
-    capacity: 340000
-    resources: {}
-    neighbours: [it_aequi, it_aurunci, it_hernici, it_latium, it_roma]
-  - id: it_aurunci
-    name: "Aurunci and Ausones (Fundi, Formiae)"
-    latlon: [41.3, 13.55]
-    terrain: hills
-    coastal: true
-    river: true
-    capacity: 220000
-    resources: {}
-    neighbours: [it_campania, it_hernici, it_latium, it_samnium, it_volsci]
-  - id: it_marsi
-    name: "Marsi, Paeligni and Vestini"
-    latlon: [42.05, 13.75]
-    terrain: mountains
-    coastal: false
-    river: false
-    capacity: 280000
-    resources: {}
-    neighbours: [it_aequi, it_frentani, it_hernici, it_picenum, it_sabina, it_samnium]
+    capacity: 90000
+    resources: {clay: accessible}
+    neighbours: [it_boii, it_etruria_n, it_populonia, it_senones, it_umbria, it_volsinii]
+
+  # --- Umbria, Picenum and the Adriatic coast ---
+  # source: Livy (battle of Mevania, 308 BC); (Narnia colony 299 BC); Velleius (Spoletium colony 241 BC); Strabo; Polybius 2.24 (Umbrians and Sarsinates 20,000 foot, 3,000 horse)  # unverified: passage numbers not yet read and so withheld
   - id: it_umbria
-    name: "Umbria"
-    latlon: [42.95, 12.6]
+    name: "Umbria (Mevania, Spoletium, Iguvium, Narnia)"
+    latlon: [42.93, 12.61]
     terrain: hills
     coastal: false
     river: true
-    capacity: 460000
+    capacity: 95000
     resources: {}
-    neighbours: [it_etruria_n, it_picenum, it_sabina, it_senones, it_veii, it_volsinii]
+    neighbours: [it_arretium, it_falisci, it_picenum, it_sabina, it_senones, it_volsinii]
+  # source: Strabo (Picentes, Asculum, Ancona); Livy (Picenes defeated 268 BC), Florus; Livy (Asculum and the Social War)  # unverified: passage numbers not yet read and so withheld
   - id: it_picenum
-    name: "Picenum"
-    latlon: [43.15, 13.6]
+    name: "Picenum (Asculum, Firmum, Auximum, Ancona)"
+    latlon: [42.85, 13.57]
     terrain: hills
     coastal: true
     river: true
-    capacity: 460000
+    capacity: 130000
     resources: {}
-    neighbours: [it_aequi, it_marsi, it_sabina, it_senones, it_umbria]
+    neighbours: [it_marsi, it_sabina, it_senones, it_umbria]
+  # source: Polybius (Senones expelled 283 BC); (Gallic land divided 232 BC); Livy (Ariminum colony 268 BC); Strabo  # unverified: passage numbers not yet read and so withheld
   - id: it_senones
-    name: "Ager Gallicus (Senones)"
-    latlon: [43.65, 12.95]
+    name: "Ager Gallicus (Sena Gallica, Ariminum)"
+    latlon: [43.72, 13.22]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 55000
+    resources: {}
+    neighbours: [it_arretium, it_boii, it_picenum, it_umbria]
+  # source: Livy (Marsi, Paeligni, Marrucini, Vestini); Strabo; Polybius 2.24 (Marsi, Marrucini, Frentani, Vestini 20,000 foot, 4,000 horse); Diodorus (Corfinium as Italica, 90 BC)  # unverified: passage numbers not yet read and so withheld
+  # note: Corfinium is central to all four peoples.
+  - id: it_marsi
+    name: "Marsi, Paeligni, Vestini and Marrucini (Marruvium, Corfinium)"
+    latlon: [42.12, 13.84]
+    terrain: mountains
+    coastal: false
+    river: true
+    capacity: 85000
+    resources: {}
+    neighbours: [it_aequi, it_frentani, it_hernici, it_picenum, it_samnium]
+  # source: Strabo (Frentani from the Marrucini to Apulia); Livy (Frentani treaty with Rome 304 BC); Polybius 2.24  # unverified: passage numbers not yet read and so withheld
+  - id: it_frentani
+    name: "Frentani (Histonium, Anxanum, Larinum)"
+    latlon: [42.11, 14.71]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 35000
+    resources: {}
+    neighbours: [it_apulia, it_marsi, it_samnium]
+
+  # --- Campania, Samnium and the south ---
+  # source: Polybius (Falernian plain, richest of Italy); Livy (Campania submits to Rome, 343 BC); (Capua and its cavalry); Strabo 5.4.3  # unverified: passage numbers not yet read and so withheld
+  # note: Neapolis and the Bay are split off as it_neapolis: Capua alone is inland (centre 25 km from the Bay).
+  - id: it_campania
+    name: "Campania (Capua, Cales, Teanum, Casilinum)"
+    latlon: [41.08, 14.25]
     terrain: plains
     coastal: true
     river: true
     capacity: 300000
+    resources: {horses: accessible}
+    neighbours: [it_aurunci, it_hirpini, it_neapolis, it_samnium]
+  # source: Strabo 5.4.6 (sulphur at Puteoli); (Neapolis); Vitruvius (volcanic sand); Diodorus (Elba iron carried to Dicaearchia/Puteoli); Livy (Neapolis' treaty with Rome 326 BC)  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: the Greek coast of the Bay is a separate people and harbour from Capua; 
+  - id: it_neapolis
+    name: "Neapolis, Cumae and the Bay (Puteoli, Pompeii, Nola)"
+    latlon: [40.85, 14.27]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 80000
+    resources: {sulphur: limited, stone: accessible}
+    neighbours: [it_campania, it_picentini]
+  # source: Strabo 5.4.13 (Picentini deported to the gulf of Posidonia; Paestum); Velleius (Paestum, Latin colony 273 BC)  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: Paestum (Latin colony 273 BC) and the Picentine deportees (Strabo 5.4.13) hold the Salerno coast between Campania and Lucania.
+  - id: it_picentini
+    name: "Picentini (Picentia, Salernum, Paestum)"
+    latlon: [40.68, 14.77]
+    terrain: coast
+    coastal: true
+    river: true
+    capacity: 40000
     resources: {}
-    neighbours: [it_picenum, it_umbria]
-  - id: it_campania
-    name: "Campania (Capua, Cumae, Neapolis)"
-    latlon: [40.95, 14.3]
+    neighbours: [it_hirpini, it_lucania, it_neapolis]
+  # source: Livy (Ausones betrayed and destroyed, 314 BC); (Fundi and Formiae, citizens without vote 338 BC); Strabo 5.3.6 (Formiae, Fundi)  # unverified: passage numbers not yet read and so withheld
+  - id: it_aurunci
+    name: "Aurunci and Ausones (Fundi, Formiae, Minturnae, Suessa)"
+    latlon: [41.25, 13.75]
+    terrain: hills
+    coastal: true
+    river: true
+    capacity: 55000
+    resources: {}
+    neighbours: [it_campania, it_hernici, it_samnium, it_volsci]
+  # source: Livy (Bovianum taken 305 BC); Livy (Aesernia colony 263 BC); Strabo; Polybius 2.24 (Samnites 70,000 foot, 7,000 horse)  # unverified: passage numbers not yet read and so withheld
+  - id: it_samnium
+    name: "Samnium (Pentri, Caudini, Carricini: Bovianum, Aesernia)"
+    latlon: [41.48, 14.47]
+    terrain: mountains
+    coastal: false
+    river: true
+    capacity: 150000
+    resources: {timber: limited}
+    neighbours: [it_aurunci, it_campania, it_frentani, it_hirpini, it_marsi]
+  # source: Strabo (Hirpini, Aeclanum, Beneventum); Velleius (Latin colony Beneventum, 268 BC); Livy (Compsa)  # unverified: passage numbers not yet read and so withheld
+  - id: it_hirpini
+    name: "Hirpini (Aeclanum, Compsa, Beneventum)"
+    latlon: [41.04, 15.01]
+    terrain: mountains
+    coastal: false
+    river: true
+    capacity: 65000
+    resources: {}
+    neighbours: [it_apulia, it_campania, it_lucania, it_picentini, it_samnium]
+  # source: Strabo 6.1.3 (Lucani, Samnite in race); Livy (Hannibal at Grumentum, 207 BC); Polybius 2.24 (Lucanians 30,000 foot, 3,000 horse)  # unverified: passage numbers not yet read and so withheld
+  - id: it_lucania
+    name: "Lucania (Grumentum, Volcei, Potentia, Heraclea)"
+    latlon: [40.29, 15.91]
+    terrain: mountains
+    coastal: true
+    river: false
+    capacity: 120000
+    resources: {}
+    neighbours: [it_apulia, it_bruttium, it_hirpini, it_picentini, it_tarentum]
+  # source: Strabo 6.3.9 (Daunians, Arpi, Sipontum, fertile pasture); Polybius (Gerunium, Hannibal's winter camp 217 BC); Livy (Luceria colony 314 BC)  # unverified: passage numbers not yet read and so withheld
+  - id: it_apulia
+    name: "Apulia (Daunia: Arpi, Luceria, Teanum, Sipontum)"
+    latlon: [41.48, 15.58]
     terrain: plains
     coastal: true
     river: true
-    capacity: 1040000
-    resources: {}
-    neighbours: [it_apulia, it_aurunci, it_hernici, it_hirpini, it_samnium]
-  - id: it_samnium
-    name: "Samnium (Pentri, Caudini)"
-    latlon: [41.55, 14.4]
-    terrain: mountains
-    coastal: false
-    river: true
-    capacity: 660000
-    resources: {}
-    neighbours: [it_apulia, it_aurunci, it_campania, it_frentani, it_hirpini, it_marsi]
-  - id: it_hirpini
-    name: "Hirpini"
-    latlon: [41.0, 14.95]
-    terrain: mountains
-    coastal: false
-    river: false
-    capacity: 260000
-    resources: {}
-    neighbours: [it_apulia, it_campania, it_frentani, it_lucania, it_samnium]
-  - id: it_frentani
-    name: "Frentani"
-    latlon: [42.05, 14.6]
+    capacity: 100000
+    resources: {horses: accessible}
+    neighbours: [it_frentani, it_hirpini, it_lucania, it_peucetia, it_tarentum]
+  # source: Strabo 6.3.8 (Peucetii, Barium, Egnatia); (Canusium); Polybius (Canusium); Polybius 2.24 (Iapygian horse)  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: Peucetia is neither Daunia (Arpi) nor Messapia in Strabo; Barium lies 140 km from Brundisium. Horse figures are Polybius' for Iapygians, Strabo 6.3.9.
+  - id: it_peucetia
+    name: "Peucetia (Barium, Gnathia, Egnatia, Canusium)"
+    latlon: [40.89, 17.39]
     terrain: hills
     coastal: true
     river: false
-    capacity: 180000
-    resources: {}
-    neighbours: [it_aequi, it_apulia, it_hernici, it_hirpini, it_marsi, it_samnium]
-  - id: it_apulia
-    name: "Apulia (Daunia: Arpi, Luceria)"
-    latlon: [41.45, 15.55]
-    terrain: plains
-    coastal: true
-    river: true
-    capacity: 520000
-    resources: {}
-    neighbours: [it_campania, it_frentani, it_hirpini, it_lucania, it_samnium]
-  - id: it_lucania
-    name: "Lucania"
-    latlon: [40.45, 15.8]
-    terrain: mountains
-    coastal: true
-    river: false
-    capacity: 420000
-    resources: {}
-    neighbours: [it_apulia, it_hirpini, it_tarentum]
+    capacity: 70000
+    resources: {horses: limited}
+    neighbours: [it_apulia, it_tarentum]
+  # source: Strabo 6.3.1 (Messapia); Livy (Brundisium Latin colony, 244 BC); Polybius 2.24 (Iapygians and Messapians 50,000 foot, 16,000 horse)  # unverified: passage numbers not yet read and so withheld
   - id: it_messapia
-    name: "Messapia and Brundisium"
-    latlon: [40.55, 17.9]
+    name: "Messapia (Brundisium, Uria, Hydruntum, Lupiae)"
+    latlon: [40.64, 17.94]
     terrain: plains
     coastal: true
     river: false
-    capacity: 340000
+    capacity: 110000
     resources: {}
     neighbours: [it_tarentum]
+  # source: Strabo 6.3.1 (Tarentum, Metapontum); Polybius (Tarentum 212-209 BC); Livy (Tarentum surrenders 272 BC)  # unverified: passage numbers not yet read and so withheld
   - id: it_tarentum
     name: "Tarentum and Metapontum"
-    latlon: [40.45, 17.1]
-    terrain: plains
+    latlon: [40.47, 17.24]
+    terrain: coast
     coastal: true
     river: false
-    capacity: 400000
+    capacity: 100000
     resources: {}
-    neighbours: [it_lucania, it_messapia]
+    neighbours: [it_apulia, it_lucania, it_messapia, it_peucetia]
+  # source: Strabo 6.1.4 (Brettii); (Consentia; Temesa's copper mines, abandoned by his day); (Sila forest, Brettian pitch); Cicero Brutus (Bruttian pitch)  # unverified: passage numbers not yet read and so withheld
   - id: it_bruttium
-    name: "Bruttium (Croton, Locri, Thurii)"
-    latlon: [39.25, 16.5]
+    name: "Bruttium (Consentia, Croton, Locri, Thurii)"
+    latlon: [39.3, 16.25]
     terrain: mountains
     coastal: true
     river: false
-    capacity: 400000
-    resources: {}
-    neighbours: []
+    capacity: 165000
+    resources: {timber: accessible, copper: limited}
+    neighbours: [it_lucania, it_rhegium]
+  # source: Polybius (Rhegium's Campanian garrison, retaken 270 BC); Strabo 6.1.6 (Rhegium)  # unverified: passage numbers not yet read and so withheld
   - id: it_rhegium
     name: "Rhegium"
-    latlon: [38.1, 15.7]
+    latlon: [38.11, 15.65]
     terrain: hills
     coastal: true
     river: false
-    capacity: 120000
+    capacity: 35000
     resources: {}
-    neighbours: [si_messana]
+    neighbours: [it_bruttium]
+
+  # --- Cisalpine Gaul and Liguria ---
+  # source: Polybius (oak woods and swine of the plain); Strabo 5.1.6 (Boii driven out); Livy,(Boii beaten 191 BC); (Bononia colony 189 BC)  # unverified: passage numbers not yet read and so withheld
   - id: it_boii
-    name: "Boii (Felsina/Bononia)"
-    latlon: [44.5, 11.3]
-    terrain: plains
-    coastal: false
-    river: true
-    capacity: 500000
-    resources: {}
-    neighbours: [it_ligures_apuani, it_veneti]
-  - id: it_insubres
-    name: "Insubres (Mediolanum)"
-    latlon: [45.45, 9.2]
-    terrain: plains
-    coastal: false
-    river: true
-    capacity: 600000
-    resources: {}
-    neighbours: [it_cenomani, it_liguria]
-  - id: it_cenomani
-    name: "Cenomani (Brixia)"
-    latlon: [45.5, 10.25]
-    terrain: plains
-    coastal: false
-    river: true
-    capacity: 400000
-    resources: {}
-    neighbours: [it_insubres]
-  - id: it_veneti
-    name: "Veneti"
-    latlon: [45.45, 11.9]
-    terrain: plains
+    name: "Boii (Felsina/Bononia, Mutina)"
+    latlon: [44.49, 11.34]
+    terrain: river_plains
     coastal: true
     river: true
-    capacity: 440000
+    capacity: 95000
+    resources: {timber: accessible}
+    neighbours: [it_arretium, it_cenomani, it_ligures_apuani, it_senones, it_veneti]
+  # source: Polybius (Mediolanum); Livy; Strabo 5.1.6  # unverified: passage numbers not yet read and so withheld
+  - id: it_insubres
+    name: "Insubres (Mediolanum, Comum)"
+    latlon: [45.46, 9.19]
+    terrain: river_plains
+    coastal: false
+    river: true
+    capacity: 140000
+    resources: {timber: accessible}
+    neighbours: [it_cenomani, it_ligures_apuani, it_liguria, it_salassi, it_taurini]
+  # source: Livy (Cenomani); Polybius,(Placentia and Cremona colonies, 218 BC)  # unverified: passage numbers not yet read and so withheld
+  - id: it_cenomani
+    name: "Cenomani (Brixia, Verona, Cremona)"
+    latlon: [45.54, 10.22]
+    terrain: plains
+    coastal: false
+    river: true
+    capacity: 85000
     resources: {}
-    neighbours: [it_boii]
+    neighbours: [it_boii, it_insubres, it_veneti]
+  # source: Strabo 5.1.4 (Venetic horse-breeding, prized in the past, gone by Strabo's day); (Patavium); Polybius (Veneti allied to Rome); Livy (Patavium)  # unverified: passage numbers not yet read and so withheld
+  - id: it_veneti
+    name: "Veneti (Patavium, Ateste, Altinum)"
+    latlon: [45.41, 11.87]
+    terrain: river_plains
+    coastal: true
+    river: true
+    capacity: 120000
+    resources: {horses: accessible}
+    neighbours: [it_boii, it_cenomani]
+  # source: Polybius (Hannibal storms the capital of the Taurini); Livy; Strabo  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: the Taurini lie west of the Insubres, on the road Hannibal took (Polybius).  # unverified
+  - id: it_taurini
+    name: "Taurini (Taurasia)"
+    latlon: [45.07, 7.69]
+    terrain: plains
+    coastal: false
+    river: true
+    capacity: 55000
+    resources: {}
+    neighbours: [it_insubres, it_liguria, it_salassi]
+  # source: Strabo 4.6.7 (Salassi gold-washing in the Duria; Rome's war on them, 143 and 25 BC); Cassius Dio  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: Alpine pass-keepers whom Rome crushed in 25 BC (Cassius Dio), the end of this game's span.  # unverified
+  - id: it_salassi
+    name: "Salassi (Aosta valley)"
+    latlon: [45.74, 7.32]
+    terrain: mountains
+    coastal: false
+    river: true
+    capacity: 35000
+    resources: {gold: limited}
+    neighbours: [it_insubres, it_taurini]
+  # source: Strabo 4.6.2 (Ligurian ship-timber, flocks, hides, honey; Genua); Livy (Mago takes Genua, 205 BC)  # unverified: passage numbers not yet read and so withheld
   - id: it_liguria
-    name: "Liguria"
-    latlon: [44.35, 8.9]
+    name: "Liguria (Genua, Albingaunum, Vada Sabatia)"
+    latlon: [44.41, 8.93]
     terrain: mountains
     coastal: true
     river: false
-    capacity: 300000
-    resources: {}
-    neighbours: [it_insubres, it_ligures_apuani]
+    capacity: 90000
+    resources: {timber: accessible}
+    neighbours: [it_insubres, it_ligures_apuani, it_taurini]
+  # source: Strabo 5.2.5 (Luna's marble); Pliny NH; Livy (Apuani deported 180 BC); (Luna colony 177 BC)  # unverified: passage numbers not yet read and so withheld
   - id: it_ligures_apuani
     name: "Apuan Ligurians and Luna"
-    latlon: [44.1, 10.1]
+    latlon: [44.1, 10.03]
     terrain: mountains
     coastal: true
     river: true
-    capacity: 160000
-    resources: {}
-    neighbours: [it_boii, it_etruria_n, it_liguria]
+    capacity: 35000
+    resources: {stone: accessible}
+    neighbours: [it_boii, it_etruria_n, it_insubres, it_liguria]
+
+  # --- Sicily ---
+  # source: Polybius (Mamertines at Messana; the quarrel that began the First Punic War); Thucydides  # unverified: passage numbers not yet read and so withheld
   - id: si_messana
-    name: "Messana"
-    latlon: [38.15, 15.4]
+    name: "Messana and the Peloritani"
+    latlon: [38.19, 15.55]
     terrain: hills
     coastal: true
     river: false
-    capacity: 180000
+    capacity: 50000
     resources: {}
-    neighbours: [it_rhegium, si_syracuse]
+    neighbours: [si_catana, si_enna]
+  # source: Strabo (Catana, Tauromenium, Aetna); Cicero Verr. (Catana and its grain-lands)  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: the east-coast plain under Etna, outside the Syracusan royal territory in 264 BC (Diodorus, Hiero's kingdom).  # unverified
+  - id: si_catana
+    name: "Catana, Tauromenium and Aetna"
+    latlon: [37.5, 15.09]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 80000
+    resources: {}
+    neighbours: [si_enna, si_messana, si_syracuse]
+  # source: Thucydides; Diodorus (Hiero's treaty 263 BC); Polybius; Cicero Verr. (Syracuse's quarries, latomiae)  # unverified: passage numbers not yet read and so withheld
+  # note: Leontini (,) is only 40 km from Syracuse and was part of Hiero's kingdom (Diodorus), so no separate province.  # unverified
   - id: si_syracuse
-    name: "Syracuse"
-    latlon: [37.1, 15.2]
+    name: "Syracuse (with Leontini)"
+    latlon: [37.07, 15.29]
     terrain: plains
     coastal: true
     river: false
-    capacity: 600000
+    capacity: 170000
+    resources: {stone: accessible}
+    neighbours: [si_catana, si_gela]
+  # source: Cicero Verr. (Enna in the heart of Sicily); Diodorus (first Servile War rises at Enna, 135 BC)  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: the Sicel grain interior and scene of both Servile Wars, absent from the skeleton.
+  - id: si_enna
+    name: "Enna and the Sicel interior (Centuripae, Morgantina)"
+    latlon: [37.57, 14.28]
+    terrain: hills
+    coastal: false
+    river: true
+    capacity: 55000
     resources: {}
-    neighbours: [si_messana]
+    neighbours: [si_akragas, si_catana, si_gela, si_halaesa, si_messana]
+  # source: Polybius (siege of Akragas 262 BC); Strabo; Pliny NH (rock salt of Agrigentum)  # unverified: passage numbers not yet read and so withheld
+  # note: Salt rests on Pliny alone and the passage number is from memory: to check.
   - id: si_akragas
-    name: "Akragas and Gela"
-    latlon: [37.3, 13.6]
+    name: "Akragas"
+    latlon: [37.29, 13.58]
     terrain: hills
     coastal: true
     river: false
-    capacity: 360000
+    capacity: 85000
+    resources: {salt: limited}
+    neighbours: [si_enna, si_panormus]
+  # source: Diodorus (Gela razed by Phintias of Akragas, 282 BC); (Camarina destroyed by the Romans, 258 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: the south-coast plain between Akragas and Syracuse; without it the interior (Enna) would wrongly touch the south sea.
+  - id: si_gela
+    name: "Gela and Camarina (southern Sicily)"
+    latlon: [37.07, 14.25]
+    terrain: plains
+    coastal: true
+    river: true
+    capacity: 35000
+    resources: {}
+    neighbours: [si_enna, si_syracuse]
+  # source: Cicero Verrines (Halaesa, a free Sicilian city; Cephaloedium; Tyndaris); Diodorus (Halaesa founded 403 BC)
+  # note: ADDED: the north-coast strip between Panormus and Messana; without it Enna would wrongly reach the northern sea. unverified town positions.
+  - id: si_halaesa
+    name: "Halaesa, Cephaloedium and Tyndaris (the north coast)"
+    latlon: [38.0, 14.18]
+    terrain: hills
+    coastal: true
+    river: false
+    capacity: 45000
+    resources: {}
+    neighbours: [si_enna, si_panormus]
+  # source: Polybius (Panormus taken 254 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+  - id: si_panormus
+    name: "Panormus and Himera"
+    latlon: [38.12, 13.36]
+    terrain: coast
+    coastal: true
+    river: false
+    capacity: 75000
+    resources: {}
+    neighbours: [si_akragas, si_halaesa, si_lilybaeum]
+  # source: Polybius (siege of Lilybaeum); (Eryx, Drepana); Diodorus  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: the Carthaginian epikrateia in the west, the last Punic holdings in Sicily (Polybius,).  # unverified
+  - id: si_lilybaeum
+    name: "Lilybaeum, Eryx and Drepana (western Sicily)"
+    latlon: [37.8, 12.43]
+    terrain: coast
+    coastal: true
+    river: false
+    capacity: 60000
     resources: {}
     neighbours: [si_panormus]
-  - id: si_panormus
-    name: "Panormus and western Sicily (Lilybaeum)"
-    latlon: [37.95, 13.0]
-    terrain: hills
-    coastal: true
-    river: false
-    capacity: 380000
-    resources: {}
-    neighbours: [si_akragas]
+
+  # --- Sardinia and Corsica ---
+  # source: Livy (Sardinian revolt and Carthaginian landing, 215 BC); Cicero (grain); Pausanias; Strabo  # unverified: passage numbers not yet read and so withheld
+  # note: Silver rests on later Roman mining at Metalla near Iglesias; Republican working is uncertain.
   - id: sa_sardinia
-    name: "Sardinia"
-    latlon: [40.0, 9.0]
-    terrain: hills
+    name: "Sardinia (Carales, Nora, Sulci, Tharros)"
+    latlon: [39.23, 9.11]
+    terrain: plains
     coastal: true
-    river: false
-    capacity: 500000
-    resources: {}
-    neighbours: []
-  - id: co_corsica
-    name: "Corsica"
-    latlon: [42.15, 9.1]
+    river: true
+    capacity: 140000
+    resources: {silver: limited}
+    neighbours: [sa_barbagia]
+  # source: Strabo (mountain raiders: Diagesbes, Iolaei, Balari, Corsi); Pausanias (Ilienses, Balari, Corsi); Livy,(Gracchus' Sardinian war, 177 BC)  # unverified: passage numbers not yet read and so withheld
+  # note: ADDED: Sardinia's unsubjugated interior, fought from 238 BC to 177 BC (Livy,).  # unverified
+  - id: sa_barbagia
+    name: "Sardinian highlands (Ilienses, Balari, Corsi)"
+    latlon: [40.32, 9.33]
     terrain: mountains
     coastal: true
     river: false
-    capacity: 120000
-    resources: {}
+    capacity: 90000
+    resources: {timber: accessible}
+    neighbours: [sa_sardinia]
+  # source: Diodorus (Corsica, Kyrnos; Alalia); Strabo; Livy (Roman wars in Corsica, 181 and 173 BC); Theophrastus HP (Corsican timber, to check)  # unverified: passage numbers not yet read and so withheld
+  - id: co_corsica
+    name: "Corsica (Aleria, Mariana)"
+    latlon: [42.11, 9.51]
+    terrain: mountains
+    coastal: true
+    river: false
+    capacity: 60000
+    resources: {timber: accessible}
     neighbours: []
