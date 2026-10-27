@@ -1,6 +1,6 @@
 {
   "name": "anachronism",
-  "mainBranch": "main",
+  "mainBranch": "claude/phase-2-3d",
   "mode": "team",
   "commands": {
     "check": "bash scripts/check.sh",
