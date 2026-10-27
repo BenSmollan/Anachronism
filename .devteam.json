@@ -1,0 +1,17 @@
+{
+  "name": "anachronism",
+  "mainBranch": "main",
+  "mode": "team",
+  "commands": {
+    "check": "bash scripts/check.sh",
+    "testChanged": "bash scripts/check.sh"
+  },
+  "shared": [],
+  "safety": [],
+  "features": {},
+  "staffing": "auto",
+  "release": {
+    "via": "pr",
+    "pr": {}
+  }
+}

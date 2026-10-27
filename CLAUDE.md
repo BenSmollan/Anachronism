@@ -59,3 +59,13 @@ updating `docs/PLAN.md` (checkboxes, current step) and logging decisions in `doc
 - Don't let pygame_gui widgets hold game state — UI reads from engine state each frame.
 - Keep the LLM summary under ~500 tokens; include only related nodes.
 - Seshat data is CC BY-NC-SA and historical-basemaps is GPL-3.0: consult, don't copy (D-009).
+
+## Team (dev harness)
+
+This project is built with the dev harness (mode: team). `devteam where` prints where the harness
+and this project's board live on this machine (`devteam install`, once per machine, puts `devteam` on PATH).
+- Read the harness's `HARNESS.md` first, then your role brief in its `roles/` folder.
+- The board, briefs and hand-offs live in the team folder (`devteam where`); the adapter is `.devteam.json` here.
+- A question for the owner: `devteam ask`; only the CTO asks them (HARNESS.md rule 4).
+- Run `devteam handoff <id>` before handing off; builders never commit to main. Slash commands: `/dt:team`, `/dt:cto`,
+  `/dt:brief`, `/dt:grill`, `/dt:options`, `/dt:shots`, `/dt:handoff`, `/dt:release`, `/dt:harvest`, `/dt:launch`, `/dt:check-tests`, `/dt:check-flow`, `/dt:check-code`, `/dt:debug`.
