@@ -76,6 +76,7 @@ scenarios:
           it_campania: 240000
           it_picenum: 104000
           it_senones: 44000
+          it_picentini: 32000
         stockpiles: {food: 2009, materials: 502, wealth: 628, knowledge: 314}
         stats: {literacy_bp: 500, unrest_bp: 800, legitimacy_bp: 7000}
         influence: {clergy: 2500, nobility: 5500, guilds: 2000}
@@ -201,14 +202,59 @@ scenarios:
         pitch: "Rich old cities that remember being a great power, and know they are not one now."
         provinces:
           it_tarquinii: 80000
-          it_volsinii: 72000
           it_populonia: 48000
           it_arretium: 72000
           it_etruria_n: 72000
           it_falisci: 32000
-        stockpiles: {food: 601, materials: 150, wealth: 150, knowledge: 75}
+        stockpiles: {food: 486, materials: 121, wealth: 121, knowledge: 61}
         stats: {literacy_bp: 600, unrest_bp: 1000, legitimacy_bp: 5500}
         influence: {clergy: 4000, nobility: 5000, guilds: 1000}
+        techs:
+          republic: widespread
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          roads: adopted
+          piston_bellows: adopted
+          aqueduct: adopted
+      e2_volsinii:
+        # Rome opens at war with Volsinii (DEC014). Zonaras 8.7: the freedmen ("servants") of Volsinii hold
+        # the senate and offices; the old citizens appealed to Rome; the consul Q. Fabius (265 BC) besieged
+        # the city and was killed in the assault; it surrendered to famine. The Fasti Triumphales give the
+        # triumph over the Vulsinienses to M. Fulvius Flaccus, consul of 264, on 1 November.
+        # The province it_volsinii also holds Clusium and Perusia, which were not Volsinii's: an approximation.
+        navy_bp: 0
+        disposition: aggressive
+        capital: it_volsinii
+        leader: The freedmen's senate of Volsinii
+        leader_age: 45
+        pitch: "An old Etruscan city whose former servants rule it, besieged by a Roman consul. Hold the citadel."
+        provinces:
+          it_volsinii: 72000
+        stockpiles: {food: 115, materials: 29, wealth: 29, knowledge: 14}
+        stats: {literacy_bp: 600, unrest_bp: 2500, legitimacy_bp: 3500}
+        influence: {clergy: 4000, nobility: 3000, guilds: 3000}
         techs:
           republic: widespread
           agriculture: widespread
@@ -291,8 +337,7 @@ scenarios:
           it_apulia: 80000
           it_peucetia: 56000
           it_messapia: 88000
-          it_picentini: 32000
-        stockpiles: {food: 774, materials: 193, wealth: 193, knowledge: 96}
+        stockpiles: {food: 723, materials: 181, wealth: 181, knowledge: 90}
         stats: {literacy_bp: 250, unrest_bp: 1100, legitimacy_bp: 5500}
         influence: {clergy: 3500, nobility: 5500, guilds: 1000}
         techs:
@@ -688,8 +733,7 @@ scenarios:
         pitch: "One city, two giants, and Archimedes. Survive by ingenuity alone."
         provinces:
           si_syracuse: 136000
-          si_catana: 64000
-        stockpiles: {food: 640, materials: 160, wealth: 200, knowledge: 230}
+        stockpiles: {food: 435, materials: 109, wealth: 200, knowledge: 230}
         stats: {literacy_bp: 1100, unrest_bp: 900, legitimacy_bp: 6500}
         influence: {clergy: 2500, nobility: 4000, guilds: 3500}
         techs:
@@ -1221,10 +1265,9 @@ scenarios:
           pto_delta: 1800000
           pto_middle: 1000000
           pto_thebaid: 1200000
-          pto_cyrenaica: 250000
           pto_coele_syria: 800000
           pto_cyprus: 200000
-        stockpiles: {food: 8400, materials: 2100, wealth: 2625, knowledge: 2110}
+        stockpiles: {food: 8000, materials: 2000, wealth: 2500, knowledge: 2110}
         stats: {literacy_bp: 800, unrest_bp: 1000, legitimacy_bp: 6500}
         influence: {clergy: 4500, nobility: 4000, guilds: 1500}
         techs:
@@ -1259,6 +1302,53 @@ scenarios:
           canals: widespread
           alchemy: concept
           water_wheel: concept
+      e2_cyrene:
+        # Cyrene is its own kingdom under Magas (DEC014): Pausanias 1.7.1-3 (revolt from Ptolemy, marriage to
+        # Antiochus' daughter Apame); Justin 26.3 (his death, the betrothal of Berenice to Ptolemy's son, the
+        # murder of Demetrius the Fair). Justin calls Magas' widow Arsinoe, Pausanias calls his wife Apame.
+        navy_bp: 3000
+        disposition: cautious
+        scripts:
+          - {id: "cyrene_returns_to_egypt", goal: "ally", target: "ptolemaic", preconditions: {after_year: -250}, note: "Magas dies; his daughter Berenice, betrothed to Ptolemy's son, has Demetrius the Fair killed and marries as her father chose, bringing Cyrene back to Egypt (c. 250-246 BC)."}
+        capital: pto_cyrenaica
+        music: near_east
+        leader: King Magas
+        leader_age: 50
+        leader_died: -250
+        pitch: "A half-brother's kingdom between Egypt and the desert, rich in silphium. Stay free of Alexandria, or marry back into it."
+        provinces:
+          pto_cyrenaica: 250000
+        stockpiles: {food: 400, materials: 100, wealth: 150, knowledge: 80}
+        stats: {literacy_bp: 800, unrest_bp: 1200, legitimacy_bp: 6000}
+        influence: {clergy: 3500, nobility: 4500, guilds: 2000}
+        techs:
+          agriculture: widespread
+          irrigation: widespread
+          ox_plough: widespread
+          iron_plough: adopted
+          pottery_kiln: widespread
+          charcoal_burning: widespread
+          wheel: widespread
+          herbal_medicine: widespread
+          copper_smelting: widespread
+          bronze_working: widespread
+          iron_working: widespread
+          ore_prospecting: adopted
+          writing: widespread
+          alphabet: widespread
+          masonry: widespread
+          surveying: adopted
+          astronomy_calendar: adopted
+          standard_measures: widespread
+          coinage: widespread
+          sailing: widespread
+          composite_bow: adopted
+          horse_riding: widespread
+          chariot: adopted
+          fortification: widespread
+          crossbow: concept
+          schools: adopted
+          roads: adopted
       seleucid:
         disposition: aggressive
         scripts:
@@ -1398,6 +1488,7 @@ scenarios:
       sa_barbagia: 72000
       si_halaesa: 36000
       si_gela: 28000
+      si_catana: 64000
       southern_gaul: 300000
       central_gaul: 700000
       belgic_gaul: 450000
@@ -1437,11 +1528,14 @@ scenarios:
       - {a: "rhodes", b: "ptolemaic", status: "trading", note: "Rhodes grows rich on Egyptian grain."}
       - {a: "carthage", b: "numidia", status: "tributary", note: "Numidian princes serve Carthage."}
       - {a: "rome", b: "carthage", status: "trading", note: "Old treaties have kept the peace between Rome and Carthage. Polybius 3.22-26."}
-      - {a: "pergamon", b: "seleucid", status: "hostile", grievance_bp: 2000, note: "Pergamon has broken away from the Seleucids."}
+      - {a: "pergamon", b: "seleucid", status: "neutral", grievance_bp: 1000, note: "Philetaerus still holds Pergamon in the Seleucids' name; the open break comes under Eumenes I, who beats Antiochus near Sardis (c. 261 BC)."}
+      - {a: "rome", b: "e2_volsinii", status: "war", grievance_bp: 6000, note: "The freedmen of Volsinii killed the envoys the old citizens sent to Rome; a consul besieges the city. Zonaras 8.7; Fasti Triumphales 264."}
+      - {a: "e2_cyrene", b: "ptolemaic", status: "hostile", grievance_bp: 3000, note: "Magas led Cyrene in revolt from his half-brother Ptolemy and marched on Egypt. Pausanias 1.7.1-2."}
+      - {a: "e2_cyrene", b: "seleucid", status: "allied", note: "Magas, married to Antiochus' daughter, urged Antiochus to attack Egypt. Pausanias 1.7.3."}
     faiths:
-      - {id: olympians, name: "The Olympian gods", followers: [macedon, athens, achaea, aetolia, sparta, epirus, syracuse, rhodes, massalia, pergamon, bithynia, pontus, seleucid, ptolemaic, e2_italiote_greeks], spreads: true, note: "Greek gods, carried by Alexander's heirs from Egypt to Bactria."}
+      - {id: olympians, name: "The Olympian gods", followers: [macedon, athens, achaea, aetolia, sparta, epirus, syracuse, rhodes, massalia, pergamon, bithynia, pontus, seleucid, ptolemaic, e2_italiote_greeks, e2_cyrene], spreads: true, note: "Greek gods, carried by Alexander's heirs from Egypt to Bactria."}
       - {id: roman_gods, name: "The gods of Rome", followers: [rome], spreads: false, note: "Jupiter, Juno and Minerva on the Capitol - soon to meet their Greek cousins."}
-      - {id: italic_gods, name: "The gods of the Italic and Etruscan peoples", followers: [e2_samnites, e2_central_italics, e2_etruscans, e2_umbrians, e2_southern_italics, e2_mamertines], spreads: false, note: "Local cults of Italy beside Rome's own."}
+      - {id: italic_gods, name: "The gods of the Italic and Etruscan peoples", followers: [e2_samnites, e2_central_italics, e2_etruscans, e2_volsinii, e2_umbrians, e2_southern_italics, e2_mamertines], spreads: false, note: "Local cults of Italy beside Rome's own."}
       - {id: punic_gods, name: "The gods of Carthage", followers: [carthage, numidia], spreads: false, note: "Baal Hammon and Tanit."}
       - {id: celtic_gods, name: "The Celtic gods and druids", followers: [e2_boii, e2_insubres, e2_cenomani, e2_ligurians, e2_celtiberians], spreads: false}
       - {id: kushite_gods, name: "Amun of Napata", followers: [kush], spreads: false}

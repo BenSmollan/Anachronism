@@ -203,3 +203,32 @@ civs:
       - "Polybius 3.14 (Hannibal against the Vaccaei and Carpetani of the Spanish interior)"
       - "Appian, Iberica 97 (Numantia, 133 BC) # unverified"
     confidence: low
+  - id: e2_volsinii
+    name: Volsinii
+    adjective: Volsinian
+    lineage: e2_volsinii
+    colour: "#7a3e1d"
+    symbol: tower
+    emblem: VEL
+    portrait: roman
+    description: >-
+      Velzna, the oldest and strongest of the Etruscan cities, on its high citadel. Its freedmen have taken the senate and the offices; the old families have called in Rome, and in 264 BC a consul besieges the city.
+    sources:
+      - "Zonaras 8.7 (Volsinii, the most ancient of the Etruscans, with a very strong citadel; its servants take the offices and the senate; the old citizens appeal secretly to Rome; Fabius besieges it, is killed, and the city surrenders to famine)"
+      - "Fasti Triumphales, 264/3 BC (M. Fulvius Flaccus, consul, triumphs over the Vulsinienses, 1 November)"
+      - "Livy, Periochae 16.8 (successful wars against the Carthaginians and the Volsinians)"
+    confidence: medium
+  - id: e2_cyrene
+    name: Kingdom of Cyrene
+    adjective: Cyrenaean
+    lineage: e2_cyrene
+    colour: "#5b8a72"
+    symbol: flower
+    emblem: ΚΥΡ
+    portrait: hellenistic
+    description: >-
+      The Greek cities of Libya under King Magas, half-brother of Ptolemy II, who led them out of Egypt's empire and married a Seleucid princess. When he dies, his daughter Berenice's marriage will bring Cyrene back to Egypt.
+    sources:
+      - "Pausanias 1.7.1-3 (Magas, Ptolemy's half-brother and governor of Cyrene, leads it in revolt and marches on Egypt; married to Apame, daughter of Antiochus, he urges Antiochus to attack Egypt)"
+      - "Justin 26.3.2-8 (Magas, king of Cyrene, dies after betrothing his only daughter Berenice to Ptolemy's son; Demetrius the Fair is killed and Berenice keeps her father's choice)"
+    confidence: medium
