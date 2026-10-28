@@ -3,74 +3,6 @@ schema_version: 1
 # latlon: [degrees north, degrees east] of the province's centre (usually its chief city).
 # neighbours and coastal are checked against the map with client/tools/province_report.gd.
 provinces:
-  - id: rom_latium
-    name: Latium
-    latlon: [41.9, 12.5]
-    terrain: plains
-    coastal: true
-    river: true
-    capacity: 1220000
-    resources: {stone: accessible, salt: limited}
-    neighbours: [rom_campania, rom_etruria, rom_samnium, rom_umbria]
-  - id: rom_etruria
-    name: Etruria
-    latlon: [42.7, 11.5]
-    terrain: hills
-    coastal: true
-    river: true
-    capacity: 810000
-    resources: {iron: accessible, copper: limited, timber: accessible}
-    neighbours: [gau_boii, rom_latium, rom_umbria]
-  - id: rom_campania
-    name: Campania
-    latlon: [40.95, 14.4]
-    terrain: plains
-    coastal: true
-    river: true
-    capacity: 1080000
-    resources: {clay: accessible, stone: accessible}
-    neighbours: [rom_apulia, rom_latium, rom_samnium]
-  - id: rom_samnium
-    name: Samnium
-    latlon: [41.55, 14.8]
-    terrain: mountains
-    coastal: true
-    capacity: 470000
-    resources: {timber: accessible}
-    neighbours: [rom_apulia, rom_campania, rom_latium, rom_umbria]
-  - id: rom_umbria
-    name: Umbria and Picenum
-    latlon: [43.1, 12.9]
-    terrain: hills
-    coastal: true
-    river: true
-    capacity: 610000
-    resources: {timber: accessible}
-    neighbours: [gau_boii, rom_etruria, rom_latium, rom_samnium]
-  - id: rom_apulia
-    name: Apulia
-    latlon: [41.2, 16.0]
-    terrain: plains
-    coastal: true
-    capacity: 540000
-    resources: {horses: limited, salt: limited}
-    neighbours: [rom_campania, rom_samnium, rom_tarentum]
-  - id: rom_tarentum
-    name: Tarentum
-    latlon: [40.47, 17.24]
-    terrain: coast
-    coastal: true
-    capacity: 340000
-    resources: {salt: accessible}
-    neighbours: [rom_apulia, rom_bruttium]
-  - id: rom_bruttium
-    name: Bruttium
-    latlon: [39.1, 16.4]
-    terrain: mountains
-    coastal: true
-    capacity: 270000
-    resources: {timber: accessible}
-    neighbours: [rom_tarentum]
   - id: car_carthage
     name: Carthage
     latlon: [36.85, 10.2]
@@ -96,22 +28,6 @@ provinces:
     capacity: 200000
     resources: {salt: limited}
     neighbours: [car_byzacena, garamantes, pto_cyrenaica]
-  - id: car_lilybaeum
-    name: Western Sicily
-    latlon: [37.8, 12.8]
-    terrain: coast
-    coastal: true
-    capacity: 340000
-    resources: {salt: accessible}
-    neighbours: [syr_syracuse]
-  - id: car_sardinia
-    name: Sardinia
-    latlon: [39.9, 9.0]
-    terrain: hills
-    coastal: true
-    capacity: 400000
-    resources: {silver: limited, iron: limited}
-    neighbours: []
   - id: car_gades
     name: Gades and Tartessos
     latlon: [37.2, -5.8]
@@ -121,31 +37,6 @@ provinces:
     capacity: 400000
     resources: {silver: accessible, copper: accessible}
     neighbours: [celtiberia, east_iberia, lusitania]
-  - id: syr_syracuse
-    name: Syracuse
-    latlon: [37.2, 14.9]
-    terrain: coast
-    coastal: true
-    capacity: 540000
-    resources: {stone: accessible, sulphur: limited}
-    neighbours: [car_lilybaeum, messana]
-  - id: gau_insubria
-    name: Insubria
-    latlon: [45.46, 9.19]
-    terrain: plains
-    river: true
-    capacity: 540000
-    resources: {horses: accessible, iron: limited}
-    neighbours: [gau_boii, liguria]
-  - id: gau_boii
-    name: Land of the Boii
-    latlon: [44.6, 11.3]
-    terrain: river_plains
-    coastal: true
-    river: true
-    capacity: 470000
-    resources: {horses: limited, timber: accessible}
-    neighbours: [gau_insubria, rom_etruria, rom_umbria]
   - id: mas_massalia
     name: Massalia
     latlon: [43.3, 5.37]
@@ -154,7 +45,7 @@ provinces:
     river: true
     capacity: 140000
     resources: {salt: accessible}
-    neighbours: [central_gaul, liguria, southern_gaul]
+    neighbours: [central_gaul, southern_gaul]
   - id: num_massyli
     name: Land of the Massyli
     latlon: [36.2, 7.0]
@@ -399,30 +290,6 @@ provinces:
     capacity: 540000
     resources: {iron: accessible, gold: accessible, elephants: accessible}
     neighbours: [pto_thebaid]
-  - id: messana
-    name: Messana (the Mamertines)
-    latlon: [38.1, 15.4]
-    terrain: coast
-    coastal: true
-    capacity: 70000
-    resources: {}
-    neighbours: [syr_syracuse]
-  - id: corsica
-    name: Corsica
-    latlon: [42.1, 9.05]
-    terrain: mountains
-    coastal: true
-    capacity: 50000
-    resources: {timber: accessible}
-    neighbours: []
-  - id: liguria
-    name: Liguria
-    latlon: [44.3, 8.6]
-    terrain: mountains
-    coastal: true
-    capacity: 200000
-    resources: {timber: accessible}
-    neighbours: [gau_insubria, mas_massalia]
   - id: southern_gaul
     name: Southern Gaul
     latlon: [43.8, 3.0]

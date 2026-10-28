@@ -86,6 +86,10 @@ class Script(Frozen):
     """Scripts (of any civilisation) that must have fired first."""
     note: Annotated[str, Field(max_length=300)] = ""
     """What happened in real history, for the chronicle and for content review."""
+    sources: tuple[str, ...] = ()
+    """Where this is known from (ancient authors first, passage numbers)."""
+    disputed: str = ""
+    """What historians dispute about it and why; empty when nothing is."""
 
 
 class StartingRelation(Frozen):
@@ -100,6 +104,10 @@ class StartingRelation(Frozen):
     grievance_bp: Rate = 0
     """Memory of old wrongs, which colours how they react (0-100%)."""
     note: Annotated[str, Field(max_length=300)] = ""
+    sources: tuple[str, ...] = ()
+    """Where this is known from (ancient authors first, passage numbers)."""
+    disputed: str = ""
+    """What historians dispute about it and why; empty when nothing is."""
 
     @model_validator(mode="after")
     def _check_pair(self) -> StartingRelation:

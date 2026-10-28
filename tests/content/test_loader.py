@@ -184,15 +184,17 @@ def test_scenario_provinces_need_map_positions(packs: Path) -> None:
 
 
 def test_real_map_provinces_need_a_latlon(packs: Path) -> None:
-    edit(packs / "europe" / "provinces_ancient.yaml", "    latlon: [41.9, 12.5]\n", "")
+    edit(packs / "europe" / "provinces_ancient.yaml", "    latlon: [36.85, 10.2]\n", "")
     assert any(
-        "province 'rom_latium' has no latlon for the europe map" in p for p in problems(packs)
+        "province 'car_carthage' has no latlon for the europe map" in p for p in problems(packs)
     )
 
 
 def test_latlon_must_be_on_earth(packs: Path) -> None:
     edit(
-        packs / "europe" / "provinces_ancient.yaml", "latlon: [41.9, 12.5]", "latlon: [125.0, 41.9]"
+        packs / "europe" / "provinces_ancient.yaml",
+        "latlon: [36.85, 10.2]",
+        "latlon: [125.0, 36.85]",
     )
     assert any("is not a place on Earth" in p for p in problems(packs))
 

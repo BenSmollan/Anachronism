@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from itertools import pairwise
 
+from anachronism.content.checks_sources import source_issues
 from anachronism.content.issues import ContentIssue
 from anachronism.content.registry import Registry
 from anachronism.content.schema import (
@@ -39,6 +40,7 @@ def cross_reference_issues(registry: Registry) -> list[ContentIssue]:
         *_formation_issues(registry),
         *_symbol_issues(registry),
         *_dialogue_issues(registry),
+        *source_issues(registry),
     ]
 
 

@@ -81,6 +81,10 @@ class ProvinceGeography(Frozen):
     per km). Provinces on the real Earth use ``latlon`` instead."""
     latlon: LatLon | None = None
     """The province's centre on the real Earth: (degrees north, degrees east)."""
+    sources: tuple[str, ...] = ()
+    """Where this is known from (ancient authors first, passage numbers)."""
+    disputed: str = ""
+    """What historians dispute about it and why; empty when nothing is."""
 
     @model_validator(mode="after")
     def _check_neighbours(self) -> ProvinceGeography:
