@@ -5,7 +5,7 @@ dilemmas:
     title: Copy the enemy's ship
     text: "A Carthaginian warship has run aground on the coast. Rome has never built a fleet - but here is a perfect model."
     chance_bp: 4000
-    scenarios: [punic_wars]
+    scenarios: [rome_264]
     civs: [rome]
     at_war: true
     choices:
