@@ -127,28 +127,59 @@ scenarios:
         # Rome here is the ager Romanus and its citizen and Latin colonies, plus the peoples whose land
         # Rome had annexed outright (Sabines 290/268, Picentes 268, Senones 283). The allies (socii) are separate civs.
         # Paestum (it_picentini, Latin colony 273) is Rome's here: Rome holds 13 provinces in 264, not 12.
+        # NUMBERS, and how they were reached (each a derivation, not a quotation):
+        # - Citizens: the lustrum of the censors of 265/4 counted 382,234 citizens (Livy, Per. 16.4-5; censors
+        #   in Fasti Capitolini 265). Eutropius 2.18 gives 292,334 for the same census: disputed, and the
+        #   game follows Livy. Populations: 1,290,000 people on Rome's 13 provinces = the census (adult male
+        #   citizens) times about 3.4 for women, children and slaves. The multiplier is a modelling assumption;
+        #   no ancient source gives one. Polybius 2.24.14 (250,000 foot and 23,000 horse of Romans and
+        #   Campanians on the rolls in 225) checks the order of size.
+        # - Manpower: martial_bp stays at the usual 10,000. Polybius 1.16.2 has four citizen legions a year
+        #   of 4,000 foot and 300 horse, with the allies apart; the allied levies sit with the allied civs.
+        # - Navy: navy_bp 500, a twentieth of the usual. In 264 Rome had "not any decked ships, but no long
+        #   warships at all, not even a single boat", and crossed to Messana in fifty-oared boats and triremes
+        #   borrowed from Tarentum, Locri, Elea and Naples (Polybius 1.20.13-14). Its first fleet of 100
+        #   quinqueremes and 20 triremes came later (Polybius 1.20.9).
         navy_bp: 500
         disposition: aggressive
+        sources:
+          - "Polybius 1.11.3 (the people vote for war; the consul Appius Claudius is sent to Messana)"
+          - "Fasti Capitolini, 264 BC (consuls Ap. Claudius Caudex and M. Fulvius Flaccus)"
+          - "Livy, Periochae 16.4-5 (the lustrum: 382,234 citizens)"
+          - "Polybius 1.20.13-14 (no warships; boats borrowed from Tarentum, Locri, Elea and Naples)"
+          - "Polybius 1.16.2 (four citizen legions a year, each 4,000 foot and 300 horse)"
+        disputed: "The census of 265/4: Livy, Per. 16.5 has 382,234 citizens, Eutropius 2.18 has 292,334; the game follows Livy."
         scripts:
-          - {id: "first_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -266}, note: "Rome crosses to Sicily and the First Punic War begins (264-241 BC). Polybius 1.11-1.63."}
-          - {id: "seize_sardinia", goal: "conquer", target: "carthage", preconditions: {after_year: -240, before_year: -232}, depends_on: ["first_punic_war"], note: "Rome takes Sardinia from a Carthage crippled by the Mercenary War and adds 1,200 talents (238 BC). Polybius 1.88.8-12."}
-          - {id: "first_illyrian_war", goal: "conquer", target: "e2_illyrians", preconditions: {after_year: -231}, depends_on: ["first_punic_war"], note: "Rome sends fleet and legions across the Adriatic against Queen Teuta (229 BC). Polybius 2.8-12."}
-          - {id: "gallic_war_telamon", goal: "conquer", target: "e2_boii", preconditions: {after_year: -227}, depends_on: ["first_punic_war"], note: "Rome crushes the Gauls at Telamon (225 BC) and enters the lands of the Boii. Polybius 2.27-31."}
-          - {id: "conquest_of_the_insubres", goal: "conquer", target: "e2_insubres", preconditions: {after_year: -224}, depends_on: ["gallic_war_telamon"], note: "Rome besieges Acerrae and wins at Clastidium (222 BC). Polybius 2.34."}
-          - {id: "second_illyrian_war", goal: "conquer", target: "e2_illyrians", preconditions: {after_year: -221}, depends_on: ["first_illyrian_war"], note: "Rome drives Demetrius of Pharos from Illyria (219 BC). Polybius 3.16, 3.18-19."}
-          - {id: "first_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Philip V allies with Hannibal (215 BC); Rome keeps him busy in Greece. Polybius 7.9 (treaty); Livy 23.33-38 and 26.24."}
-          - {id: "conquest_of_syracuse", goal: "conquer", target: "syracuse", preconditions: {after_year: -214}, depends_on: ["hannibals_war"], note: "Syracuse, gone over to Carthage after Hiero died, is stormed by Marcellus (212 BC). Polybius 8.3-7 (siege); Livy 25.23-31."}
-          - {id: "scipio_in_africa", goal: "conquer", target: "carthage", preconditions: {after_year: -206}, depends_on: ["hannibals_war"], note: "Scipio crosses to Africa and defeats Hannibal at Zama (202 BC). Livy 30.29-35; Polybius 15.5."}
-          - {id: "second_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -201}, depends_on: ["scipio_in_africa"], note: "Flamininus defeats Philip V at Cynoscephalae (197 BC) and proclaims the freedom of Greece at the Isthmus. Polybius 18.19-27; Livy 33.7-10, 33.32."}
-          - {id: "rome_vs_antiochus", goal: "conquer", target: "seleucid", preconditions: {after_year: -195}, depends_on: ["second_macedonian_war"], note: "The Scipios defeat Antiochus III at Magnesia (190 BC); treaty of Apamea 188. Livy 37.37-44, 38.38."}
-          - {id: "third_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -173}, depends_on: ["rome_vs_antiochus"], note: "Aemilius Paullus defeats Perseus at Pydna (168 BC); Macedon is cut into four republics. Livy 44.40-42, 45.29-32."}
-          - {id: "numantine_war", goal: "conquer", target: "e2_celtiberians", preconditions: {after_year: -145}, depends_on: ["third_macedonian_war"], note: "Scipio Aemilianus starves Numantia into surrender (133 BC). Appian, Iberica 97 (unverified); Livy, Periochae 59 (unverified)."}
-          - {id: "third_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -151}, depends_on: ["scipio_in_africa"], note: "Rome demands the surrender of Carthage and destroys it (149-146 BC). Polybius 36.9 (opinions in Greece); Appian, Punica 74-135 (unverified)."}
-          - {id: "achaean_war", goal: "conquer", target: "achaea", preconditions: {after_year: -149}, depends_on: ["third_macedonian_war"], note: "Mummius defeats the Achaean League and sacks Corinth (146 BC). Polybius 38.10-18 and 39.2."}
+          - {id: "first_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -266}, note: "Rome crosses to Sicily and the First Punic War begins (264-241 BC). Polybius 1.11-1.63.", sources: ["Polybius 1.11.3-1.12.4 (the vote, the crossing and the first battles at Messana)", "Polybius 1.62.7-1.63.3 (the peace of Lutatius, 241 BC)"]}
+          - {id: "seize_sardinia", goal: "conquer", target: "carthage", preconditions: {after_year: -240, before_year: -232}, depends_on: ["first_punic_war"], note: "Rome takes Sardinia from a Carthage crippled by the Mercenary War and adds 1,200 talents (238 BC). Polybius 1.88.8-12.", sources: ["Polybius 1.88.8-12"]}
+          - {id: "first_illyrian_war", goal: "conquer", target: "e2_illyrians", preconditions: {after_year: -231}, depends_on: ["first_punic_war"], note: "Rome sends fleet and legions across the Adriatic against Queen Teuta (229 BC). Polybius 2.8-12.", sources: ["Polybius 2.8.1-2.12.3"]}
+          - {id: "gallic_war_telamon", goal: "conquer", target: "e2_boii", preconditions: {after_year: -227}, depends_on: ["first_punic_war"], note: "Rome crushes the Gauls at Telamon (225 BC) and enters the lands of the Boii. Polybius 2.27-31.", sources: ["Polybius 2.27.1-2.31.1"]}
+          - {id: "conquest_of_the_insubres", goal: "conquer", target: "e2_insubres", preconditions: {after_year: -224}, depends_on: ["gallic_war_telamon"], note: "Rome besieges Acerrae and wins at Clastidium (222 BC). Polybius 2.34.", sources: ["Polybius 2.34.1-15"]}
+          - {id: "second_illyrian_war", goal: "conquer", target: "e2_illyrians", preconditions: {after_year: -221}, depends_on: ["first_illyrian_war"], note: "Rome drives Demetrius of Pharos from Illyria (219 BC). Polybius 3.16, 3.18-19.", sources: ["Polybius 3.16.1", "Polybius 3.18.1-3.19.13"]}
+          - {id: "first_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Philip V allies with Hannibal (215 BC); Rome keeps him busy in Greece. Polybius 7.9 (treaty); Livy 23.33-38 and 26.24.", sources: ["Polybius 7.9 (the sworn treaty of Hannibal and Philip)", "Livy 23.33-38", "Livy 26.24 (Laevinus' treaty with the Aetolians)"]}
+          - {id: "conquest_of_syracuse", goal: "conquer", target: "syracuse", preconditions: {after_year: -214}, depends_on: ["hannibals_war"], note: "Syracuse, gone over to Carthage after Hiero died, is stormed by Marcellus (212 BC). Polybius 8.3-7 (siege); Livy 25.23-31.", sources: ["Polybius 8.3-8.7 (the siege and Archimedes' engines)", "Livy 25.23-31 (the fall of Syracuse)"]}
+          - {id: "scipio_in_africa", goal: "conquer", target: "carthage", preconditions: {after_year: -206}, depends_on: ["hannibals_war"], note: "Scipio crosses to Africa and defeats Hannibal at Zama (202 BC). Livy 30.29-35; Polybius 15.9-16.", sources: ["Polybius 15.9-16 (Zama)", "Livy 30.29-35"]}
+          - {id: "second_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -201}, depends_on: ["scipio_in_africa"], note: "Flamininus defeats Philip V at Cynoscephalae (197 BC) and proclaims the freedom of Greece at the Isthmus. Polybius 18.19-27; Livy 33.7-10, 33.32.", sources: ["Polybius 18.19-27 (Cynoscephalae)", "Livy 33.7-10", "Livy 33.32 (the Isthmian proclamation)"]}
+          - {id: "rome_vs_antiochus", goal: "conquer", target: "seleucid", preconditions: {after_year: -195}, depends_on: ["second_macedonian_war"], note: "The Scipios defeat Antiochus III at Magnesia (190 BC); treaty of Apamea 188. Livy 37.37-44, 38.38.", sources: ["Livy 37.37-44 (Magnesia)", "Livy 38.38 (the treaty of Apamea)"]}
+          - {id: "third_macedonian_war", goal: "conquer", target: "macedon", preconditions: {after_year: -173}, depends_on: ["rome_vs_antiochus"], note: "Aemilius Paullus defeats Perseus at Pydna (168 BC); Macedon is cut into four republics. Livy 44.40-42, 45.29-32.", sources: ["Livy 44.40-42 (Pydna)", "Livy 45.29-32 (Macedon divided)"]}
+          - {id: "numantine_war", goal: "conquer", target: "e2_celtiberians", preconditions: {after_year: -145}, depends_on: ["third_macedonian_war"], note: "Scipio Aemilianus starves Numantia into surrender (133 BC). Livy, Periochae 57 and 59.", sources: ["Livy, Periochae 57.1-9 (Scipio besieges Numantia)", "Livy, Periochae 59.1 (Numantia falls)"]}
+          - {id: "third_punic_war", goal: "conquer", target: "carthage", preconditions: {after_year: -151}, depends_on: ["scipio_in_africa"], note: "Rome demands the surrender of Carthage and destroys it (149-146 BC). Livy, Periochae 49-51; Polybius 38.19-22.", sources: ["Livy, Periochae 49.2-12 (war declared, the siege begins)", "Livy, Periochae 51.1-3 (Carthage taken, 146 BC)", "Polybius 38.19-22 (Scipio at the fall of Carthage)"]}
+          - {id: "achaean_war", goal: "conquer", target: "achaea", preconditions: {after_year: -149}, depends_on: ["third_macedonian_war"], note: "Mummius defeats the Achaean League and sacks Corinth (146 BC). Polybius 38.10-18 and 39.2.", sources: ["Polybius 38.10-18", "Polybius 39.2 (the sack of Corinth)"]}
         capital: it_roma
         leader: Consul Appius Claudius Caudex
+        # Caudex's age is unknown: no ancient source gives his birth year. 45 is a placeholder for a consul.
         leader_age: 45
-        generals: [{name: "Manius Valerius Maximus", skill: 3, trait: siege, note: "Consul in 263 BC (Polybius 1.16.1); took the Sicilian towns."}, {name: "Marcus Fulvius Flaccus", skill: 2, note: "Colleague of Appius Claudius, consul 264 BC (Fasti Capitolini)."}, {name: "Gaius Duilius", skill: 2, trait: shield, note: "Victor of Mylae, Rome's first sea battle (Polybius 1.22-23)."}, {name: "Marcus Atilius Regulus", skill: 3, trait: bold, note: "Consul who carries the war to Africa (Polybius 1.25-34)."}]
+        # Yearly consuls cannot be carried as `successors` (rulers.py: "takes the throne"); an R2 engine row.
+        # Generals in the order the war used them: Fulvius Flaccus at Volsinii (264), Valerius in Sicily (263),
+        # Postumius and Mamilius at Agrigentum (262), Duilius at Mylae (260), Scipio in Corsica (259), Regulus (256).
+        generals:
+          - {name: "Marcus Fulvius Flaccus", skill: 2, trait: siege, note: "Consul of 264 BC, Caudex's colleague; triumphs over the Volsinians on 1 November.", sources: ["Fasti Capitolini, 264 BC", "Fasti Triumphales, 264/3 BC (over the Vulsinienses)"]}
+          - {name: "Manius Valerius Maximus", skill: 3, trait: siege, note: "Consul in 263 BC; takes Hadranum, wins over Halaesa and sixty-seven towns, and forces Hiero to terms. Called Messalla.", sources: ["Polybius 1.16.1-3", "Diodorus 23.4.1 (Hadranum, Centuripa, sixty-seven cities)", "Fasti Triumphales, 263/2 BC (over the Carthaginians and Hiero)"]}
+          - {name: "Lucius Postumius Megellus", skill: 2, trait: siege, note: "Consul of 262 BC; besieges Agrigentum with Mamilius.", sources: ["Polybius 1.17.6-8", "Fasti Capitolini, 262 BC"]}
+          - {name: "Quintus Mamilius Vitulus", skill: 2, note: "Consul of 262 BC; holds the lines at Agrigentum.", sources: ["Polybius 1.17.6-8", "Fasti Capitolini, 262 BC"]}
+          - {name: "Gaius Duilius", skill: 2, trait: shield, note: "Victor of Mylae, Rome's first sea battle (260 BC), and the first naval triumph.", sources: ["Polybius 1.22.1, 1.23.1-4", "Fasti Triumphales, 260/59 BC"]}
+          - {name: "Lucius Cornelius Scipio", skill: 2, note: "Consul of 259 BC; takes Aleria in Corsica and sails on Sardinia.", sources: ["Zonaras 8.11", "Fasti Triumphales, 259/8 BC (over the Carthaginians, Sardinia and Corsica)"]}
+          - {name: "Marcus Atilius Regulus", skill: 3, trait: bold, note: "Consul who carries the war to Africa and is taken prisoner (256-255 BC).", sources: ["Polybius 1.26.11, 1.29.1, 1.34.8-12"]}
         pitch: "Two consuls, a Senate of families and a federation of allies bound by treaty rather than conquest. Carthage rules the western sea; the question is what Rome does with Sicily."
         provinces:
           it_roma: 256000
@@ -167,38 +198,40 @@ scenarios:
         stockpiles: {food: 2009, materials: 502, wealth: 628, knowledge: 314}
         stats: {literacy_bp: 500, unrest_bp: 800, legitimacy_bp: 7000}
         influence: {clergy: 2500, nobility: 5500, guilds: 2000}
+        # Rome's start techs, checked one by one against 264 BC. "judgement" = common to Iron Age Italy and
+        # needs no single passage; a cite is given where a passage shows the thing in Roman use by 264.
         techs:
-          republic: widespread
-          agriculture: widespread
-          irrigation: widespread
-          ox_plough: widespread
-          iron_plough: adopted
-          pottery_kiln: widespread
-          charcoal_burning: widespread
-          wheel: widespread
-          herbal_medicine: widespread
-          copper_smelting: widespread
-          bronze_working: widespread
-          iron_working: widespread
-          ore_prospecting: adopted
-          writing: widespread
-          alphabet: widespread
-          masonry: widespread
-          surveying: adopted
-          astronomy_calendar: adopted
-          standard_measures: widespread
-          coinage: widespread
-          sailing: widespread
-          composite_bow: adopted
-          horse_riding: widespread
-          chariot: adopted
-          fortification: widespread
-          crossbow: concept
-          schools: concept
-          roads: adopted
-          piston_bellows: adopted
-          aqueduct: adopted
-          concrete: concept
+          republic: widespread  # Polybius 1.11.1-3 (Senate, people and consuls decide the war of 264); Polybius 6.11-18
+          agriculture: widespread  # judgement
+          irrigation: widespread  # judgement
+          ox_plough: widespread  # judgement
+          iron_plough: adopted  # judgement
+          pottery_kiln: widespread  # judgement
+          charcoal_burning: widespread  # judgement
+          wheel: widespread  # judgement; Livy 10.28 (wagons at Sentinum, 295)
+          herbal_medicine: widespread  # judgement
+          copper_smelting: widespread  # Polybius 6.23.14 (the bronze heart-protector)
+          bronze_working: widespread  # Polybius 6.23.14
+          iron_working: widespread  # Polybius 6.22.1, 6.23.1 (swords, javelins, the panoply of the hastati)
+          ore_prospecting: adopted  # judgement
+          writing: widespread  # Polybius 3.22.3 (Rome's treaty with Carthage of 509 in archaic Latin)
+          alphabet: widespread  # Polybius 3.22.3
+          masonry: widespread  # Frontinus Aq. 1.5 (the Appian aqueduct and road, 312)
+          surveying: adopted  # Velleius 1.14.2-8 (colonies laid out on allotted land)
+          astronomy_calendar: adopted  # judgement; the first sundial reaches Rome only in 263 (Pliny NH 7.214)
+          standard_measures: widespread  # judgement
+          coinage: widespread  # Zonaras 8.7 (money so plentiful that Rome used silver coin, c. 269); disputed: Zonaras calls them denarii, a later coin
+          sailing: widespread  # Polybius 1.20.14 (allied Italian ships carry the army); no Roman warships (1.20.13)
+          composite_bow: concept  # Polybius 6.21-23: the legion has no archers, only javelins (velites); known from enemies
+          horse_riding: widespread  # Polybius 1.16.2 (300 horse to each legion)
+          chariot: concept  # Livy 10.28 (Gallic war chariots at Sentinum, 295); Rome never fielded them
+          fortification: widespread  # Polybius 1.18.3 (the double trench and palisade at Agrigentum, 262)
+          crossbow: concept  # Polybius 8.5.6 (Archimedes' "small scorpions" at Syracuse): known in Sicily, not used by Rome
+          schools: concept  # judgement: no public schools in 264
+          roads: adopted  # Frontinus Aq. 1.5 (Appius Claudius builds the Appian Way, 312)
+          aqueduct: adopted  # Frontinus Aq. 1.5 (Aqua Appia, 312), 1.6 (Anio Vetus, contracted 272)
+          concrete: concept  # judgement: hydraulic concrete is later than 264
+          # piston_bellows removed: the double-acting piston bellows is Chinese (techs/craft.yaml); Rome used skin bellows
       e2_samnites:
         # Allied to Rome by treaty since 290 BC (Livy 10.45, unverified). Polybius 2.24.10 gives 70,000 foot and 7,000 horse in 225 BC.
         navy_bp: 0
