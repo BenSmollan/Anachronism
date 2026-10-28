@@ -54,6 +54,10 @@ class Successor(Frozen):
     ends: Annotated[str, Field(max_length=60)] = ""
     """How that reign ended, if not by death ("is forced to abdicate"): the chronicle's
     words for it (D-145)."""
+    sources: tuple[str, ...] = ()
+    """Where this is known from (ancient authors first, passage numbers)."""
+    disputed: str = ""
+    """What historians dispute about it and why; empty when nothing is."""
 
 
 GeneralTrait = Literal["horse", "siege", "shield", "bold", "quartermaster", "beloved"]
@@ -70,6 +74,10 @@ class General(Frozen):
     trait: GeneralTrait | None = None
     note: str = ""
     """A line of history."""
+    sources: tuple[str, ...] = ()
+    """Where this is known from (ancient authors first, passage numbers)."""
+    disputed: str = ""
+    """What historians dispute about it and why; empty when nothing is."""
 
 
 class ScenarioCiv(Frozen):
@@ -111,6 +119,10 @@ class ScenarioCiv(Frozen):
     peoples, where every adult man rode and shot, raise far more; a demilitarised court less."""
     scripts: tuple[Script, ...] = ()
     """What this civilisation means to do, if conditions allow (brief §7.1)."""
+    sources: tuple[str, ...] = ()
+    """Where this is known from (ancient authors first, passage numbers)."""
+    disputed: str = ""
+    """What historians dispute about it and why; empty when nothing is."""
 
 
 class Scenario(Frozen):
@@ -142,6 +154,9 @@ class Scenario(Frozen):
     not tens of thousands) raise it so inventions cost the same share of a state's effort."""
     sources: tuple[str, ...] = ()
     """Internal research notes on the moment (populations, borders, rulers)."""
+    sourced: bool = False
+    """Opt in to the sourcing check: ``anachronism-lint`` then fails any civ, general,
+    successor, starting relation or script of this scenario that has no ``sources``."""
     confidence: Confidence = Confidence.LOW
     """How sure the snapshot is; internal only."""
     common_techs: dict[Identifier, Stage] = Field(default_factory=dict)
