@@ -4,7 +4,7 @@
 ## `--seed=N` picks the game, `--turns=N` plays N turns (the player does nothing) first,
 ## `--focus=province_id,distance` points the camera at a province (practice map),
 ## `--look=lat,lon,distance` points it at a real place, `--scenario=ID` picks the scenario
-## (default `punic_wars`; the player is always Rome). On the real map:
+## (default `rome_264`; the player is always Rome). On the real map:
 ## `--start=idea_id` begins an experiment, `--select=province_id` selects a province and
 ## `--play=N` then ends N turns, `--click=x,y` clicks the map, `--tab=ideas|projects|world` opens a panel (all for
 ## screenshots and tests). `--smoke` goes through the title screen and picker, builds the
@@ -73,7 +73,7 @@ func _ready() -> void:
 	var real: Array = catalog["scenarios"].filter(func(s): return s["map"] != null and s["civs"].any(func(c): return c["id"] == "rome"))
 	var direct := options.has("scenario") or options.has("civ") or (options.has("screenshot") and not options.has("screen"))
 	if direct or real.is_empty():
-		_start_game(str(options.get("scenario", "punic_wars")), str(options.get("civ", "rome")))
+		_start_game(str(options.get("scenario", "rome_264")), str(options.get("civ", "rome")))
 		return
 	# Title screen over a slowly drifting view of the real map, then the civilisation picker.
 	_ensure_earth(str(real[0]["map"]))

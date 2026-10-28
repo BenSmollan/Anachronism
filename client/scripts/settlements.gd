@@ -17,7 +17,7 @@ extends RefCounted
 
 const FolkHouses := preload("res://scripts/folk_houses.gd")
 ## The model-kit modules (D-280) by name: each has kinds() and build(kind).
-const MODULE_NAMES := ["east", "classical", "northern", "steppe", "south", "walls", "civic", "props",
+const MODULE_NAMES := ["classical", "northern", "south", "walls", "civic", "props",
 	"flora"]
 const PlanCity := preload("res://scripts/city/plan_city.gd")
 const PlanRural := preload("res://scripts/city/plan_rural.gd")
@@ -378,7 +378,7 @@ func prop(kind: String, pixel: Vector2, yaw: float, size := 1.0, site := -1, lif
 
 
 ## Each style's model module (for house_set and its own props).
-const REGION_MODULE := {"east": "east", "classical": "classical", "northern": "northern", "steppe": "steppe",
+const REGION_MODULE := {"classical": "classical", "northern": "northern",
 	"nile": "south", "near_east": "south", "south_asian": "south"}
 
 
@@ -493,31 +493,25 @@ var _feet := {}    ## part -> footprint radius at scale 1
 ## Which model-kit houses each style builds (D-280), listed by how common each kind is; a
 ## culture may have its own mix. Missing kinds (a module not yet made) fall back to the old ones.
 const HOUSE_MODELS := {
-	"east": ["east", ["house_1", "house_1", "house_2", "house_3", "house_6", "house_2"]],
-	"east:samurai": ["east", ["house_4", "house_4", "house_4", "house_2", "house_6", "house_1"]],
-	"east:joseon": ["east", ["house_5", "house_5", "house_5", "house_6", "house_1", "house_3"]],
-	"east:hills": ["east", ["house_6", "house_6", "house_5", "house_1"]],
 	"classical": ["classical", ["house_1", "house_2", "house_3", "house_4", "house_5", "house_6", "house_2", "house_1"]],
 	"classical:punic": ["classical", ["house_5", "house_5", "house_5", "house_2", "house_6", "house_3"]],
 	"northern": ["northern", ["house_1", "house_2", "house_3", "house_4", "house_5", "house_6"]],
 	"northern:viking": ["northern", ["house_4", "house_4", "house_2", "house_6"]],
 	"northern:rus": ["northern", ["house_5", "house_5", "house_2", "house_1"]],
-	"steppe": ["steppe", ["yurt_1", "yurt_2", "yurt_3", "yurt_1", "yurt_2", "wagon_tent"]],
 	"nile": ["south", ["nile_house_1", "nile_house_2", "nile_house_3", "nile_house_4"]],
 	"near_east": ["south", ["near_east_house_1", "near_east_house_2", "near_east_house_3", "near_east_house_4"]],
 	"south_asian": ["south", ["south_asian_house_1", "south_asian_house_2", "south_asian_house_3", "south_asian_house_4"]],
 }
 ## The seat of power at a capital's heart, by style (and culture).
 const PALACE_MODELS := {
-	"east": ["east", "palace"], "east:samurai": ["east", "castle_keep"],
 	"classical": ["classical", "palace"], "northern": ["northern", "palace"],
-	"steppe": ["steppe", "great_tent"], "nile": ["south", "nile_palace"],
+	"nile": ["south", "nile_palace"],
 	"near_east": ["south", "near_east_palace"], "near_east:assyrian": ["south", "ziggurat"],
 	"near_east:hittite": ["south", "near_east_palace"], "south_asian": ["south", "south_asian_palace"],
 }
 ## The roof colour each style's houses start from (the owner's colour is mixed in).
-const ROOF_BASE := {"east": Color(0.40, 0.43, 0.48), "classical": Color(0.84, 0.47, 0.32),
-	"northern": Color(0.46, 0.42, 0.40), "steppe": Color(0.86, 0.82, 0.74), "nile": Color(0.70, 0.56, 0.38),
+const ROOF_BASE := {"classical": Color(0.84, 0.47, 0.32),
+	"northern": Color(0.46, 0.42, 0.40), "nile": Color(0.70, 0.56, 0.38),
 	"near_east": Color(0.70, 0.60, 0.46), "south_asian": Color(0.74, 0.52, 0.36)}
 const HOUSE_UNIT := LOT * 0.95   ## map units per model-kit unit for houses
 const GRAND_UNIT := LOT * 1.15   ## ... and for palaces and great buildings
@@ -569,7 +563,7 @@ func _model(module: String, kind: String, unit: float) -> String:
 
 ## A temple in each people's own manner (the civic temple is a Greco-Roman one): module,
 ## kind, and a scale bringing it to a public building's size (D-281).
-const TEMPLE_OF := {"east": ["east", "pagoda", 0.8], "northern": ["northern", "church", 0.85],
+const TEMPLE_OF := {"northern": ["northern", "church", 0.85],
 	"south_asian": ["south", "temple_shikhara", 0.9], "nile": ["south", "nile_palace", 0.5],
 	"near_east": ["south", "ziggurat", 0.55]}
 
