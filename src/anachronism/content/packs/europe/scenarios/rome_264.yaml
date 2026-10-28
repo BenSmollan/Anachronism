@@ -1,25 +1,109 @@
 schema_version: 1
-# Rome and Carthage, 264 BC: the deep successor of punic_wars.yaml (which stays until the lead retires it).
+# Rome and Carthage, 264 BC: the one start point, made deep (DEC007, DEC009).
 # Map: provinces_italy.yaml (it_*, si_*, sa_*, co_*) for Italy, Sicily, Sardinia and Corsica.
 #
-# HOW THE ITALIAN ALLIES ARE MODELLED (decision, see the report):
+# SOURCES: every civ, general, successor, script and starting relation below carries `sources`
+# (ancient author first, book.chapter.section) and, where the evidence conflicts, `disputed`.
+# Modern works were used only to check, never cited (docs/plans/rome.md:77). A cite still marked
+# "# unverified" is one whose passage was not opened while writing this file; the hand-off names each.
+# Texts read: Polybius (Paton, LacusCurtius), Livy 8-10 and 22-30 (Roberts, Wikisource), Livy Periochae
+# (Lendering, livius.org), Velleius 1.14-15, Zonaras 8 (with Dio, LacusCurtius), Diodorus 22-23
+# (LacusCurtius), Florus 1, Strabo 5-6, Justin (Watson, attalus.org), Pausanias 1 (theoi.com), the
+# Fasti Capitolini and Triumphales (Degrassi, attalus.org), Pliny NH 7 (Bostock, Perseus).
+#
+# WHO HOLDS WHAT IN 264 BC (Italy, Sicily, Sardinia, Corsica; DEC006 and DEC013: no new provinces, the
+# Latin colonies are noted on the province that holds them). Status words: ager Romanus = Roman land;
+# sine suffragio = Roman citizens without the vote; Latin colony = a colony of Latin right (in law an
+# allied state, here drawn as Rome's); socius = an ally by treaty; free = no Roman tie.
+#   province       holder               status in 264                                   source                                  disputed
+#   it_roma        rome                 ager Romanus, the City                          Polybius 2.24.14                        no
+#   it_latium      rome                 citizen towns (Lanuvium, Aricia, Nomentum,      Livy 8.14; Polybius 2.24.10 (Latins)     grain: Tibur and Praeneste stay Latin allies
+#                                       Pedum, Tusculum) and Latin allies
+#   it_volsci      rome                 Antium and Velitrae settled 338; Setia,         Livy 8.14; Velleius 1.14.2, 1.14.4       no
+#                                       Tarracina colonies
+#   it_hernici     rome                 Hernici surrendered 306; Aletrium, Verulae,     Livy 9.43                               grain: three Hernican towns keep self-rule
+#                                       Ferentinum keep their own laws
+#   it_aequi       rome                 Aequi crushed 304; Alba and Carseoli Latin      Livy 9.45; Velleius 1.14.5              no
+#                                       colonies
+#   it_sabina      rome                 sine suffragio 290, the vote in 268             Velleius 1.14.6-7; Livy Per. 11.6       no
+#   it_veii        rome                 ager Romanus; Sutrium and Nepet colonies        Velleius 1.14.2                         no
+#   it_caere       rome                 citizens without the vote ("Caerite tablets")   Strabo 5.2.3                            no
+#   it_aurunci     rome                 Fundi, Formiae citizens 338/334; Minturnae,     Livy 8.14; Velleius 1.14.3-4, 1.14.6     no
+#                                       Sinuessa colonies 296; Suessa Aurunca
+#   it_campania    rome                 Capua sine suffragio 338; Cales colony          Velleius 1.14.3; Livy 8.14; Pol. 2.24.14 no
+#   it_picenum     rome                 Picentes beaten 268; Hadria 289; Firmum 264     Livy Per. 11.7, 15.4; Velleius 1.14.8;  grain: Asculum and the Picentes were given peace,
+#                                                                                       Fasti Triumphales 268                  not annexed outright
+#   it_senones     rome                 ager Gallicus, Senones driven out 283; Sena,    Polybius 2.19.10-12; Velleius 1.14.7;  no
+#                                       Ariminum 268 colonies                           Livy Per. 15.5
+#   it_picentini   rome                 Paestum (Posidonia) Latin colony 273; Picentes  Velleius 1.14.7; Livy Per. 14.8;       grain: a Latin colony and deportees, not ager Romanus
+#                                       moved here by Rome                              Strabo 5.4.13
+#   it_samnium     e2_samnites          socius, treaty renewed 290; Aesernia colony 263 Livy Per. 11.5, 16.7; Velleius 1.14.8   no
+#   it_hirpini     e2_samnites          socius; Beneventum Latin colony 268             Velleius 1.14.7; Livy Per. 15.5         grain: Beneventum is Rome's, drawn allied
+#   it_marsi       e2_central_italics   socii by treaty of 304                          Livy 9.45; Polybius 2.24.12             no
+#   it_frentani    e2_central_italics   socii by treaty of 304                          Livy 9.45; Polybius 2.24.12             no
+#   it_tarquinii   e2_etruscans         socius; Cosa Latin colony 273                   Velleius 1.14.7; Livy Per. 14.8         grain: Cosa is Rome's, drawn allied
+#   it_volsinii    e2_volsinii          AT WAR: besieged by the consul                  Zonaras 8.7; Florus 1.16;               consul: Zonaras and Florus name Q. Fabius
+#                                                                                       Fasti Triumphales 264                   Gurges (265); the Fasti, M. Fulvius Flaccus (264)
+#   it_populonia   e2_etruscans         socius                                          Polybius 2.24.5                         no
+#   it_arretium    e2_etruscans         socius                                          Polybius 2.19.7-8, 2.24.5               no
+#   it_etruria_n   e2_etruscans         socius                                          Polybius 2.24.5                         no
+#   it_falisci     e2_etruscans         socius (Falerii revolts in 241)                 Fasti Triumphales 241                   no
+#   it_umbria      e2_umbrians          socii, Umbrians and Sassinates beaten 267-266;  Livy Per. 15.7; Fasti Triumphales 266;  grain: Narnia is Rome's, drawn allied
+#                                       Narnia Latin colony 299                         Livy 10.10; Polybius 2.24.7
+#   it_lucania     e2_southern_italics  socii                                           Polybius 2.24.12                        no
+#   it_bruttium    e2_southern_italics  socii                                           Polybius 1.20.14 (Locri lends ships)    no
+#   it_apulia      e2_southern_italics  socii; Luceria and Venusia Latin colonies       Velleius 1.14.4, 1.14.6; Pol. 2.24.11   grain: two colonies drawn allied
+#   it_peucetia    e2_southern_italics  socii                                           Polybius 2.24.11                        no
+#   it_messapia    e2_southern_italics  Sallentini and Messapii beaten 267-266          Livy Per. 15.7; Fasti Triumphales 266   no
+#   it_neapolis    e2_italiote_greeks   socius by treaty (326)                          Livy 8.26; Polybius 1.20.14             no
+#   it_tarentum    e2_italiote_greeks   socius since 272                                Livy Per. 15.1; Polybius 1.20.14        no
+#   it_rhegium     e2_italiote_greeks   restored to its citizens 270                    Polybius 1.7.10-13; Livy Per. 15.2      no
+#   it_boii        e2_boii              free, at peace since the treaty after Vadimon   Polybius 2.20.5, 2.21.1                 no
+#   it_insubres    e2_insubres          free                                            Polybius 2.17, 2.21.1                   no
+#   it_cenomani    e2_cenomani          free                                            Polybius 2.17, 2.23.2                   no
+#   it_veneti      e2_veneti            free                                            Polybius 2.17.5-6, 2.23.2               no
+#   it_liguria     e2_ligurians         free                                            Polybius 2.16.1-2                       no
+#   it_ligures_apuani e2_ligurians      free                                            Polybius 2.16.1-2                       no
+#   it_taurini     unowned              free                                            Polybius 3.60.8-10                      no
+#   it_salassi     unowned              free                                            (no source for 264)                     no
+#   si_messana     e2_mamertines        the Mamertines; a Punic garrison in the citadel Polybius 1.7.2-5, 1.10.1-2, 1.11.4      no
+#   si_syracuse    syracuse             Hiero's kingdom, with Leontini                  Polybius 1.9.8; Diodorus 23.4.1         no
+#   si_catana      unowned              free city                                       Diodorus 23.4.1; Pliny NH 7.214         yes: Diodorus leaves Catana out of Hiero's 263
+#                                                                                                                               cities but names Tauromenium (in this province);
+#                                                                                                                               Pliny has Catina "captured" in 263
+#   si_enna        carthage             Carthaginian or allied interior                 Polybius 1.10.8; Diodorus 22.10.1,      yes: Enna had a Punic garrison in 278 and is
+#                                                                                       23.9.5                                  taken from one in 258; its status in 264 is not told
+#   si_akragas     carthage             allied to Carthage, its citadel fortified       Diodorus 23.1.2; Polybius 1.17.5        yes: a free city allied to Carthage in 264
+#                                       by Hanno                                                                                (Diodorus); Carthage's base only from 262 (Polybius)
+#   si_gela        unowned              free (Phintias moved Gela's people to his city) Diodorus 22.2.2, 23.9.5                 yes: no source states its ties in 264
+#   si_halaesa     unowned              free                                            Diodorus 22.13.2, 23.4.1                yes: Hiero took Halaesa and Tyndaris c. 269,
+#                                                                                                                               but Halaesa treats with Rome on its own in 263
+#   si_panormus    carthage             Punic                                           Polybius 1.21.6, 1.24.3                 no
+#   si_lilybaeum   carthage             Punic epikrateia                                Diodorus 23.1.2                         no
+#   sa_sardinia    carthage             Punic                                           Polybius 1.10.5, 1.24.5-7               no
+#   sa_barbagia    unowned              the unsubdued interior                          (no source for 264)                     no
+#   co_corsica     carthage             Punic, as Polybius puts it                      Polybius 1.10.5; Fasti Triumphales 259  yes: Polybius gives Carthage "all the islands"
+#                                                                                                                               of the Tyrrhenian Sea, but nothing shows a
+#                                                                                                                               Punic hold on Corsica before Scipio's raid (259)
+#   car_gades      carthage             Phoenician Gades, Carthage's ally               Polybius 1.10.5, 2.1.5-7                yes: Polybius says Carthage held "a great part of
+#                                                                                                                               Spain" in 264, yet Hamilcar subjugates it from 237
+#
+# HOW THE ITALIAN ALLIES ARE MODELLED (D-287):
 # The schema has no "ally" or lower-loyalty status for a province, only owners. Rome's Italian
-# *socii* kept their own laws, magistrates and armies and were bound by treaty (Polybius 2.24 lists their
-# levies separately from the Romans and Campanians), so they are modelled as separate civs in alliance
-# with Rome: Samnites, Central Italics, Etruscans, Umbrians, Southern Italics, Greek cities. Rome itself
-# owns only the ager Romanus, its citizen and Latin colonies and the peoples whose land it annexed
-# (Latium, Volsci, Hernici, Aequi, Sabines, Aurunci, Campania, Picenum, Senones, Caere, Veii).
-# A civ-per-people lets an ally defect after Cannae, as Capua, Tarentum and the Bruttians did (Polybius 3.118).
-# Grouping is approximate: Latin colonies lie inside allied provinces and cannot be drawn at this grain.
-# Sicily: Carthage holds the west (Lilybaeum, Panormus, Akragas, Enna); Hiero II holds Syracuse and Catana;
-# the Mamertines hold Messana; Gela and Halaesa are unowned (their allegiance in 264 BC is not
-# recorded in the sources read) # unverified. Carthage holds Sardinia (Polybius 1.10.5, 1.88) and Corsica.
-# Scripts of the eastern states and the common tech baseline are carried over from punic_wars.yaml.
+# *socii* kept their own laws, magistrates and armies and were bound by treaty (Polybius 2.24.10-14 lists
+# their levies apart from the Romans and Campanians), so they are separate civs in alliance with Rome:
+# Samnites, Central Italics, Etruscans, Umbrians, Southern Italics, Greek cities. Rome itself owns the
+# ager Romanus, its citizen and Latin colonies and the peoples whose land it annexed (see the table).
+# A civ-per-people lets an ally defect after Cannae, as Tarentum, Arpi and Campanian towns did (Polybius 3.118.2).
+# Volsinii is its own state because Rome is at war with it in 264 (DEC014). Cyrene is Magas' kingdom (DEC014).
+# Not carried, for want of an engine office (an R2 row): the yearly consuls and censors. The consuls of 264
+# are Ap. Claudius Caudex and M. Fulvius Flaccus (Fasti Capitolini 264; Polybius 1.11.3); the censors of 265,
+# Cn. Cornelius Blasio and C. Marcius Rutilus Censorinus, closed the 35th lustrum (Fasti Capitolini 265).
 scenarios:
   - id: rome_264
     name: "Rome and Carthage, 264 BC"
     description: >-
-      264 BC. Rome leads a mosaic of Italian allies from the Arno to the toe of Italy, and has never fought beyond the peninsula. Carthage rules the western sea. A quarrel over Messana in Sicily, where Hiero of Syracuse is also watching, is about to become the First Punic War. The consuls are Appius Claudius Caudex and Marcus Fulvius Flaccus. North of the Apennines the Gauls of the Po and the Ligurians are still unconquered.
+      264 BC. Rome leads a mosaic of Italian allies from the Arno to the toe of Italy, and has never fought beyond the peninsula. Carthage rules the western sea. A quarrel over Messana in Sicily, where Hiero of Syracuse is also watching, is about to become the First Punic War. The consuls are Appius Claudius Caudex and Marcus Fulvius Flaccus, and Rome is already at war in Etruria, besieging Volsinii. North of the Apennines the Gauls of the Po and the Ligurians are still unconquered.
     start_year: -264
     years_per_turn: 10
     campaign_years_per_turn: 2
@@ -32,14 +116,17 @@ scenarios:
       - "Polybius 1.7-1.12 (the Mamertines, Hiero and the crossing to Messana)"
       - "Polybius 2.17-24 (peoples of Italy and the levies of Rome and her allies in 225 BC)"
       - "Polybius 1.10.5 (Carthage holds the islands of the Sardinian and Tyrrhenian seas)"
-      - "Fasti Capitolini (consuls of 264 BC) # unverified"
+      - "Fasti Capitolini, 264 BC (consuls Ap. Claudius Caudex and M. Fulvius Flaccus)"
+      - "Velleius Paterculus 1.14.2-8 (the colonies and grants of citizenship, with their years)"
+      - "Livy, Periochae 11-16 (Rome's wars and colonies, 292-263 BC)"
+      - "Diodorus 22.13, 23.1-4 (Sicily in 269-263 BC)"
     # what every state of the age knows, where it has the prerequisites (Rome's Twelve Tables, Greek city laws, Carthage's constitution)
     common_techs: {written_law: widespread}
     civs:
       rome:
         # Rome here is the ager Romanus and its citizen and Latin colonies, plus the peoples whose land
         # Rome had annexed outright (Sabines 290/268, Picentes 268, Senones 283). The allies (socii) are separate civs.
-        # source for the consuls of 264 BC: Fasti Capitolini (Appius Claudius Caudex and Marcus Fulvius Flaccus).
+        # Paestum (it_picentini, Latin colony 273) is Rome's here: Rome holds 13 provinces in 264, not 12.
         navy_bp: 500
         disposition: aggressive
         scripts:
