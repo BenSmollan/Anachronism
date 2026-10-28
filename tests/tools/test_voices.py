@@ -24,7 +24,7 @@ def event(kind: str, civ: str, subject: str = "") -> Event:
 
 
 def test_the_ruler_opens_the_game(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     voice = speak(content, state, "game_start")
     assert voice is not None
     assert voice["name"] == "Consul Appius Claudius Caudex"
@@ -33,7 +33,7 @@ def test_the_ruler_opens_the_game(content: Content) -> None:
 
 
 def test_the_steward_briefs_a_new_game_on_its_moment(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     voices = opening_voices(content, state)
     assert [v["moment"] for v in voices] == ["briefing", "game_start"]
     assert "Carthage" in voices[0]["text"]
@@ -41,7 +41,7 @@ def test_the_steward_briefs_a_new_game_on_its_moment(content: Content) -> None:
 
 
 def test_worst_news_first_and_at_most_two(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     events = [
         event("widespread", "rome", "Coinage"),
         event("adopted", "rome", "Paper"),
@@ -55,7 +55,7 @@ def test_worst_news_first_and_at_most_two(content: Content) -> None:
 
 
 def test_a_rival_boasts_about_ideas_ahead_of_their_time(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     voices = voices_for_turn(content, state, [event("adopted", "syracuse", "Paper")])
     assert [v["moment"] for v in voices] == ["rival_adopted"]
     assert voices[0]["name"] == "Hiero II"
@@ -67,7 +67,7 @@ def test_a_rival_boasts_about_ideas_ahead_of_their_time(content: Content) -> Non
 
 
 def test_lines_are_chosen_deterministically(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=4)
+    state = new_game(content, "rome_264", seed=4)
     first = [speak(content, state, "adopted", "Paper") for _ in range(3)]
     assert first[0] == first[1] == first[2]
 
@@ -87,7 +87,7 @@ def test_bad_dialogue_is_reported(packs: Path) -> None:  # noqa: F811
 
 
 def test_a_rival_who_declares_war_says_so(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     carthage = state.civs["carthage"].name
     war = Event(
         turn=1, year=-340, civ="rome", kind="war",
@@ -103,13 +103,13 @@ def test_a_rival_who_declares_war_says_so(content: Content) -> None:
 
 
 def test_a_rival_makes_peace(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     voices = voices_for_turn(content, state, [event("peace", "rome", state.civs["carthage"].name)])
     assert any(v["moment"] == "rival_peace" and v["civ"] == "carthage" for v in voices)
 
 
 def test_the_court_mourns_the_old_ruler_and_turns_to_the_new(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     state.civs["rome"].ruler = "Consul Gaius Duilius"
     voices = voices_for_turn(
         content, state, [event("ruler_died", "rome", "Consul Appius Claudius Caudex")]
@@ -120,7 +120,7 @@ def test_the_court_mourns_the_old_ruler_and_turns_to_the_new(content: Content) -
 
 
 def test_no_eulogy_for_an_unnamed_ruler(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1, player_civ="carthage")
+    state = new_game(content, "rome_264", seed=1, player_civ="carthage")
     assert state.civs["carthage"].ruler == ""
     death = event("ruler_died", "carthage", "the ruler of Carthage")
     voices = voices_for_turn(content, state, [death])

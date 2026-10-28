@@ -19,7 +19,7 @@ from anachronism.engine.tales import tell
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ="rome")
+    return new_game(content, "rome_264", seed=1, player_civ="rome")
 
 
 def army(owner: str, troops: dict[str, int], **extra: object) -> Army:

@@ -12,7 +12,7 @@ from anachronism.engine.state import Framing, GameState, NewsInTransit
 
 @pytest.fixture
 def suspected(content: Content) -> GameState:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     rome = state.civs["rome"]
     rome.stockpiles.wealth = 100_000
     rome.stockpiles.knowledge = 100_000

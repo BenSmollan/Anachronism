@@ -25,7 +25,7 @@ from anachronism.engine.state import Army, GameState
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ="rome")
+    return new_game(content, "rome_264", seed=1, player_civ="rome")
 
 
 def log(state: GameState) -> EventLog:
@@ -184,11 +184,11 @@ def test_raise_army_respects_the_cap(warring: GameState) -> None:
 
 
 def test_new_armies_take_the_next_general(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     carthage = state.civs["carthage"]
     royal = next(a for a in state.armies.values() if a.owner == "carthage")
-    assert royal.general == "Hamilcar Barca"
-    assert royal.trait == "bold"
+    assert royal.general == "Hanno"
+    assert royal.trait == "quartermaster"
     pool = [g.name for g in carthage.generals]
     army, _ = raise_army(
         state,

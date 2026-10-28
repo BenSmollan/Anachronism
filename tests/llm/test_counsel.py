@@ -29,7 +29,7 @@ def content() -> Content:
 
 @pytest.fixture
 def game(content: Content) -> GameState:
-    state = new_game(content, "punic_wars", seed=4, player_civ="rome")
+    state = new_game(content, "rome_264", seed=4, player_civ="rome")
     state.civs["carthage"].awareness = Awareness.AWARE
     state.civs["carthage"].stockpiles.wealth = 100_000
     state.civs["carthage"].martial_bp = 30_000  # a court strong enough to dare a war
@@ -38,11 +38,11 @@ def game(content: Content) -> GameState:
 
 def test_only_aware_courts_counsel_the_deepest_grudge_first(game: GameState) -> None:
     assert who_counsels(game) == "carthage"
-    game.civs["syracuse"].awareness = Awareness.FREE_AGENT
-    rel = relation(game, "syracuse", "rome")
+    game.civs["e2_mamertines"].awareness = Awareness.FREE_AGENT
+    rel = relation(game, "e2_mamertines", "rome")
     assert rel is not None
-    rel.grievance["syracuse"] = 5000
-    assert who_counsels(game) == "syracuse"
+    rel.grievance["e2_mamertines"] = 5000
+    assert who_counsels(game) == "e2_mamertines"
     for civ in game.civs.values():
         civ.awareness = Awareness.ON_SCRIPT
     assert who_counsels(game) is None
@@ -78,7 +78,7 @@ def test_counsel_returns_a_guarded_move_and_a_line(game: GameState) -> None:
 def test_a_court_that_marches_is_recorded_and_speaks(tmp_path: Path, game: GameState) -> None:
     fake = FakeProvider({"move": "war", "line": "Your sorcery ends here."})
     session = Session(load_content(), tmp_path, IdeaPipeline(ONLINE, fake, use_files=False))
-    session.new_game({"scenario": "punic_wars", "civ": "rome", "seed": 4})
+    session.new_game({"scenario": "rome_264", "civ": "rome", "seed": 4})
     session.state = game
     view = session.end_turn({})
     assert view["voices"][0]["text"] == "Your sorcery ends here."

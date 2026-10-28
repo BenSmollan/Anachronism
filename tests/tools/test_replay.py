@@ -16,7 +16,7 @@ def content() -> Content:
 
 
 def test_a_march_and_a_raised_army_are_in_the_replay(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=3, player_civ="rome")
+    state = new_game(content, "rome_264", seed=3, player_civ="rome")
     state, _ = apply_action(state, RaiseArmy(civ="rome", province=state.civs["rome"].capital))
     army = next(a for a in state.armies.values() if a.owner == "rome")
     goal = state.world.geography[army.province].neighbours[0]
@@ -33,7 +33,7 @@ def test_a_march_and_a_raised_army_are_in_the_replay(content: Content) -> None:
 
 
 def test_changes_of_ownership_are_flagged(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=3, player_civ="rome")
+    state = new_game(content, "rome_264", seed=3, player_civ="rome")
     before = snapshot(state)
     after = state.model_copy(deep=True)
     pid = after.owned_provinces("carthage")[0]
@@ -45,7 +45,7 @@ def test_changes_of_ownership_are_flagged(content: Content) -> None:
 
 
 def test_a_sunk_fleet_is_among_the_losses(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=3, player_civ="rome")
+    state = new_game(content, "rome_264", seed=3, player_civ="rome")
     assert state.fleets
     fleet_id = sorted(state.fleets)[0]
     before = snapshot(state)
@@ -59,8 +59,9 @@ def test_your_cities_show_what_each_building_would_add(content: Content) -> None
     # D-127: plain numbers for every building the player could raise, and the city's rank
     from anachronism.tools.view import build_view, city_tier
 
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
-    latium = next(p for p in build_view(state)["provinces"] if p["id"] == "rom_latium")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
+    state.provinces["it_roma"].population = 900_000  # a city grown to a Town, as Latium once was
+    latium = next(p for p in build_view(state)["provinces"] if p["id"] == "it_roma")
     assert latium["tier_name"] == "Town"
     assert latium["output"]["food"] > 0
     options = latium["can_build"]

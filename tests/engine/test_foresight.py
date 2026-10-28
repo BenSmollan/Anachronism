@@ -14,7 +14,7 @@ from anachronism.engine.tech import beyond_age, feasibility
 
 
 def _rome(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ="rome")
+    return new_game(content, "rome_264", seed=1, player_civ="rome")
 
 
 def test_rivals_cannot_reach_ahead_of_their_age_but_the_player_can(content: Content) -> None:

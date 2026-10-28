@@ -20,7 +20,7 @@ from anachronism.engine.state import GameState
 from tests.engine.conftest import override_rules
 from tests.engine.test_simulation import check_invariants
 
-SCENARIO = "punic_wars"
+SCENARIO = "rome_264"
 REAL = sorted(s.id for s in load_content().scenarios.values() if s.map is not None)
 
 
@@ -35,8 +35,8 @@ def test_scenario_sits_on_the_real_map(content: Content) -> None:
 
 
 def test_music_follows_the_scenario_and_the_civilisation(content: Content) -> None:
-    assert new_game(content, "punic_wars", seed=1, player_civ="rome").world.music == "roman"
-    carthage = new_game(content, "punic_wars", seed=1, player_civ="carthage")
+    assert new_game(content, "rome_264", seed=1, player_civ="rome").world.music == "roman"
+    carthage = new_game(content, "rome_264", seed=1, player_civ="carthage")
     assert carthage.world.music == "near_east"
 
 

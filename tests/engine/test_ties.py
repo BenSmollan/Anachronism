@@ -18,7 +18,7 @@ ME, OTHER = "rome", "carthage"
 
 @pytest.fixture
 def state(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ=ME)
+    return new_game(content, "rome_264", seed=1, player_civ=ME)
 
 
 def test_a_tributary_pays_its_overlord_every_turn(state: GameState) -> None:

@@ -35,7 +35,7 @@ from anachronism.engine.war import capture, wear_wars
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ="rome")
+    return new_game(content, "rome_264", seed=1, player_civ="rome")
 
 
 def only_scripts(state: GameState, civ: str, *scripts: Script) -> None:
@@ -182,22 +182,22 @@ def test_allies_join_defensive_wars(warring: GameState) -> None:
 
 
 def test_player_diplomacy(warring: GameState) -> None:
-    state, logged = apply_action(warring, SendEnvoy(civ="rome", target="syracuse"))
+    state, logged = apply_action(warring, SendEnvoy(civ="rome", target="e2_veneti"))
     assert logged.ok
     assert state.civs["rome"].stockpiles.wealth < warring.civs["rome"].stockpiles.wealth
-    assert status(state, "rome", "syracuse") is RelationStatus.TRADING
+    assert status(state, "rome", "e2_veneti") is RelationStatus.TRADING
     _, logged = apply_action(state, SendEnvoy(civ="rome", target="carthage"))
     assert not logged.ok  # one embassy a turn
-    state, logged = apply_action(state, ProposeAlliance(civ="rome", target="syracuse"))
+    state, logged = apply_action(state, ProposeAlliance(civ="rome", target="e2_veneti"))
     assert not logged.ok  # trade a while first
     state.turn += state.world.rules.rivals.alliance_trust_turns
-    state, logged = apply_action(state, ProposeAlliance(civ="rome", target="syracuse"))
+    state, logged = apply_action(state, ProposeAlliance(civ="rome", target="e2_veneti"))
     assert logged.ok
-    assert status(state, "rome", "syracuse") is RelationStatus.ALLIED
-    state, logged = apply_action(state, DeclareWar(civ="rome", target="cisalpine_gauls"))
+    assert status(state, "rome", "e2_veneti") is RelationStatus.ALLIED
+    state, logged = apply_action(state, DeclareWar(civ="rome", target="e2_boii"))
     assert logged.ok
-    assert state.civs["cisalpine_gauls"].awareness is Awareness.FREE_AGENT
-    state, logged = apply_action(state, MakePeace(civ="rome", target="cisalpine_gauls"))
+    assert state.civs["e2_boii"].awareness is Awareness.FREE_AGENT
+    state, logged = apply_action(state, MakePeace(civ="rome", target="e2_boii"))
     assert logged.ok or "scorns" in logged.message
     state, logged = apply_action(state, DeclareWar(civ="rome", target="rome"))
     assert not logged.ok
@@ -295,8 +295,8 @@ def test_a_collapsed_state_passes_to_a_new_dynasty(warring: GameState) -> None:
 
 
 def test_turns_with_rivals_stay_deterministic(content: Content) -> None:
-    a = new_game(content, "punic_wars", seed=3)
-    b = new_game(content, "punic_wars", seed=3)
+    a = new_game(content, "rome_264", seed=3)
+    b = new_game(content, "rome_264", seed=3)
     for _ in range(4):
         a, _ = end_turn(a)
         b, _ = end_turn(b)
@@ -344,7 +344,7 @@ def test_a_last_province_holds_out_and_the_player_has_grace(warring: GameState) 
 def test_faiths_start_from_the_scenario_and_spread(content: Content) -> None:
     from anachronism.engine.culture import spread_faiths
 
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     assert state.civs["rome"].faith == "roman_gods"
     assert state.civs["carthage"].faith == "punic_gods"
     override = state.world.rules.rivals.model_copy(update={"faith_spread_bp": 10_000})
@@ -359,7 +359,7 @@ def test_faiths_start_from_the_scenario_and_spread(content: Content) -> None:
 def test_courts_of_world_faiths_hold_to_them(content: Content) -> None:
     from anachronism.engine.culture import spread_faiths
 
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     override = state.world.rules.rivals.model_copy(
         update={"faith_spread_bp": 10_000, "faith_rooted_resistance_bp": 0}
     )
@@ -377,7 +377,7 @@ def test_courts_of_world_faiths_hold_to_them(content: Content) -> None:
 def test_the_players_faith_changes_only_by_choice(content: Content) -> None:
     from anachronism.engine.culture import spread_faiths
 
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     override = state.world.rules.rivals.model_copy(update={"faith_spread_bp": 10_000})
     state.world = state.world.model_copy(
         update={"rules": state.world.rules.model_copy(update={"rivals": override})}
@@ -394,6 +394,8 @@ def test_rivals_league_against_a_dominant_player(warring: GameState) -> None:
     events = EventLog(turn=0, year=warring.year)
     coalitions(warring, GameRng(warring.rng), events)
     assert not events.items  # Rome is not yet feared
+    # Rome's neighbours here are few: let the two that remain be at peace with each other
+    set_status(warring, "carthage", "e2_mamertines", RelationStatus.NEUTRAL)
     for pid in sorted(warring.provinces)[: len(warring.provinces) * 2 // 3]:
         if warring.provinces[pid].owner is not None:
             warring.provinces[pid].owner = "rome"
@@ -434,7 +436,7 @@ def test_trade_pays_both_sides(warring: GameState) -> None:
 def test_missionaries(content: Content) -> None:
     from anachronism.engine.actions import SendMissionaries
 
-    state = new_game(content, "punic_wars", seed=2)
+    state = new_game(content, "rome_264", seed=2)
     state.civs["syracuse"].stockpiles.wealth = 10_000
     state, logged = apply_action(state, SendMissionaries(civ="syracuse", target="carthage"))
     assert logged.ok
@@ -485,7 +487,7 @@ def test_rival_courts_issue_decrees(warring: GameState) -> None:
 def test_rival_courts_never_start_work_they_cannot_staff(content: Content) -> None:
     # D-112: work beyond the surplus is taken on only as steady (low-priority) work, so no
     # rival starves itself chasing an idea it heard of
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     node = "crop_rotation"
     for secret in (node, "quarantine"):  # stolen, so beyond-the-age is not what stops them
         state.civs["pergamon"].tech[secret] = TechState(stage=Stage.CONCEPT, stolen=True)
@@ -514,13 +516,13 @@ def test_the_side_that_tires_first_cedes_what_is_besieged(warring: GameState) ->
 
 
 def test_a_state_with_only_besieged_land_left_becomes_a_tributary(warring: GameState) -> None:
-    set_status(warring, "rome", "syracuse", RelationStatus.WAR)
-    (home,) = warring.owned_provinces("syracuse")
+    set_status(warring, "rome", "e2_mamertines", RelationStatus.WAR)
+    (home,) = warring.owned_provinces("e2_mamertines")
     army = next(a for a in warring.armies.values() if a.owner == "rome")
     army.province = home
-    rel = relation(warring, "rome", "syracuse")
+    rel = relation(warring, "rome", "e2_mamertines")
     assert rel is not None
-    rel.weariness["syracuse"] = warring.world.rules.rivals.peace_weariness_bp
+    rel.weariness["e2_mamertines"] = warring.world.rules.rivals.peace_weariness_bp
     wear_wars(warring, EventLog(turn=0, year=warring.year))
-    assert warring.provinces[home].owner == "syracuse"
-    assert status(warring, "rome", "syracuse") is RelationStatus.TRIBUTARY
+    assert warring.provinces[home].owner == "e2_mamertines"
+    assert status(warring, "rome", "e2_mamertines") is RelationStatus.TRIBUTARY

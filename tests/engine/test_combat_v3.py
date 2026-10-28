@@ -27,14 +27,14 @@ from anachronism.engine.wings import Line, contest
 from anachronism.tools.view import build_view
 
 MIXED = {"levy": 5000, "spearmen": 3000, "archers": 2000}
-RIVER = "gau_boii"  # river plains, with a river
+RIVER = "it_boii"  # river plains, with a river
 PLAIN = "car_byzacena"  # plains, no river
-HILLS = "car_sardinia"  # hills, no river
+HILLS = "it_latium"  # hills, no river
 
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     state, _ = apply_action(state, DeclareWar(civ="rome", target="carthage"))
     return state
 

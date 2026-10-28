@@ -18,12 +18,12 @@ from anachronism.engine.state import Army, GameState, TechState
 from anachronism.engine.tech import feasibility, standing_buildings
 from anachronism.engine.timeflow import turns_for
 
-LATIUM = "rom_latium"
+LATIUM = "it_roma"
 
 
 @pytest.fixture
 def punic(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ="rome")
+    return new_game(content, "rome_264", seed=1, player_civ="rome")
 
 
 def log(state: GameState) -> EventLog:
@@ -192,15 +192,15 @@ def test_an_upgrade_counts_for_what_it_replaced(punic: GameState) -> None:
 def test_a_queued_building_starts_when_the_builders_are_free(punic: GameState) -> None:
     # D-128: build while builders are busy, and it waits its turn, paid for when it starts
     state = rich(punic)
-    state, first = apply_action(state, Build(civ="rome", province="rom_latium", building="mine"))
+    state, first = apply_action(state, Build(civ="rome", province="it_roma", building="mine"))
     assert first.ok
-    state, second = apply_action(state, Build(civ="rome", province="rom_latium", building="school"))
+    state, second = apply_action(state, Build(civ="rome", province="it_roma", building="school"))
     assert second.ok
-    assert state.provinces["rom_latium"].queue == ["school"]
+    assert state.provinces["it_roma"].queue == ["school"]
     wealth = state.civs["rome"].stockpiles.wealth
-    state.provinces["rom_latium"].works.turns_left = 1  # type: ignore[union-attr]
+    state.provinces["it_roma"].works.turns_left = 1  # type: ignore[union-attr]
     buildings.advance_works(state, log(state))
-    latium = state.provinces["rom_latium"]
+    latium = state.provinces["it_roma"]
     assert "mine" in latium.buildings
     assert latium.works is not None
     assert latium.works.building == "school"
@@ -212,23 +212,24 @@ def test_the_queue_can_be_cancelled_and_lapses_with_the_city(punic: GameState) -
     from anachronism.engine.actions import Unqueue
 
     state = rich(punic)
-    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="mine"))
-    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="school"))
-    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="granary"))
-    state, done = apply_action(state, Unqueue(civ="rome", province="rom_latium", building="school"))
+    state.provinces["it_roma"].population = 10**9  # room for three works at once
+    state, _ = apply_action(state, Build(civ="rome", province="it_roma", building="mine"))
+    state, _ = apply_action(state, Build(civ="rome", province="it_roma", building="school"))
+    state, _ = apply_action(state, Build(civ="rome", province="it_roma", building="granary"))
+    state, done = apply_action(state, Unqueue(civ="rome", province="it_roma", building="school"))
     assert done.ok
-    assert state.provinces["rom_latium"].queue == ["granary"]
-    state.provinces["rom_latium"].owner = "carthage"  # taken: Rome's plans are not theirs
+    assert state.provinces["it_roma"].queue == ["granary"]
+    state.provinces["it_roma"].owner = "carthage"  # taken: Rome's plans are not theirs
     buildings.advance_works(state, log(state))
-    assert state.provinces["rom_latium"].queue == []
+    assert state.provinces["it_roma"].queue == []
 
 
 def test_a_queued_building_waits_for_the_stores(punic: GameState) -> None:
     state = rich(punic)
-    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="mine"))
-    state, _ = apply_action(state, Build(civ="rome", province="rom_latium", building="school"))
+    state, _ = apply_action(state, Build(civ="rome", province="it_roma", building="mine"))
+    state, _ = apply_action(state, Build(civ="rome", province="it_roma", building="school"))
     state.civs["rome"].stockpiles.wealth = 0
-    state.provinces["rom_latium"].works.turns_left = 1  # type: ignore[union-attr]
+    state.provinces["it_roma"].works.turns_left = 1  # type: ignore[union-attr]
     buildings.advance_works(state, log(state))
-    assert state.provinces["rom_latium"].works is None
-    assert state.provinces["rom_latium"].queue == ["school"]
+    assert state.provinces["it_roma"].works is None
+    assert state.provinces["it_roma"].queue == ["school"]

@@ -17,22 +17,22 @@ from anachronism.engine.state import GameState, Offer
 
 @pytest.fixture
 def rome(content: Content) -> GameState:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     state.turn = 5  # past the opening grace
     return state
 
 
 def test_a_beaten_weary_enemy_sues_for_peace(rome: GameState) -> None:
-    state, _ = apply_action(rome, DeclareWar(civ="rome", target="syracuse"))
-    rel = relation(state, "rome", "syracuse")
+    state, _ = apply_action(rome, DeclareWar(civ="rome", target="carthage"))
+    rel = relation(state, "rome", "carthage")
     assert rel is not None
-    rel.losses["syracuse"] = 2
-    rel.weariness["syracuse"] = 9000
-    assert any(o.kind == "peace" and o.from_civ == "syracuse" for o in _candidates(state))
-    state.offer = Offer(kind="peace", from_civ="syracuse")
+    rel.losses["carthage"] = 2
+    rel.weariness["carthage"] = 9000
+    assert any(o.kind == "peace" and o.from_civ == "carthage" for o in _candidates(state))
+    state.offer = Offer(kind="peace", from_civ="carthage")
     state, logged = apply_action(state, AnswerEnvoy(civ="rome", accept=True))
     assert logged.ok
-    assert status(state, "rome", "syracuse") is not RelationStatus.WAR
+    assert status(state, "rome", "carthage") is not RelationStatus.WAR
 
 
 def test_defying_an_ultimatum_means_war(rome: GameState) -> None:
@@ -59,8 +59,8 @@ def test_unanswered_envoys_are_refused(rome: GameState) -> None:
 
 
 def test_a_merchant_court_proposes_trade(rome: GameState) -> None:
-    rome.civs["syracuse"].disposition = Disposition.MERCANTILE
-    rel = relation(rome, "rome", "syracuse")
+    rome.civs["carthage"].disposition = Disposition.MERCANTILE
+    rel = relation(rome, "rome", "carthage")
     assert rel is not None
     rel.status = RelationStatus.NEUTRAL
     rel.grievance = {}
@@ -71,6 +71,6 @@ def test_a_merchant_court_proposes_trade(rome: GameState) -> None:
     envoys(rome, GameRng(rome.rng), EventLog(rome.turn, rome.year))
     assert rome.offer is not None
     state, logged = apply_action(rome, AnswerEnvoy(civ="rome", accept=True))
-    if rome.offer.kind == "trade" and rome.offer.from_civ == "syracuse":
-        assert status(state, "rome", "syracuse") is RelationStatus.TRADING
+    if rome.offer.kind == "trade" and rome.offer.from_civ == "carthage":
+        assert status(state, "rome", "carthage") is RelationStatus.TRADING
     assert logged.ok

@@ -11,14 +11,14 @@ from tests.engine.conftest import override_rules
 
 
 def test_rulers_start_from_the_scenario(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     assert state.civs["macedon"].ruler == "Antigonus II Gonatas"
     assert state.civs["macedon"].ruler_age == 55
     assert state.world.successors["macedon"][0].name == "Demetrius II"
 
 
 def test_older_rulers_are_likelier_to_die(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     macedon = state.civs["macedon"]
     young = death_chance_bp(state, macedon)
     macedon.ruler_age = 70
@@ -26,7 +26,7 @@ def test_older_rulers_are_likelier_to_die(content: Content) -> None:
 
 
 def test_succession_follows_history_then_heirs(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1)
+    state = new_game(content, "rome_264", seed=1)
     override_rules(state, society={"death_chance_per_year_of_age_bp": 10_000})
     macedon = state.civs["macedon"]
     macedon.stats.legitimacy_bp = 3000

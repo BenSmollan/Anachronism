@@ -3,8 +3,6 @@
 extends SceneTree
 
 const CASTS := [
-	["qin", "court", ""], ["zhao", "court", ""], ["chu", "southern", ""], ["donghu", "steppe", ""],
-	["qin_scholar", "scholar", "court"], ["qin_general", "general", "court"],
 	["rome", "roman", ""], ["carthage", "punic", ""], ["egypt", "pharaoh", ""], ["hatti", "hittite", ""],
 	["england", "medieval_king", ""], ["norway", "viking", ""], ["kyiv", "rus", ""], ["venice", "doge", ""],
 	["rome_scholar", "scholar", "roman"], ["rome_steward", "steward", "roman"], ["rome_general", "general", "roman"],
@@ -12,7 +10,6 @@ const CASTS := [
 	["egypt_general", "general", "pharaoh"], ["egypt_diviner", "diviner", "pharaoh"],
 	["england_scholar", "scholar", "medieval_king"], ["england_steward", "steward", "medieval_king"],
 	["england_general", "general", "medieval_king"], ["england_diviner", "diviner", "medieval_king"],
-	["oda", "samurai", ""], ["joseon", "joseon", ""],
 ]
 const COLOURS := ["#3a4a6b", "#b04a2e", "#6b8e3a", "#8a5a9e", "#c49a2a", "#2e7d8c", "#9e3a3a"]
 

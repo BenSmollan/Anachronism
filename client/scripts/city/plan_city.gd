@@ -1378,11 +1378,6 @@ func _landmarks(site: Dictionary, t: int) -> Array:
 	var out: Array = []
 	var cap: bool = site["capital"]
 	match s.style:
-		"east":
-			if cap or t >= 2:
-				out.append("|m:east:pagoda")
-			if t >= 1:
-				out.append("|m:east:gate")
 		"classical":
 			if t >= 2 or cap:
 				out.append("|m:classical:forum_hall")
