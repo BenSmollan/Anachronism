@@ -21,7 +21,7 @@ MIXED = {"levy": 5000, "spearmen": 3000, "archers": 2000}
 
 @pytest.fixture
 def warring(content: Content) -> GameState:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     state, _ = apply_action(state, DeclareWar(civ="rome", target="carthage"))
     return state
 

@@ -29,7 +29,7 @@ from anachronism.engine.state import Fleet, GameState
 
 @pytest.fixture
 def punic(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ="rome")
+    return new_game(content, "rome_264", seed=1, player_civ="rome")
 
 
 def log(state: GameState) -> EventLog:
@@ -64,7 +64,7 @@ def test_seafaring_states_start_with_fleets(punic: GameState) -> None:
 def test_building_a_fleet_costs_materials_and_wealth(punic: GameState) -> None:
     stores = punic.civs["rome"].stockpiles
     materials, wealth = stores.materials, stores.wealth
-    state, logged = apply_action(punic, BuildFleet(civ="rome", province="rom_latium", size="small"))
+    state, logged = apply_action(punic, BuildFleet(civ="rome", province="it_roma", size="small"))
     assert logged.ok
     built = [f for f in state.fleets.values() if f.owner == "rome"]
     assert len(built) == 1
@@ -73,7 +73,7 @@ def test_building_a_fleet_costs_materials_and_wealth(punic: GameState) -> None:
     assert state.civs["rome"].stockpiles.materials == materials - kind.materials * 10
     assert state.civs["rome"].stockpiles.wealth == wealth - kind.wealth * 10
     # more ships of the same kind in the same sea join the fleet already there
-    state, logged = apply_action(state, BuildFleet(civ="rome", province="rom_campania"))
+    state, logged = apply_action(state, BuildFleet(civ="rome", province="it_campania"))
     assert logged.ok
     assert [f.ships for f in state.fleets.values() if f.owner == "rome"] == [35]
 
@@ -88,7 +88,7 @@ def test_fleets_are_built_only_on_your_own_coasts(punic: GameState) -> None:
 
 
 def test_sail_and_lay_up_orders(punic: GameState) -> None:
-    state, _ = apply_action(punic, BuildFleet(civ="rome", province="rom_latium", size="small"))
+    state, _ = apply_action(punic, BuildFleet(civ="rome", province="it_roma", size="small"))
     mine = next(f for f in state.fleets.values() if f.owner == "rome")
     _, logged = apply_action(state, SailFleet(civ="rome", fleet=mine.id, sea="tyrrhenian"))
     assert not logged.ok  # already there
@@ -136,23 +136,23 @@ def test_a_carthaginian_victory_is_told_as_carthaginian(punic: GameState) -> Non
 
 def test_command_of_the_sea_decides_crossings(punic: GameState) -> None:
     state = at_war(punic)
-    assert can_cross(state, "rome", "rom_latium", "car_sardinia")  # nobody holds the sea yet
+    assert can_cross(state, "rome", "it_roma", "sa_sardinia")  # nobody holds the sea yet
     fleet(state, "carthage", "tyrrhenian", 100)
     for f in list(state.fleets.values()):
         if f.owner == "carthage" and f.sea != "tyrrhenian":
             state.fleets.pop(f.id)
-    assert not can_cross(state, "rome", "rom_latium", "car_sardinia")
-    army, _ = raise_army(state, "rome", "rom_latium", 5000, free=True)
+    assert not can_cross(state, "rome", "it_roma", "sa_sardinia")
+    army, _ = raise_army(state, "rome", "it_roma", 5000, free=True)
     assert army is not None
-    state, logged = apply_action(state, MarchArmy(civ="rome", army=army.id, target="car_sardinia"))
+    state, logged = apply_action(state, MarchArmy(civ="rome", army=army.id, target="sa_sardinia"))
     assert logged.ok
     events = log(state)
     march(state, GameRng.from_seed(1), events)
-    assert state.armies[army.id].province == "rom_latium"
+    assert state.armies[army.id].province == "it_roma"
     assert "crossing_barred" in [e.kind for e in events.items]
     # a stronger Roman fleet opens the way
     fleet(state, "rome", "tyrrhenian", 200)
-    assert can_cross(state, "rome", "rom_latium", "car_sardinia")
+    assert can_cross(state, "rome", "it_roma", "sa_sardinia")
 
 
 def test_blockades_close_harbours_and_cost_trade(punic: GameState) -> None:
@@ -163,8 +163,8 @@ def test_blockades_close_harbours_and_cost_trade(punic: GameState) -> None:
     events = log(state)
     blockades(state, events)
     shut = [p for p in state.owned_provinces("rome") if state.provinces[p].blockaded]
-    assert "rom_latium" in shut
-    assert "rom_apulia" not in shut  # the Adriatic is open
+    assert "it_roma" in shut
+    assert "it_apulia" not in shut  # the Adriatic is open
     assert "blockade" in [e.kind for e in events.items]
     assert production(state, "rome", effects, BP).wealth < before
     rel = state.relations["carthage|rome"]

@@ -26,7 +26,7 @@ def content() -> Content:
 
 @pytest.fixture
 def game(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=4, player_civ="rome")
+    return new_game(content, "rome_264", seed=4, player_civ="rome")
 
 
 def test_offline_keeps_the_content_line(game: GameState) -> None:

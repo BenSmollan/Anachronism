@@ -13,7 +13,7 @@ from anachronism.engine.state import GameState, NewsInTransit
 
 @pytest.fixture
 def rome(content: Content) -> GameState:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     state.civs["rome"].stockpiles.wealth = 100_000
     return state
 

@@ -31,7 +31,7 @@ def content() -> Content:
 
 @pytest.fixture
 def game(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=2, player_civ="rome")
+    return new_game(content, "rome_264", seed=2, player_civ="rome")
 
 
 @pytest.mark.parametrize(
@@ -68,7 +68,7 @@ def test_offline_splits_several_ideas(game: GameState) -> None:
 def test_offline_rules_from_feasibility(game: GameState) -> None:
     reply = offline.interpret(game, "rome", "gunpowder")
     assert reply.ideas[0].verdict is Verdict.BLOCKED  # needs alchemy, charcoal, saltpetre...
-    mixed = offline.interpret(game, "rome", "paper and quantum teleportation")
+    mixed = offline.interpret(game, "rome", "compass and quantum teleportation")
     assert [i.verdict for i in mixed.ideas] == [Verdict.FEASIBLE, Verdict.IMPLAUSIBLE]
     unknown = offline.interpret(game, "rome", "quantum teleportation")
     assert unknown.ideas[0].verdict is Verdict.IMPLAUSIBLE

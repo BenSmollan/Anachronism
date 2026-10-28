@@ -12,7 +12,7 @@ from anachronism.engine.war import capture
 
 
 def conquered(content: Content) -> tuple[GameState, str]:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     target = next(
         p for p in state.owned_provinces("carthage") if p != state.civs["carthage"].capital
     )

@@ -17,11 +17,11 @@ from anachronism.tools.story import chronicle_block
 
 @pytest.fixture
 def chronicle(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ="rome", chronicle=True)
+    return new_game(content, "rome_264", seed=1, player_civ="rome", chronicle=True)
 
 
 def test_free_play_has_no_chapters(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     assert not state.world.chapters
     assert state.chapter is None
     assert state.world.years_per_turn == 10
@@ -31,38 +31,38 @@ def test_the_chronicle_opens_with_its_first_chapter_and_short_turns(
     chronicle: GameState,
 ) -> None:
     assert chronicle.world.years_per_turn == 2
-    assert chronicle.chapter == "rome_messana"
+    assert chronicle.chapter == "r264_messana"
     assert any(e.kind == "almanac" for e in chronicle.events)
 
 
 def test_a_choice_acts_in_the_world_and_is_compared_with_history(
     chronicle: GameState,
 ) -> None:
-    chapter = chronicle.world.chapters["rome_messana"]
+    chapter = chronicle.world.chapters["r264_messana"]
     index = historical_index(chapter)
     state, logged = apply_action(
-        chronicle, ChooseChapter(civ="rome", chapter="rome_messana", choice=index)
+        chronicle, ChooseChapter(civ="rome", chapter="r264_messana", choice=index)
     )
     assert logged.ok, logged.message
     assert status(state, "rome", "carthage") is RelationStatus.WAR
-    assert state.provinces["messana"].owner == "rome"
+    assert state.provinces["si_messana"].owner == "rome"
     assert state.chapter is None
     assert state.chapter_result is not None
     assert state.chapter_result.historical
-    assert "real Rome held 8" in state.chapter_result.benchmark
+    assert "real Rome held 12" in state.chapter_result.benchmark
 
 
 def test_an_unanswered_chapter_goes_as_history_went(chronicle: GameState) -> None:
     state, events = end_turn(chronicle)
-    assert state.chapters_done["rome_messana"] == historical_index(
-        chronicle.world.chapters["rome_messana"]
+    assert state.chapters_done["r264_messana"] == historical_index(
+        chronicle.world.chapters["r264_messana"]
     )
     assert any(e.kind == "chapter_settled" for e in events)
 
 
 def test_a_chapter_whose_world_is_gone_is_passed_over(chronicle: GameState) -> None:
     # refuse Messana: there is no war, so Hiero never changes sides
-    refuse = ChooseChapter(civ="rome", chapter="rome_messana", choice=1)
+    refuse = ChooseChapter(civ="rome", chapter="r264_messana", choice=1)
     state, _ = apply_action(chronicle, refuse)
     for _ in range(4):
         if state.chapter is not None:
@@ -72,17 +72,17 @@ def test_a_chapter_whose_world_is_gone_is_passed_over(chronicle: GameState) -> N
                 ChooseChapter(civ="rome", chapter=chapter.id, choice=historical_index(chapter)),
             )
         state, _ = end_turn(state)
-    assert state.chapters_done.get("rome_hiero") == PASSED_OVER
+    assert state.chapters_done.get("r264_hiero") == PASSED_OVER
 
 
 def test_ideas_ahead_of_their_time_open_choices_history_never_had(
     chronicle: GameState,
 ) -> None:
-    fleet = chronicle.world.chapters["rome_fleet"]
+    fleet = chronicle.world.chapters["r264_fleet"]
     locked = next(i for i, c in enumerate(fleet.choices) if c.needs_adopted)
-    chronicle.chapter = "rome_fleet"
+    chronicle.chapter = "r264_fleet"
     _, logged = apply_action(
-        chronicle, ChooseChapter(civ="rome", chapter="rome_fleet", choice=locked)
+        chronicle, ChooseChapter(civ="rome", chapter="r264_fleet", choice=locked)
     )
     assert not logged.ok
     for tech in fleet.choices[locked].needs_adopted:
@@ -91,7 +91,7 @@ def test_ideas_ahead_of_their_time_open_choices_history_never_had(
     shown = next(c for c in block["chapter"]["choices"] if c["index"] == locked)
     assert shown["locked"] == ""
     _, logged = apply_action(
-        chronicle, ChooseChapter(civ="rome", chapter="rome_fleet", choice=locked)
+        chronicle, ChooseChapter(civ="rome", chapter="r264_fleet", choice=locked)
     )
     assert logged.ok
 
@@ -119,7 +119,7 @@ def put_chapter(state: GameState, chapter_id: str, civ: str, **deeds: object) ->
     scenario's own chapters need not use), and make it the one waiting."""
     chapter = Chapter(
         id=chapter_id,
-        scenario="punic_wars",
+        scenario="rome_264",
         civ=civ,
         year=state.year,
         title="A test chapter",
@@ -143,11 +143,11 @@ def test_reforms_last_and_conquered_land_comes_with_a_garrison(rome: GameState) 
     put_chapter(state, "test_conquest", "rome", conquer=("syracuse",))
     state, _ = apply_action(state, ChooseChapter(civ="rome", chapter="test_conquest", choice=0))
     assert state.civs["syracuse"].collapsed
-    assert state.provinces["syr_syracuse"].owner == "rome"
-    assert garrisoned(state, "syr_syracuse")
+    assert state.provinces["si_syracuse"].owner == "rome"
+    assert garrisoned(state, "si_syracuse")
     # a garrison keeps apart from a host passing through
     state, _ = end_turn(state)
-    assert garrisoned(state, "syr_syracuse")
+    assert garrisoned(state, "si_syracuse")
 
 
 def test_a_conquest_waits_until_the_state_is_strong_enough(rome: GameState) -> None:
@@ -155,7 +155,7 @@ def test_a_conquest_waits_until_the_state_is_strong_enough(rome: GameState) -> N
 
     chapter = Chapter(
         id="test_carthage_falls",
-        scenario="punic_wars",
+        scenario="rome_264",
         civ="rome",
         year=rome.year,
         title="Carthage is ripe",
@@ -172,7 +172,7 @@ def test_a_conquest_waits_until_the_state_is_strong_enough(rome: GameState) -> N
 
 @pytest.fixture
 def syracuse(content: Content) -> GameState:
-    return new_game(content, "punic_wars", seed=1, player_civ="syracuse", chronicle=True)
+    return new_game(content, "rome_264", seed=1, player_civ="syracuse", chronicle=True)
 
 
 def test_hiero_is_spared_old_age_until_history_ends_his_reign(
@@ -187,7 +187,7 @@ def test_hiero_is_spared_old_age_until_history_ends_his_reign(
     assert spared(syracuse, civ)
     syracuse.year = -214
     assert not spared(syracuse, civ)
-    free = new_game(content, "punic_wars", seed=1, player_civ="syracuse")
+    free = new_game(content, "rome_264", seed=1, player_civ="syracuse")
     assert not spared(free, free.civs["syracuse"])  # in free play the dice decide
 
 
@@ -205,7 +205,7 @@ def test_a_chapter_can_end_the_reign(syracuse: GameState) -> None:
 
 def test_the_court_can_move_and_a_tributary_can_break_away(content: Content) -> None:
     """Carthage's court moves to another province, and Numidia slips out of its orbit."""
-    state = new_game(content, "punic_wars", seed=1, player_civ="carthage", chronicle=True)
+    state = new_game(content, "rome_264", seed=1, player_civ="carthage", chronicle=True)
     assert status(state, "carthage", "numidia") is RelationStatus.TRIBUTARY
     put_chapter(state, "test_move", "carthage", capital="car_byzacena", break_away=("numidia",))
     state, _ = apply_action(state, ChooseChapter(civ="carthage", chapter="test_move", choice=0))
@@ -273,7 +273,7 @@ def test_a_coup_does_not_happen_once_history_has_turned(syracuse: GameState) -> 
     civ.rulers, civ.ruler, civ.ruler_age = 2, "Hieronymus", 30
     syracuse.year = -213
     syracuse.chapter_result = ChapterResult(
-        chapter="rome_hiero", choice=1, outcome="", history="", historical=False, benchmark=""
+        chapter="r264_hiero", choice=1, outcome="", history="", historical=False, benchmark=""
     )
     age_and_succeed(syracuse, civ, GameRng(syracuse.rng), EventLog(syracuse.turn, syracuse.year))
     assert civ.ruler == "Hieronymus"

@@ -18,7 +18,7 @@ from anachronism.engine.save import dumps, loads
 from anachronism.engine.state import Army, GameState
 from anachronism.tools.view import build_view
 
-ME, FRIEND, FOE = "rome", "cisalpine_gauls", "carthage"
+ME, FRIEND, FOE = "rome", "e2_ligurians", "carthage"
 
 
 def log(state: GameState) -> EventLog:
@@ -28,7 +28,7 @@ def log(state: GameState) -> EventLog:
 @pytest.fixture
 def attacked(content: Content) -> GameState:
     """Carthage has attacked the Gauls; Rome (the player) is neutral to both."""
-    state = new_game(content, "punic_wars", seed=1, player_civ=ME)
+    state = new_game(content, "rome_264", seed=1, player_civ=ME)
     set_status(state, ME, FRIEND, RelationStatus.NEUTRAL)
     set_status(state, ME, FOE, RelationStatus.NEUTRAL)
     declare_war(state, FOE, FRIEND, log(state))
@@ -125,7 +125,7 @@ def test_a_friends_city_retaken_goes_back_to_it(attacked: GameState) -> None:
 
 def test_a_separate_peace_is_a_betrayal(attacked: GameState) -> None:
     state, _ = apply_action(attacked, ComeToAid(civ=ME, target=FRIEND, against=FOE))
-    rel = state.relations["cisalpine_gauls|rome"]
+    rel = state.relations["e2_ligurians|rome"]
     before = rel.grievance.get(FRIEND, 0)
     rel_war = state.relations["carthage|rome"]
     rel_war.weariness[FOE] = 10**6  # Carthage is glad of any peace
@@ -135,7 +135,7 @@ def test_a_separate_peace_is_a_betrayal(attacked: GameState) -> None:
     aid_turn(state, events)
     assert key(ME, FRIEND, FOE) not in state.pledges
     assert any(e.kind == "aid_abandoned" for e in events.items)
-    assert state.relations["cisalpine_gauls|rome"].grievance.get(FRIEND, 0) > before
+    assert state.relations["e2_ligurians|rome"].grievance.get(FRIEND, 0) > before
 
 
 def test_the_pledge_ends_with_the_friends_war(attacked: GameState) -> None:
@@ -159,7 +159,7 @@ def test_view_and_saves(attacked: GameState) -> None:
 
 
 def test_the_player_hears_a_neighbour_is_attacked(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1, player_civ=ME)
+    state = new_game(content, "rome_264", seed=1, player_civ=ME)
     set_status(state, ME, FRIEND, RelationStatus.NEUTRAL)
     events = log(state)
     declare_war(state, FOE, FRIEND, events)

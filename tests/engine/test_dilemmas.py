@@ -19,19 +19,19 @@ def only(state: GameState, dilemma_id: str, chance: int = 10_000) -> None:
 
 
 def test_historical_dilemmas_need_their_moment(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     corvus = state.world.dilemmas["corvus"]
     assert not fits(state, corvus)  # Rome is at peace: no Carthaginian wreck on the shore
     set_status(state, "rome", "carthage", RelationStatus.WAR)
     assert fits(state, corvus)
-    carthage = new_game(content, "punic_wars", seed=1, player_civ="carthage")
+    carthage = new_game(content, "rome_264", seed=1, player_civ="carthage")
     set_status(carthage, "rome", "carthage", RelationStatus.WAR)
     carthage_dilemmas = carthage.world.dilemmas
     assert "corvus" not in {d for d in carthage_dilemmas if fits(carthage, carthage_dilemmas[d])}
 
 
 def test_answering_applies_the_choice(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     only(state, "comet")
     ask(state, GameRng(state.rng), EventLog(state.turn, state.year))
     assert state.dilemma == "comet"
@@ -46,7 +46,7 @@ def test_answering_applies_the_choice(content: Content) -> None:
 
 
 def test_unanswered_the_court_decides_and_once_is_once(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     only(state, "comet")
     ask(state, GameRng(state.rng), EventLog(state.turn, state.year))
     assert state.dilemma == "comet"
@@ -57,7 +57,7 @@ def test_unanswered_the_court_decides_and_once_is_once(content: Content) -> None
 
 
 def test_an_idea_is_planted(content: Content) -> None:
-    state = new_game(content, "punic_wars", seed=1, player_civ="rome")
+    state = new_game(content, "rome_264", seed=1, player_civ="rome")
     set_status(state, "rome", "carthage", RelationStatus.WAR)
     only(state, "corvus")
     ask(state, GameRng(state.rng), EventLog(state.turn, state.year))
