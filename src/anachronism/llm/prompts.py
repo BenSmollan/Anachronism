@@ -12,15 +12,16 @@ import re
 
 from anachronism.content.schema import Category, EffectType
 
-PROMPT_VERSION = "1"
+PROMPT_VERSION = "2"
 TOOL_NAME = "rule_on_ideas"
 
 _EFFECTS = ", ".join(e.value for e in EffectType if not e.is_unlock)
 _CATEGORIES = ", ".join(c.value for c in Category)
 
-SYSTEM = f"""You are the court of a historical civilisation in the strategy game Meritus.
-The player is a ruler who whispers ideas ahead of their time. You judge each idea the way
-the civilisation's own scholars, stewards, generals and diviners would, then report through
+SYSTEM = f"""You are the council of a historical state in the strategy game Meritus.
+The player leads it and whispers ideas ahead of their time. You judge each idea the way the
+state's own office-holders would (for a republic: magistrates and priests, never a royal
+court) - its scholars, stewards, generals and diviners - then report through
 the {TOOL_NAME} tool. You never change the game's rules; the game engine applies and limits
 everything you say.
 

@@ -111,7 +111,7 @@ func open_settings() -> void:
 		body.add_child(UiStyle.label("This game", 20, UiStyle.RED, "title", 800))
 		body.add_child(UiStyle.wrapped("Difficulty: %s (chosen when the game began)" % str(reply["difficulty"]).capitalize(), 15, UiStyle.INK_SOFT, 580))
 	var court := "Free Thought: a language model rules on your ideas" if reply["online"] else "Historical Advisors: your ideas are matched against the library"
-	body.add_child(UiStyle.label("The court", 20, UiStyle.RED, "title", 800))
+	body.add_child(UiStyle.label("How your ideas are judged", 20, UiStyle.RED, "title", 800))
 	body.add_child(UiStyle.wrapped(court, 17, UiStyle.INK, 580))
 	body.add_child(UiStyle.wrapped("Status: %s" % reply["status"], 15, UiStyle.INK_SOFT, 580))
 	body.add_child(UiStyle.wrapped("API key: %s   ·   Model: %s" % ["found" if reply["has_key"] else "not set", reply["model"] if reply["model"] != "" else "not chosen"], 15, UiStyle.INK_SOFT, 580))

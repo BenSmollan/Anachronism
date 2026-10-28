@@ -1,7 +1,9 @@
 schema_version: 1
-# Advisers found at every court. Portrait styles are placeholders drawn by the client (D-060).
+# The advisers who counsel the Senate (D-288). The ids stay scholar, steward, general and
+# diviner: saves, dialogue moments and portraits key on them. Portrait styles are placeholders
+# drawn by the client (D-060).
 speakers:
-  - {id: scholar, title: Chief Scholar, portrait: scholar}
-  - {id: steward, title: Grand Steward, portrait: steward}
-  - {id: general, title: General, portrait: general}
-  - {id: diviner, title: Court Diviner, portrait: diviner}
+  - {id: scholar, title: Greek Tutor, subtitle: Freedman of a senatorial house, portrait: scholar}
+  - {id: steward, title: Censor, subtitle: Magistrate of Rome, portrait: steward}
+  - {id: general, title: Legate, subtitle: Commander of the legions, portrait: general}
+  - {id: diviner, title: Pontifex Maximus, subtitle: College of Pontiffs, portrait: diviner}

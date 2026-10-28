@@ -85,7 +85,7 @@ def apply_ruling(state: GameState, civ_id: str, ruling: Ruling) -> tuple[bool, s
         civ.stats.suspicion_bp + min(ruling.suspicion_bp, limits.adviser_suspicion_bp), 0, BP
     )
     if ruling.verdict is Verdict.IMPLAUSIBLE:
-        return True, ruling.reason or "The court cannot make sense of it yet."
+        return True, ruling.reason or "Your advisers cannot make sense of it yet."
 
     for spec in ruling.stubs[: limits.max_stubs]:
         stub = add_stub(state, spec.id, spec.name, spec.category)

@@ -89,7 +89,7 @@ def ask(state: GameState, rng: GameRng, events: EventLog) -> None:
             events.add(
                 state.player_civ,
                 "dilemma_settled",
-                f"The court decided for you: {message}",
+                f"Your advisers decided for you: {message}",
                 dilemma.title,
             )
     for dilemma_id in sorted(state.world.dilemmas):

@@ -50,8 +50,25 @@ def test_worst_news_first_and_at_most_two(content: Content) -> None:
     ]
     voices = voices_for_turn(content, state, events)
     assert [v["moment"] for v in voices] == ["riot", "adopted"]
-    assert voices[0]["name"] == "General"
+    assert voices[0]["name"] == "Legate"
     assert "Paper" in voices[1]["text"]
+
+
+def test_an_adviser_speaks_under_their_roman_office(content: Content) -> None:
+    state = new_game(content, "rome_264", seed=1)
+    voices = opening_voices(content, state)
+    assert voices[0]["name"] == content.speakers["steward"].title == "Censor"
+    assert voices[0]["title"] == content.speakers["steward"].subtitle == "Magistrate of Rome"
+    assert voices[1]["title"] == "Rome"  # the consul speaks for Rome, not as its "ruler"
+
+
+def test_an_adviser_without_a_subtitle_is_of_the_court(packs: Path) -> None:  # noqa: F811
+    edit(packs / "core" / "speakers.yaml", ", subtitle: Commander of the legions", "")
+    content = load_content(root=packs)
+    state = new_game(content, "rome_264", seed=1)
+    voices = voices_for_turn(content, state, [event("riot", "rome")])
+    assert voices[0]["name"] == "Legate"
+    assert voices[0]["title"] == "Roman court"
 
 
 def test_a_rival_boasts_about_ideas_ahead_of_their_time(content: Content) -> None:

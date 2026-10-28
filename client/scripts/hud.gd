@@ -189,7 +189,7 @@ func _fill_dilemma() -> void:
 		row.add_child(pick)
 		row.add_child(_label(str(choice["hint"]), 12, DIM))
 		body.add_child(row)
-	body.add_child(_label("If you do not choose, the court will take the first answer.", 12, DIM))
+	body.add_child(_label("If you do not choose, the Senate will take the first answer.", 12, DIM))
 	_dilemma.add_child(body)
 
 
@@ -222,7 +222,7 @@ func _fill_offer(offer: Dictionary) -> void:
 		pick.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(pick)
 	body.add_child(row)
-	body.add_child(_label("If you give no answer, the court refuses for you.", 12, DIM))
+	body.add_child(_label("If you give no answer, the Senate refuses for you.", 12, DIM))
 	_dilemma.add_child(body)
 
 
@@ -598,7 +598,7 @@ func _fill_top_bar() -> void:
 	_stats.add_child(VSeparator.new())
 	_stat("literacy", "Literacy: who can read; it speeds learning, and some ideas need it", pct(status["literacy_bp"]), trends["literacy_bp"], true)
 	_stat("unrest", "Unrest: when it runs high come riots, then revolts", pct(status["unrest_bp"]), trends["unrest_bp"], false)
-	_stat("legitimacy", "Legitimacy: the people's trust in the throne; it holds the realm and its armies together", pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
+	_stat("legitimacy", "Legitimacy: the people's trust in the Senate; it holds the state and its armies together", pct(status["legitimacy_bp"]), trends["legitimacy_bp"], true)
 	_stat("suspicion", "Suspicion: how uncanny your progress looks to the world; it draws spies and enemies", pct(status["suspicion_bp"]), trends["suspicion_bp"], false)
 	var menu := Button.new()
 	menu.tooltip_text = "Menu: save, load, chronicle, tech tree, settings (Esc)"
@@ -717,7 +717,7 @@ func _build_idea_box() -> void:
 	_idea_box.add_theme_constant_override("separation", 4)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 6)
-	_idea_input.placeholder_text = "Whisper an idea to your court…"
+	_idea_input.placeholder_text = "Whisper an idea to the Senate…"
 	_idea_input.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_idea_input.custom_minimum_size.y = 44
 	_idea_input.max_length = 600
@@ -780,16 +780,16 @@ func _update_idea_box() -> void:
 	_idea_send.disabled = deliberating
 	_idea_box.visible = tab == "ideas"
 	if deliberating:
-		_idea_status.text = "The court deliberates"
+		_idea_status.text = "The Senate deliberates"
 		_idea_status.add_theme_color_override("font_color", GOLD)
 	elif question != "":
-		_idea_status.text = "The court asks: %s" % question
+		_idea_status.text = "The Senate asks: %s" % question
 		_idea_status.add_theme_color_override("font_color", GOLD)
 		_idea_input.placeholder_text = "Your answer…"
 	else:
 		_idea_status.text = "Anything at all: \"make the river work for us\", \"a printing press\"… (%s)" % court_mode
 		_idea_status.add_theme_color_override("font_color", DIM)
-		_idea_input.placeholder_text = "Whisper an idea to your court…"
+		_idea_input.placeholder_text = "Whisper an idea to the Senate…"
 
 
 ## The developer overlay (brief §6.6, §11): engine, seed, turn, the court's model and its
@@ -808,7 +808,7 @@ func _process(delta: float) -> void:
 		_dev.text = "\n".join(lines)
 	if deliberating:
 		_dots += delta * 2.5
-		_idea_status.text = "The court deliberates" + ".".repeat(int(_dots) % 4)
+		_idea_status.text = "The Senate deliberates" + ".".repeat(int(_dots) % 4)
 
 
 func _ruling_card(ruling: Dictionary) -> Control:
@@ -867,12 +867,12 @@ func _fill_ideas() -> void:
 	ahead_ideas.sort_custom(func(a, b): return a["year"] < b["year"])
 	abroad.sort_custom(func(a, b): return a["year"] > b["year"])
 	if not rulings.is_empty():
-		_side_body.add_child(_label("The court's ruling", 17, GOLD))
+		_side_body.add_child(_label("The Senate's ruling", 17, GOLD))
 		for ruling in rulings:
 			_side_body.add_child(_ruling_card(ruling))
 	var advice: Array = view.get("advice", [])
 	if not advice.is_empty():
-		_side_body.add_child(_label("Your court's counsel", 17, GOLD))
+		_side_body.add_child(_label("Counsel of your advisers", 17, GOLD))
 		for item in advice:
 			_side_body.add_child(_advice_card(item))
 	_side_body.add_child(_notebook_banner(ahead_ideas.size()))
@@ -955,6 +955,8 @@ func _advice_card(item: Dictionary) -> Control:
 	var node_id := str(item["node_id"])
 	head.add_child(_small_button("Begin", {"kind": "start", "node_id": node_id}))
 	card.add_child(head)
+	if str(item.get("heard_from", "")) != "":
+		card.add_child(_label("Known in %s" % item["heard_from"], 12, DIM))
 	card.add_child(_wrapped("\u201c%s\u201d" % str(item["text"]), 13, DIM))
 	return card
 
@@ -969,7 +971,7 @@ func _idea_card(idea: Dictionary) -> Control:
 	if idea["ready"]:
 		head.add_child(_button("Begin", func(): action_requested.emit({"kind": "start", "node_id": idea["id"]})))
 	elif idea.get("stub", false):
-		var ask := _button("Ask the court", func(): idea_submitted.emit(str(idea["name"]), ""))
+		var ask := _button("Ask the Senate", func(): idea_submitted.emit(str(idea["name"]), ""))
 		ask.disabled = deliberating
 		head.add_child(ask)
 	card.add_child(head)
@@ -1068,13 +1070,13 @@ func _fill_world() -> void:
 			_side_body.add_child(_wrapped("⚔ %s and %s are at war" % [_civ_name(war["a"]), _civ_name(war["b"])], 14, BAD))
 	var status: Dictionary = view["status"]
 	if status.has("festival_cost"):
-		_side_body.add_child(_label("Royal decrees", 17, GOLD))
+		_side_body.add_child(_label("Decrees of the Senate", 17, GOLD))
 		var decrees := HBoxContainer.new()
 		decrees.add_theme_constant_override("separation", 6)
 		var rich: int = int(status["stores"]["wealth"])
 		var feast := _small_button("Hold a festival (%s)" % number(int(status["festival_cost"])), {"kind": "festival"})
 		feast.disabled = rich < int(status["festival_cost"])
-		feast.tooltip_text = "Feasts and games: legitimacy +%d%%, unrest -%d%%. Use it when unrest is high (riots, revolts and lost work) or before a hard war: a trusted throne fields stronger armies and its stories about your strange new arts are believed." % [int(status.get("festival_legitimacy_bp", 0)) / 100, int(status.get("festival_unrest_bp", 0)) / 100]
+		feast.tooltip_text = "Feasts and games: legitimacy +%d%%, unrest -%d%%. Use it when unrest is high (riots, revolts and lost work) or before a hard war: a trusted Senate fields stronger armies and its stories about your strange new arts are believed." % [int(status.get("festival_legitimacy_bp", 0)) / 100, int(status.get("festival_unrest_bp", 0)) / 100]
 		decrees.add_child(feast)
 		var hire := _small_button("Hire mercenaries (%s)" % number(int(status["mercenary_cost"])), {"kind": "mercenaries"})
 		hire.disabled = rich < int(status["mercenary_cost"]) or int(status["mercenaries"]) > 0
@@ -1104,16 +1106,16 @@ func _fill_world() -> void:
 			stories.add_theme_constant_override("separation", 6)
 			var divine := _small_button("Divine gift (%s)" % number(int(costs[0])), {"kind": "explain", "story": "divine"})
 			divine.disabled = wait > 0 or rich < int(costs[0])
-			divine.tooltip_text = "Priests proclaim the new arts divine: suspicion down. If the people trust the throne, talk of witchcraft or fraud turns to awe"
+			divine.tooltip_text = "Priests proclaim the new arts divine: suspicion down. If the people trust the Senate, talk of witchcraft or fraud turns to awe"
 			stories.add_child(divine)
 			var sages := _small_button("Foreign sages (%s knowledge)" % number(int(costs[1])), {"kind": "explain", "story": "sages"})
 			sages.disabled = wait > 0 or int(status["stores"]["knowledge"]) < int(costs[1])
 			sages.tooltip_text = "Blame wise strangers from distant lands: suspicion falls further, but rivals hear of your arts at once"
 			stories.add_child(sages)
-			_side_body.add_child(_label("People ask where the court's new arts come from", 13, INK))
+			_side_body.add_child(_label("People ask where these new arts come from", 13, INK))
 			_side_body.add_child(stories)
 			if wait > 0:
-				_side_body.add_child(_label("The court's last story is still fresh: wait %d turn(s)" % wait, 12, DIM))
+				_side_body.add_child(_label("The Senate's last story is still fresh: wait %d turn(s)" % wait, 12, DIM))
 	_side_body.add_child(_label("The powers of the world", 17, GOLD))
 	_side_body.add_child(_wrapped("On the map, lines from your capital: gold to trading partners, green to allies, purple to tributaries.", 12, DIM))
 	var me: Dictionary = {}
@@ -2573,7 +2575,7 @@ func show_conquests(items: Array) -> void:
 	else:
 		lines.append("+%s wealth carried off from the enemy treasury" % number(int(spoils.get("wealth", 0))))
 	lines += [
-		"+%d%% prestige at court%s" % [int(spoils.get("prestige_bp", 0)) / 100, " (an enemy capital!)" if spoils.get("capital", false) else ""],
+		"+%d%% prestige at Rome%s" % [int(spoils.get("prestige_bp", 0)) / 100, " (an enemy capital!)" if spoils.get("capital", false) else ""],
 		"The %s grows in renown: +%d%% veterancy, morale restored" % [str(spoils.get("army", "army")), int(spoils.get("veterancy_bp", 0)) / 100],
 		"The province, its people, fields and buildings are yours" if freed == "" else "Its people cheer their liberators"]
 	if int(spoils.get("sacked", 0)) > 0:

@@ -148,8 +148,12 @@ scenarios:
 - Every civ, AI or player, needs an era-appropriate baseline of techs.
 
 ## Characters and dialogue
-`core/speakers.yaml` lists the advisers at every court (title and placeholder portrait
-style); `core/dialogue.yaml` lists what is said at each *moment* (an idea adopted, a riot,
+`core/speakers.yaml` lists the advisers who counsel the Senate: their `title` (the office,
+e.g. `Censor`), an optional `subtitle` (the line under the name, e.g. `Magistrate of Rome`;
+left out, it reads `<Adjective> court`) and a placeholder portrait style. Keep the ids
+`scholar`, `steward`, `general` and `diviner`: saves, the `advise_*` moments and the client's
+portraits key on them (D-288). The lines speak in a Roman Republican voice: the Senate, the
+consuls, the auspices, never a king or a throne. `core/dialogue.yaml` lists what is said at each *moment* (an idea adopted, a riot,
 the game starting…). One line is picked each time, the same way in every replay:
 ```yaml
 dialogue:

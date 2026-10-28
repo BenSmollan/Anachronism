@@ -1,4 +1,4 @@
-"""The court's counsel: each adviser recommends one idea a turn (DESIGN §14, brief §10).
+"""The advisers' counsel: each recommends one idea a turn (DESIGN §14, brief §10).
 
 The offline "Historical Advisors" way to play: instead of (or as well as) whispering ideas,
 the player hears the steward, the general, the scholar and the diviner each recommend one
@@ -12,9 +12,9 @@ from typing import Any
 
 from anachronism.content.loader import Content
 from anachronism.content.schema import EffectType, RelationStatus, Stage
-from anachronism.engine.rivals import at_war, relation, strength
+from anachronism.engine.rivals import alive, at_war, relation, strength
 from anachronism.engine.state import GameState
-from anachronism.engine.tech import feasibility
+from anachronism.engine.tech import feasibility, is_adopted
 from anachronism.tools.voices import speak
 
 E = EffectType
@@ -28,6 +28,10 @@ CONCERNS: dict[str, dict[EffectType, int]] = {  # what each adviser values, per 
 }  # fmt: skip
 REACH_YEARS = 200
 """How far ahead of their time advisers will look before an idea seems fantastical."""
+HEARD_BONUS_NUM = 15
+"""An idea a neighbour in contact already uses scores this many tenths (DEC018)."""
+FAR_ONLY_DIV = 2
+"""An old idea that no neighbour uses (known only far away) scores divided by this."""
 UNLOCK_VALUE = {"general": (E.UNLOCKS_UNIT, 1500), "steward": (E.UNLOCKS_RESOURCE, 800)}
 
 
@@ -53,7 +57,20 @@ def _urgent(state: GameState, role: str) -> bool:
     return False
 
 
-def _score(state: GameState, role: str, node_id: str, urgent: bool) -> int:
+def heard_from(state: GameState, me: str, node_id: str) -> str | None:
+    """The first civ (sorted ids) in contact with ``me`` that already uses ``node_id``."""
+    for other in sorted(state.civs):
+        if (
+            other != me
+            and alive(state, other)
+            and relation(state, other, me) is not None
+            and is_adopted(state.civs[other], node_id)
+        ):
+            return other
+    return None
+
+
+def _score(state: GameState, role: str, node_id: str, urgent: bool, heard: str | None) -> int:
     node = state.tech_nodes[node_id]
     score = 0
     for effect in node.effects:
@@ -71,6 +88,12 @@ def _score(state: GameState, role: str, node_id: str, urgent: bool) -> int:
         score = score * 12 // 10
     elif ahead > REACH_YEARS:
         score = score * REACH_YEARS // ahead // 4
+    # Romans borrow from the peoples they know (DEC018): what a neighbour already uses is
+    # easy to argue for; an old idea known only at the far ends of the earth is not.
+    if heard is not None:
+        score = score * HEARD_BONUS_NUM // 10
+    elif ahead <= 0:
+        score = score // FAR_ONLY_DIV
     return score * (2 if urgent else 1)
 
 
@@ -86,12 +109,13 @@ def counsel(content: Content, state: GameState) -> list[dict[str, Any]]:
         and node_id not in civ.projects
         and not feasibility(state, me, node_id).blocked
     ]
+    heard = {node_id: heard_from(state, me, node_id) for node_id in ready}
     advice: list[dict[str, Any]] = []
     taken: set[str] = set()
     roles = sorted(CONCERNS, key=lambda r: (not _urgent(state, r), list(CONCERNS).index(r)))
     for role in roles:
         urgent = _urgent(state, role)
-        scored = [(_score(state, role, n, urgent), n) for n in ready if n not in taken]
+        scored = [(_score(state, role, n, urgent, heard[n]), n) for n in ready if n not in taken]
         scored = [(s, n) for s, n in scored if s > 0]
         if not scored:
             continue
@@ -104,7 +128,15 @@ def counsel(content: Content, state: GameState) -> list[dict[str, Any]]:
         if voice is None:
             continue
         ahead = state.tech_nodes[best].year - state.year
+        source = heard[best]
         advice.append(
-            {**voice, "role": role, "node_id": best, "urgent": urgent, "years_ahead": ahead}
+            {
+                **voice,
+                "role": role,
+                "node_id": best,
+                "urgent": urgent,
+                "years_ahead": ahead,
+                "heard_from": state.civs[source].name if source else "",
+            }
         )
     return advice

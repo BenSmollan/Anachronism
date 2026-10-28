@@ -143,7 +143,7 @@ def _settle(
         benchmark=benchmark(state, chapter),
     )
     kind = "chapter_settled" if by_court else "chapter_chosen"
-    told = f"{chapter.title}: {outcome}" if not by_court else f"The court chose: {outcome}"
+    told = f"{chapter.title}: {outcome}" if not by_court else f"Your advisers chose: {outcome}"
     events.add(state.player_civ, kind, told, chapter.title)
     return outcome
 

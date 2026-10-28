@@ -122,6 +122,6 @@ func _get_tooltip(at: Vector2) -> String:
 			if node["flavour"] != "":
 				text += "\n" + str(node["flavour"])
 			if not node["stage"] in ["adopted", "widespread", "experimenting"]:
-				text += "\nClick to ask the court about it."
+				text += "\nClick to ask the Senate about it."
 			return text
 	return ""

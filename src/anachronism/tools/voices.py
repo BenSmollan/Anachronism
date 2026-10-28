@@ -56,12 +56,12 @@ def speak(
     civ_def = content.civs[speaker_civ]
     if dialogue.speaker in ("ruler", "rival"):
         name = ruler_of(speaker_civ)
-        title = f"Ruler of {civ_def.name}"
+        title = civ_def.name if speaker_civ == player else f"Ruler of {civ_def.name}"
         portrait = civ_def.portrait
     else:
         adviser = content.speakers[dialogue.speaker]
         name = adviser.title
-        title = f"{content.civs[player].adjective} court"
+        title = adviser.subtitle or f"{content.civs[player].adjective} court"
         portrait = adviser.portrait or civ_def.portrait
     key = f"{state.seed}:{state.turn}:{moment}:{speaker_civ}:{subject}".encode()
     line = dialogue.lines[zlib.crc32(key) % len(dialogue.lines)]
@@ -102,7 +102,7 @@ def adviser_voice(
         "moment": "idea",
         "speaker": role,
         "name": adviser.title if adviser else role.title(),
-        "title": f"{civ_def.adjective} court",
+        "title": (adviser.subtitle if adviser else "") or f"{civ_def.adjective} court",
         "portrait": (adviser.portrait if adviser else "") or civ_def.portrait,
         "culture": civ_def.portrait,
         "colour": civ_def.colour,
@@ -192,7 +192,7 @@ def _rival_boasts(content: Content, state: GameState, events: list[Event]) -> di
 def voices_for_turn(
     content: Content, state: GameState, events: list[Event]
 ) -> list[dict[str, Any]]:
-    """What the court (and one rival) have to say about the turn just played."""
+    """What the advisers (and one rival) have to say about the turn just played."""
     player = state.player_civ
     mine = {e.kind: e for e in events if e.civ == player}
     said: list[dict[str, Any]] = []

@@ -16,9 +16,9 @@ from anachronism.engine.timeflow import current_era, per_turn, rate_per_turn
 
 _FRAMING_MESSAGES = {
     Framing.INSPIRED: "People say the rulers of {name} are divinely inspired.",
-    Framing.WITCHCRAFT: "Priests in {name} denounce the court's new arts as witchcraft.",
-    Framing.FRAUD: "Nobles of {name} whisper that the court's wonders are frauds.",
-    Framing.NONE: "Talk of the court's strange knowledge dies down in {name}.",
+    Framing.WITCHCRAFT: "Priests in {name} denounce the new arts as witchcraft.",
+    Framing.FRAUD: "Nobles of {name} whisper that the new wonders are frauds.",
+    Framing.NONE: "Talk of strange knowledge in {name} dies down.",
 }
 
 

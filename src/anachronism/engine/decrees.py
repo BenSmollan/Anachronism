@@ -37,7 +37,7 @@ def apply_decree(state: GameState, action: Decree) -> tuple[bool, str]:
             civ.stats.legitimacy_bp + rules.festival_legitimacy_bp, 0, BP
         )
         civ.stats.unrest_bp = clamp(civ.stats.unrest_bp - rules.festival_unrest_bp, 0, BP)
-        return True, f"Feasts and games across {civ.name}: the people cheer the throne."
+        return True, f"Feasts and games across {civ.name}: the people cheer their leaders."
     if isinstance(action, HireMercenaries):
         price = cost(state, civ.id, rules.mercenary_wealth_per_1000)
         if civ.stockpiles.wealth < price:
@@ -90,10 +90,10 @@ def _explain(state: GameState, action: Explain) -> tuple[bool, str]:
     rules = state.world.rules.suspicion
     stats = civ.stats
     if stats.suspicion_bp <= 0:
-        return False, "nobody is asking where the court's arts come from"
+        return False, "nobody is asking where your new arts come from"
     wait = explain_ready_in(state, civ.id)
     if wait:
-        return False, f"the people heard the court's last story too recently ({wait} turn(s))"
+        return False, f"the people heard your last story too recently ({wait} turn(s))"
     wealth, knowledge = explain_costs(state, civ.id)
     if action.story == "divine":
         if civ.stockpiles.wealth < wealth:

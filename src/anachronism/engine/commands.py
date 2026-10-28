@@ -139,12 +139,12 @@ def _apply(state: GameState, action: Action) -> tuple[bool, str]:
         return True, message
     if isinstance(action, ChooseChapter):
         if civ.id != state.player_civ:
-            return False, "only the player's court plays the chronicle"
+            return False, "only the player plays the chronicle"
         return choose_chapter(state, action.chapter, action.choice)
     if isinstance(action, ChooseDilemma):
         dilemma = state.world.dilemmas.get(action.dilemma)
         if dilemma is None or state.dilemma != action.dilemma or civ.id != state.player_civ:
-            return False, "that question is not before the court"
+            return False, "that question is not before you"
         if not 0 <= action.choice < len(dilemma.choices):
             return False, "no such answer"
         state.dilemma = None

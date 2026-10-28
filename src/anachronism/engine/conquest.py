@@ -282,7 +282,7 @@ def _take(state: GameState, army: Army, owner: str, events: EventLog, stormed: b
         parts.append(f"{sacked:,} of its people killed or carried off")
     text = (
         f"{place} is {how}. Spoils: {', '.join(parts)}; the {army.name} grows in renown,"
-        f" and the court's prestige rises{' - an enemy capital!' if capital else '.'}"
+        f" and your prestige at home rises{' - an enemy capital!' if capital else '.'}"
     )
     events.add(
         army.owner,

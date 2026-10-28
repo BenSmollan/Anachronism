@@ -86,7 +86,7 @@ def interpret(state: GameState, civ_id: str, text: str) -> ModelReply:
                 verdict=Verdict.IMPLAUSIBLE,
                 reason=(
                     "The scholars pored over your words but found nothing they could build"
-                    " on. (Offline, the court knows only its library of ideas; with the model"
+                    " on. (Offline, your advisers know only their library of ideas; with the model"
                     " connected it can rule on anything.)"
                 ),
                 hint=hint,

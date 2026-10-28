@@ -316,7 +316,7 @@ func _fill_page() -> void:
 		var risks := []
 		var suspicion := int(idea.get("suspicion", 0))
 		if suspicion > 0:
-			risks.append("People will wonder where it came from: suspicion of your court +%d%%." % suspicion)
+			risks.append("People will wonder where it came from: suspicion of Rome's new arts +%d%%." % suspicion)
 		risks.append("Courts that hear of it may send spies to steal it.")
 		_page.add_child(UiStyle.wrapped(" ".join(risks), 15, DIM, 760))
 	var thieves: Array = idea.get("stolen_by", [])

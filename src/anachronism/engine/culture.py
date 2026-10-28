@@ -82,7 +82,7 @@ def convert(state: GameState, civ_id: str, faith_id: str, events: EventLog, how:
     civ = state.civs[civ_id]
     civ.faith = faith_id
     name = state.world.faiths[faith_id].name
-    events.add(civ_id, "faith", f"The {civ.adjective} court takes up {name} ({how}).", name)
+    events.add(civ_id, "faith", f"{civ.name} takes up {name} ({how}).", name)
     if civ_id != state.player_civ and state.civs[state.player_civ].faith == faith_id:
         events.add(
             state.player_civ,

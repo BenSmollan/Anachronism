@@ -45,7 +45,7 @@ def speaker_card(content: Content, state: GameState, speaker: str) -> dict[str, 
     else:
         adviser = content.speakers.get(speaker)
         name = adviser.title if adviser else speaker.title()
-        title = f"{content.civs[player].adjective} court"
+        title = (adviser.subtitle if adviser else "") or f"{content.civs[player].adjective} court"
         portrait = (adviser.portrait if adviser else "") or civ_def.portrait
     return {
         "name": name,
@@ -188,7 +188,7 @@ def _deeds_text(state: GameState, deeds: Any) -> str:
     if deeds.break_away:
         parts.append(f"{names(deeds.break_away)} breaks away")
     if deeds.capital and deeds.capital in state.world.geography:
-        parts.append(f"the court moves to {state.world.geography[deeds.capital].name}")
+        parts.append(f"the capital moves to {state.world.geography[deeds.capital].name}")
     if deeds.ships:
         parts.append(f"{deeds.ships} warships")
     if deeds.men:

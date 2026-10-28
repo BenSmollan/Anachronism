@@ -2534,3 +2534,27 @@ matters. Engine only: the client screens for it come in a later step.
   checking pass.
 - The test port (all old-scenario tests now use `punic_wars`) found that the Aegean no longer
   links to the Levantine sea since the other packs were removed; to be restored.
+
+## D-288 Rome speaks Roman: the Senate and four Roman advisers — owner's choice (2026-10-28)
+- Owner (DEC015): "the Senate, with advisers such as a consul, a censor and a pontifex". The
+  offices (DEC016): the scholar is the **Greek Tutor** (freedman of a senatorial house), the
+  steward the **Censor** (magistrate of Rome), the general the **Legate** (commander of the
+  legions), the diviner the **Pontifex Maximus** (College of Pontiffs). The tutorial opens
+  "Welcome, Senator" (DEC017).
+- The adviser ids (`scholar`, `steward`, `general`, `diviner`) are kept: rulings in saves,
+  the `advise_*` dialogue moments, chapter speakers and the client's portraits all key on
+  them, and the player never sees an id. Only titles and lines changed. A new optional
+  `Speaker.subtitle` gives the line under the name (falls back to "<Adjective> court").
+- `core/dialogue.yaml` is rewritten in a Roman Republican voice (the Senate, consuls, the
+  auspices, the gods, the ancestors' customs), plain modern English with at most one Roman
+  term a line. Rival lines keep their courts (DEC005). Engine messages about the player's
+  own state use neutral words ("your advisers", "your new arts"), so no Rome names live in
+  Python. The model prompt now names a council of office-holders; PROMPT_VERSION is 2, so
+  cached rulings are asked again once.
+- Counsel prefers what Rome's neighbours use (DEC018): an idea adopted by a living civ in
+  contact with the player scores x1.5 and its card shows "Known in <civ>"; an old idea no
+  neighbour uses scores half. Ideas ahead of their time keep their score (the game's hook).
+  Read from state, so it follows contacts and adoptions; counsel feeds only the view, so
+  saves, replays and draw counts are unchanged.
+- Left for R2: the succession messages (engine/rulers.py, engine/dynasty.py "takes the
+  throne").

@@ -43,15 +43,17 @@ MOMENTS = frozenset(
 )  # fmt: skip
 """When lines can be spoken. ``rival_adopted``: a rival adopts an idea ahead of its time,
 and its ruler tells you so (``{rival}`` is that rival);
-``quiet``: a turn with nothing else to say; ``idea_*``: the court's reaction to one of the
+``quiet``: a turn with nothing else to say; ``idea_*``: the advisers' reaction to one of the
 player's own ideas when no language model is speaking for them (offline mode)."""
 
 
 class Speaker(Frozen):
-    """An adviser at every court: the chief scholar, the grand steward..."""
+    """An adviser who counsels the player: the Greek tutor, the censor..."""
 
     id: Identifier
     title: str
+    subtitle: str = ""
+    """The line under the name, e.g. ``Magistrate of Rome``; empty: ``<Adjective> court``."""
     portrait: str = ""
     """Placeholder portrait style (``scholar``, ``steward``, ``general``, ``diviner``);
     empty means the civilisation's own style."""

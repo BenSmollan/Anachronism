@@ -86,7 +86,10 @@ def capture(state: GameState, taker: str, province_id: str, events: EventLog) ->
             )
             new_seat = state.world.geography[loser.capital].name
             events.add(
-                loser_id, "capital_lost", f"The {loser.adjective} court flees to {new_seat}.", name
+                loser_id,
+                "capital_lost",
+                f"The {loser.adjective} government moves to {new_seat}.",
+                name,
             )
     if not state.owned_provinces(loser_id):
         loser.collapsed = True
