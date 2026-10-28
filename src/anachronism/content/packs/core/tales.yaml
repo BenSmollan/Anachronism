@@ -110,11 +110,6 @@ tales:
     lines:
       - "The {winner} {unit} stood off and fired broadside after broadside; the {loser} ships never came close enough to board."
       - "Smoke covered the {place}. When it lifted, the {loser} galleys were splinters and the {winner} guns were still warm."
-  - id: greek_fire
-    sea: true
-    civs: [byzantium]
-    lines:
-      - "Siphons in the {winner} prows spat a liquid fire that burned on the water itself; the {loser} sailors leapt into a burning sea."
   - id: corvus
     sea: true
     civs: [rome]
@@ -130,21 +125,6 @@ tales:
     civs: [athens]
     lines:
       - "The {winner} triremes rowed circles round the {loser} fleet on the {place}, closing tighter and tighter, and struck at the first broken oar."
-  - id: turtle_ships
-    sea: true
-    civs: [joseon]
-    lines:
-      - "Iron-spiked turtle ships rowed straight into the {loser} fleet on the {place}, cannon firing from the dragon's mouth at their bows."
-  - id: longships
-    sea: true
-    civs: [denmark, norway, sweden]
-    lines:
-      - "The {winner} longships were lashed together into a floating fortress, and the {loser} crews died trying to climb it."
-  - id: venetian_galleys
-    sea: true
-    civs: [venice]
-    lines:
-      - "The {winner} galleys, built in the city's great shipyards and rowed by its own citizens, swept the {loser} fleet from the {place}."
 
   # --- battle plans (D-108): told when the winners' plan carried the day -----------------
   - id: plan_charge
@@ -182,11 +162,6 @@ tales:
     civs: [carthage]
     lines:
       - "At {place} the Carthaginian line bowed back like a drawn bow; the {loser} legions pushed into it, and the African foot and the Numidian horse closed around them until they could not raise their swords."
-  - id: mongol_feint
-    tactic: feint
-    civs: [mongols]
-    lines:
-      - "The Mongol tumens fled before the {loser} host at {place} for a whole day. When the pursuers' horses were blown and their ranks scattered, the drums sounded, and the Mongols turned."
   - id: teutoburg
     tactic: ambush
     terrain: [forest]

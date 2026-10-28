@@ -171,16 +171,6 @@ civs:
     portrait: berber
     description: >-
       Horse peoples of the North African highlands, the finest light cavalry of the age, courted by Carthage.
-  - id: cisalpine_gauls
-    name: Cisalpine Gauls
-    adjective: Gallic
-    lineage: cisalpine_gauls
-    colour: "#6b8e23"
-    symbol: carnyx
-    emblem: G
-    portrait: celtic
-    description: >-
-      Celtic peoples of the Po valley, the Insubres and the Boii, who once sacked Rome itself.
   - id: kush
     name: Kush
     adjective: Kushite
