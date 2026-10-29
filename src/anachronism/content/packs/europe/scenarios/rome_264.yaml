@@ -233,9 +233,13 @@ scenarios:
           concrete: concept  # judgement: hydraulic concrete is later than 264
           # piston_bellows removed: the double-acting piston bellows is Chinese (techs/craft.yaml); Rome used skin bellows
       e2_samnites:
-        # Allied to Rome by treaty since 290 BC (Livy 10.45, unverified). Polybius 2.24.10 gives 70,000 foot and 7,000 horse in 225 BC.
+        # Allied to Rome by treaty since 290 BC (Livy, Per. 11.5). Polybius 2.24.10 gives 70,000 foot and 7,000 horse in 225 BC.
         navy_bp: 0
         disposition: cautious
+        sources:
+          - "Livy, Periochae 11.5 (the Samnites sue for peace; the treaty renewed for the fourth time, 290 BC)"
+          - "Polybius 2.24.10 (Samnites: 70,000 foot and 7,000 horse on the rolls, 225 BC)"
+          - "Velleius 1.14.7-8 (Latin colonies at Beneventum, 268, and Aesernia, 263, in Samnite land)"
         capital: it_samnium
         leader: The Samnite League
         leader_age: 45
@@ -273,9 +277,12 @@ scenarios:
           fortification: widespread
           piston_bellows: adopted
       e2_central_italics:
-        # Marsi and Frentani, allied since 304 BC (Livy 9.45, unverified); Polybius 2.24.12 lists their levy.
+        # Marsi, Paeligni, Marrucini and Frentani, allied since 304 BC (Livy 9.45); Polybius 2.24.12 lists their levy.
         navy_bp: 0
         disposition: cautious
+        sources:
+          - "Livy 9.45 (the Marrucini, Marsi, Paeligni and Frentani sue for peace and obtain a treaty, 304 BC)"
+          - "Polybius 2.24.12 (Marsi, Marrucini, Frentani and Vestini: 20,000 foot and 4,000 horse)"
         capital: it_marsi
         leader: The Marsi and their neighbours
         leader_age: 45
@@ -313,9 +320,14 @@ scenarios:
           fortification: widespread
           piston_bellows: adopted
       e2_etruscans:
-        # Each Etruscan city had its own treaty with Rome; here they are one civ. Volsinii falls to Rome in 264 (Zonaras 8.7, unverified); Falerii revolts in 241.
+        # Each Etruscan city had its own treaty with Rome; here they are one civ. Volsinii, at war with Rome in 264,
+        # is its own civ (e2_volsinii); Falerii revolts in 241 (Fasti Triumphales 241).
         navy_bp: 1500
         disposition: cautious
+        sources:
+          - "Polybius 2.24.5 (Sabines and Etruscans: above 50,000 foot and 4,000 horse, 225 BC)"
+          - "Polybius 2.20.1-5 (the Etruscans beaten with the Boii at Lake Vadimon, then a treaty)"
+          - "Fasti Triumphales, 241/0 BC (two consuls triumph over the Falisci)"
         capital: it_tarquinii
         leader: The city magistrates of Etruria
         leader_age: 45
@@ -366,6 +378,12 @@ scenarios:
         # The province it_volsinii also holds Clusium and Perusia, which were not Volsinii's: an approximation.
         navy_bp: 0
         disposition: aggressive
+        sources:
+          - "Zonaras 8.7 (the servants of Volsinii take the offices; the old citizens appeal to Rome; the siege and surrender)"
+          - "Florus 1.16 [1.21] (the Volsinians, last of the Italians, ask help against their former slaves)"
+          - "Fasti Triumphales, 264/3 BC (M. Fulvius Flaccus triumphs over the Vulsinienses, 1 November)"
+          - "Livy, Periochae 16.8 (wars against the Carthaginians and the Volsinians)"
+        disputed: "Which consul fought it: Zonaras 8.7 and Florus 1.16 name Q. Fabius Gurges (consul 265), killed in the assault; the Fasti Triumphales give the triumph to M. Fulvius Flaccus (consul 264). Here Fabius began the siege and Fulvius ends it."
         capital: it_volsinii
         leader: The freedmen's senate of Volsinii
         leader_age: 45
@@ -408,6 +426,11 @@ scenarios:
         # Polybius 2.24.7: the Umbrians and Sarsinates raise about 20,000 in 225 BC.
         navy_bp: 0
         disposition: cautious
+        sources:
+          - "Polybius 2.24.7 (Umbrians and Sarsinates: about 20,000, 225 BC)"
+          - "Livy, Periochae 15.7 (the Umbrians defeated and their surrender accepted, 267 BC)"
+          - "Fasti Triumphales, 266/5 BC (two consuls triumph over the Sassinates)"
+          - "Livy 10.10 (Narnia settled as an outpost against the Umbrians, 299 BC)"
         capital: it_umbria
         leader: The Umbrian cantons
         leader_age: 45
@@ -444,9 +467,15 @@ scenarios:
           fortification: widespread
           piston_bellows: adopted
       e2_southern_italics:
-        # Latin colonies (Venusia, Luceria, Paestum) lie inside these provinces but cannot be separated at this grain.
+        # Latin colonies (Venusia, Luceria) lie inside these provinces but cannot be separated at this grain.
+        # Paestum (it_picentini) is Rome's in this scenario (see the table at the top).
         navy_bp: 2000
         disposition: cautious
+        sources:
+          - "Polybius 2.24.11-12 (Iapygians and Messapians 50,000 foot and 16,000 horse; Lucanians 30,000 and 3,000)"
+          - "Livy, Periochae 15.7 (the Sallentines defeated and their surrender accepted, 267 BC)"
+          - "Fasti Triumphales, 266/5 BC (two consuls triumph over the Sallentini and Messapii)"
+          - "Velleius 1.14.4, 1.14.6 (Latin colonies at Luceria and Venusia)"
         capital: it_lucania
         leader: The Italic chiefs of the south
         leader_age: 45
@@ -487,9 +516,14 @@ scenarios:
           fortification: widespread
           piston_bellows: adopted
       e2_italiote_greeks:
-        # Tarentum fell to Rome in 272 BC (Polybius 1.6-7 for Rhegium; Tarentum: Livy Per. 14, unverified).
+        # Tarentum came to terms with Rome in 272 BC (Livy, Per. 15.1); Rhegium was restored to its citizens (Polybius 1.7.13).
         navy_bp: 8000
         disposition: mercantile
+        sources:
+          - "Polybius 1.7.6-13 (Rhegium seized by its Campanian garrison, retaken and restored to its citizens)"
+          - "Livy, Periochae 15.1 (the Tarentines subdued and given peace and freedom, 272 BC)"
+          - "Livy 8.26 (the treaty with Neapolis, 326 BC)"
+          - "Polybius 1.20.14 (Tarentum, Locri, Elea and Naples lend Rome the boats for the crossing of 264)"
         capital: it_tarentum
         leader: The magistrates of the Greek cities
         leader_age: 45
@@ -535,8 +569,12 @@ scenarios:
         # Polybius 2.20-21: peace with Rome for forty-five years after Vadimon, then renewed war.
         navy_bp: 0
         disposition: aggressive
+        sources:
+          - "Polybius 2.17 (the Boii among the Celtic peoples of the Po plain)"
+          - "Polybius 2.20.1-6 (beaten with the Etruscans at Vadimon; a treaty)"
+          - "Polybius 2.21.1 (the Gauls at peace with Rome for forty-five years)"
         scripts:
-          - {id: "gauls_invade_etruria", goal: "conquer", target: "rome", preconditions: {after_year: -227}, note: "The Insubres and Boii bring the Gaesatae over the Alps and march into Etruria (225 BC). Polybius 2.22-23."}
+          - {id: "gauls_invade_etruria", goal: "conquer", target: "rome", preconditions: {after_year: -227}, note: "The Insubres and Boii bring the Gaesatae over the Alps and march into Etruria (225 BC). Polybius 2.22-23.", sources: ["Polybius 2.22.1 (the Insubres and Boii league and call the Gaesatae)", "Polybius 2.23.1 (the Gaesatae cross the Alps)"]}
         capital: it_boii
         leader: The Council of the Boii
         leader_age: 45
