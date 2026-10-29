@@ -17,7 +17,8 @@ def _sourcing(scenario: Scenario) -> list[str]:
 
 
 def _scenario() -> Scenario:
-    return next(iter(load_content().scenarios.values()))
+    """A scenario that has not opted in to the sourcing check (rome_264 has, since T004)."""
+    return load_content().scenarios["bronze_dawn"]
 
 
 def test_unflagged_scenario_needs_no_sources() -> None:

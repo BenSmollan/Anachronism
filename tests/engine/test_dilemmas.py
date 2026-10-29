@@ -21,6 +21,9 @@ def only(state: GameState, dilemma_id: str, chance: int = 10_000) -> None:
 def test_historical_dilemmas_need_their_moment(content: Content) -> None:
     state = new_game(content, "rome_264", seed=1, player_civ="rome")
     corvus = state.world.dilemmas["corvus"]
+    # rome_264 opens with Rome at war with Volsinii (DEC014); a dilemma cannot yet name its enemy,
+    # so make peace there first to test the at-peace case.
+    set_status(state, "rome", "e2_volsinii", RelationStatus.NEUTRAL)
     assert not fits(state, corvus)  # Rome is at peace: no Carthaginian wreck on the shore
     set_status(state, "rome", "carthage", RelationStatus.WAR)
     assert fits(state, corvus)
