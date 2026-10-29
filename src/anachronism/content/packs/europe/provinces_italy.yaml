@@ -118,8 +118,8 @@ provinces:
       - "Velleius 1.14.6 (citizenship without the vote, 290 BC), 1.14.7 (the vote, 268 BC)"
 
   # --- Etruria and the Etruscan borderlands ---
-  # source: Livy (Falerii, the schoolmaster); (Falerii revolts 293 BC), Polybius (Falerian revolt 241 BC); Strabo  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: Faliscan, not Etruscan, in speech; Rome crushed Falerii in 241 BC (Polybius) and moved the town to the plain (Zonaras).  # unverified
+  # 264 BC: an Etruscan-held ally of Rome (socius). Falerii revolts in 241, is taken in a few days (Polybius 1.65.2), and loses half its land; the old hill-town is pulled down and rebuilt on the plain (Zonaras 8.18).
+  # note: ADDED: the Falisci are a people of their own with their own speech, not Etruscans (Strabo 5.2.9).
   - id: it_falisci
     name: "Falisci (Falerii Veteres, Capena)"
     latlon: [42.29, 12.41]
@@ -129,7 +129,13 @@ provinces:
     capacity: 40000
     resources: {}
     neighbours: [it_caere, it_sabina, it_tarquinii, it_umbria, it_veii, it_volsinii]
-  # source: Livy (fall of Veii, traditionally 396 BC); (Sutrium and Nepet, Latin-style allies, 383 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 5.2.9 (Falerii and Faliscum; some call the Falisci a distinct tribe with a language of its own; Nepeta)"
+      - "Livy 5.27 (the Faliscan schoolmaster, 394 BC)"
+      - "Livy 7.17, 7.20 (Faliscans at war beside Tarquinii, 356-353 BC)"
+      - "Polybius 1.65.2 (war on the Falisci; Falerii taken in a few days, 241 BC)"
+      - "Zonaras 8.18 (half their land taken; the town on the steep hill pulled down and rebuilt in the open)"
+  # 264 BC: Rome's citizen land (ager Romanus) since Veii fell; Sutrium and Nepet are Latin colonies (Velleius 1.14.2), drawn as Rome's.
   - id: it_veii
     name: "Veii and the Ager Veientanus (Sutrium, Nepet)"
     latlon: [42.02, 12.4]
@@ -139,7 +145,12 @@ provinces:
     capacity: 60000
     resources: {}
     neighbours: [it_falisci, it_latium, it_roma]
-  # source: Strabo (Caere, Pyrgi); Livy (Caere shelters the Roman sacra); (Caere makes peace 353 BC); (Caere supplies grain to Scipio)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Livy 5.22 (the fall of Veii after a ten-year siege, traditionally 396 BC)"
+      - "Livy 6.3 (Sutrium an ally of Rome), 6.21 (three commissioners to settle a colony at Nepete)"
+      - "Velleius 1.14.2 (Sutrium and Nepe colonies)"
+      - "Strabo 5.2.9 (Sutrium, Nepeta; Veii brought low by the Romans)"
+  # 264 BC: Rome's: Caere's people hold Roman citizenship without the vote, the 'Caerite tablets' (Strabo 5.2.3).
   - id: it_caere
     name: "Caere (with Pyrgi and Alsium)"
     latlon: [41.99, 12.1]
@@ -149,7 +160,13 @@ provinces:
     capacity: 60000
     resources: {}
     neighbours: [it_falisci]
-  # source: Strabo (Tarquinii, Graviscae); Livy (war with Tarquinii 358 BC); (sailcloth for Scipio's fleet)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 5.2.3 (Caere shelters Rome's fire and Vestals from the Gauls; citizenship without enrolment, the Caerite tablets)"
+      - "Strabo 5.2.8 (Pyrgi, port of the Caeretani; Alsium and Fregena on the coast)"
+      - "Livy 5.40, 5.50 (Rome's sacred things carried to Caere; public friendship with Caere)"
+      - "Livy 7.20 (Caere given peace and a hundred-year truce, 353 BC)"
+      - "Livy 28.45 (Caere gives grain and provisions for Scipio's fleet, 205 BC)"
+  # 264 BC: an Etruscan ally of Rome (socius). Cosa, on this coast, is a Latin colony of 273 (Velleius 1.14.7; Livy Per. 14.8): Rome's town, drawn inside the allied province (DEC013).
   - id: it_tarquinii
     name: "Tarquinii and Vulci"
     latlon: [42.25, 11.76]
@@ -159,8 +176,16 @@ provinces:
     capacity: 100000
     resources: {}
     neighbours: [it_falisci, it_populonia, it_volsinii]
-  # source: Livy 28.45.18 (Clusium, Rusellae and Perusia supply fir for ships and grain); (Volsinii), Zonaras (Volsinii taken 264 BC); Strabo  # unverified: passage numbers not yet read and so withheld
-  # note: Orvieto is the Etruscan Velzna, the Volsinii of 264 BC.
+    sources:
+      - "Strabo 5.2.2 (Tarquinii, whence Rome took the triumph, the fasces and divination)"
+      - "Strabo 5.2.8 (the coast from Cosa past Gravisci to Pyrgi)"
+      - "Livy 7.12 (Rome declares war on Tarquinii, 358 BC)"
+      - "Velleius 1.14.7 (colonies at Cosa and Paestum, 273 BC)"
+      - "Livy, Periochae 14.8 (colonies founded at Posidonia and Cosa)"
+      - "Livy 28.45 (Tarquinii gives sailcloth for Scipio's fleet, 205 BC)"
+    disputed: "Cosa was a Latin colony (Rome's) inside allied Etruscan land in 264; the map cannot draw a one-town enclave, so the province stays with the Etruscans."
+  # 264 BC: AT WAR with Rome. Volsinii's freedmen had seized the city; Rome marched to restore the old citizens (Zonaras 8.7), and M. Fulvius Flaccus triumphed over the Volsinians on 1 November 264 (Fasti Triumphales).
+  # note: Orvieto is the Etruscan Velzna, the Volsinii of 264 BC. The timber is the fir of Perusia, Clusium and Rusellae (Livy 28.45).
   - id: it_volsinii
     name: "Volsinii and Clusium (Perusia, Rusellae, Saturnia)"
     latlon: [42.72, 12.11]
@@ -170,8 +195,15 @@ provinces:
     capacity: 90000
     resources: {timber: accessible}
     neighbours: [it_arretium, it_falisci, it_tarquinii, it_umbria]
-  # source: Strabo 5.2.6 (Elba iron smelted at Populonia), Diodorus (iron of Ilva), Livy (Populonia gives iron to Scipio's fleet), Virgil Aeneid  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: the Etruscan metal coast is the strategic resource of the Tyrrhenian; Strabo says Populonia's own old mines were deserted by his day, so the iron is Elban ore smelted on the mainland.
+    sources:
+      - "Zonaras 8.7 (the expedition to Volsinii; its servants had taken power and freedom)"
+      - "Fasti Triumphales, 264/3 BC (M. Fulvius Flaccus, consul, over the Vulsinienses)"
+      - "Livy, Periochae 16.8 (wars against the Carthaginians and the Volsinians)"
+      - "Strabo 5.2.9 (Arretium, Perusia, Volsinii; the lakes of Volsinii and Clusium)"
+      - "Livy 28.45 (Perusia, Clusium and Rusellae give fir for ships and grain, 205 BC)"
+    disputed: "Who led the war: Zonaras 8.7 dates the march on Volsinii to the consulship of Quintus Fabius; the Fasti Triumphales give the triumph (1 November 264) to the consul M. Fulvius Flaccus."
+  # 264 BC: an Etruscan ally of Rome (socius).
+  # note: ADDED: the Etruscan metal coast. Strabo saw Populonia's own mines worked out; the iron is Elban (Aethalia) ore, smelted and carried to Dicaearchia (Diodorus 5.13.1-2).
   - id: it_populonia
     name: "Populonia, Vetulonia and Elba (Ilva)"
     latlon: [42.99, 10.49]
@@ -181,7 +213,11 @@ provinces:
     capacity: 60000
     resources: {iron: accessible}
     neighbours: [it_arretium, it_etruria_n, it_tarquinii]
-  # source: Strabo 5.2.5-6 (Volaterrae, Pisae); Livy 28.45.16 (Volaterrae gives ship-timbers and grain), Polybius (Pisae, Roman landing 225 BC)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 5.2.6 (Poplonium on its headland; its mines had failed; iron from Aethalia worked there)"
+      - "Diodorus 5.13.1-2 (Aethaleia off Poplonium: iron-rock cut and smelted, sold on to Dicaearchia)"
+      - "Livy 28.45 (Populonia gives iron for Scipio's fleet, 205 BC)"
+  # 264 BC: an Etruscan ally of Rome (socius).
   - id: it_etruria_n
     name: "Northern Etruria (Volaterrae, Pisae)"
     latlon: [43.4, 10.86]
@@ -191,8 +227,13 @@ provinces:
     capacity: 90000
     resources: {timber: accessible}
     neighbours: [it_arretium, it_ligures_apuani, it_populonia]
-  # source: Livy 28.45.16 (Arretium's weapons, helmets, tools); Polybius (Faesulae and Arretium, Gallic raid 225 BC); Pliny NH (Arretine pottery)  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: upper Arno Etruria was the Roman advance post against the Gauls (Polybius; Livy Arretium and the army of Flaminius).  # unverified
+    sources:
+      - "Strabo 5.2.5 (Pisa, between the Arnus and the Ausar; its quarries and ship timber), 5.2.6 (Volaterrae)"
+      - "Polybius 2.16.2 (Pisa, the first city of western Etruria)"
+      - "Polybius 2.27.1 (the consul Atilius lands at Pisa from Sardinia, 225 BC)"
+      - "Livy 28.45 (Volaterrae gives ship-timbers and grain, 205 BC)"
+  # 264 BC: an Etruscan ally of Rome (socius); the Gauls had besieged Arretium in 284 and beaten the Roman relief (Polybius 2.19.7-8).
+  # note: ADDED: the upper Arno was Rome's advance post against the Gauls; Faesulae is where the Gauls turned in 225 (Polybius 2.25.6).
   - id: it_arretium
     name: "Arretium, Cortona and Faesulae (upper Arno)"
     latlon: [43.46, 11.88]
@@ -202,6 +243,12 @@ provinces:
     capacity: 90000
     resources: {clay: accessible}
     neighbours: [it_boii, it_etruria_n, it_populonia, it_senones, it_umbria, it_volsinii]
+    sources:
+      - "Polybius 2.16.2 (the Ligurians reach inland as far as Arretium)"
+      - "Polybius 2.19.7-8 (the Gauls besiege Arretium; the praetor L. Caecilius falls)"
+      - "Polybius 2.25.6 (the Gauls withdraw to Faesulae, 225 BC)"
+      - "Livy 28.45 (Arretium gives 3,000 shields, 3,000 helmets, spears and tools, 205 BC)"
+      - "Pliny NH 35.46 (Bostock; Arretine pottery still prized)"
 
   # --- Umbria, Picenum and the Adriatic coast ---
   # source: Livy (battle of Mevania, 308 BC); (Narnia colony 299 BC); Velleius (Spoletium colony 241 BC); Strabo; Polybius 2.24 (Umbrians and Sarsinates 20,000 foot, 3,000 horse)  # unverified: passage numbers not yet read and so withheld
