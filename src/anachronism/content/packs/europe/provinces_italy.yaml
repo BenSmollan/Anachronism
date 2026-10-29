@@ -724,7 +724,7 @@ provinces:
       - "Strabo 6.2.1 (the coast in Roman miles: Pelorias, Mylae, Tyndaris, Agathyrnum, Alaesa, Cephaloedium)"
       - "Strabo 6.2.3 (Messene, once Zancle; the Mamertini, a tribe of the Campani; Rome's base in the Sicilian war)"
       - "Polybius 1.23.2 (the Carthaginians ravage the territory of Mylae; Duilius sails against them, 260 BC)"
-  # 264 BC: a free Greek city, held by no state (the CTO's ruling with T004, 28 Oct 2026; rome_264.yaml leaves si_catana unowned).
+  # 264 BC: a free Greek city, held by no state (unowned in rome_264.yaml).
   #   Catana had welcomed Pyrrhus with golden crowns in 278 (Diodorus 22.8.3). Tauromenium, in this province, is Hiero's (Diodorus 22.13.2, 23.4.1).
   # note: ADDED: the east-coast plain under Etna.
   - id: si_catana
@@ -740,7 +740,7 @@ provinces:
       - "Diodorus 23.4.1 (Hiero's treaty of 263: he keeps Syracuse and its subject cities Acrae, Leontini, Megara, Helorum, Neetum and Tauromenium; Catana is not named)"
       - "Pliny NH 7.214 (Bostock 7.60; Varro: the consul M. Valerius Messala brought Rome's first public sundial from the capture of Catina, 263 BC)"
       - "Diodorus 22.8.3 (Pyrrhus welcomed at Catana, 278 BC)"
-      - "Diodorus 22.13.2 (Hiero holds Tauromenium near Messana, c. 269 BC)"
+      - "Diodorus 22.13.2 (Hiero holds Tauromenium near Messana in his Mamertine war)"
       - "Strabo 6.2.3 (Catana; the city of Aetna eighty stadia above it)"
       - "Cicero, Verrines 2.3.103 (the rich farmers of Catina and their fields)"
     disputed: "Catana's master in 264 is not told. Diodorus 23.4.1 leaves Catana out of Hiero's cities in 263, so it was outside his kingdom; Pliny NH 7.214 has Catina 'captured' by Valerius Messala in 263, so it held out against Rome. The game makes it a free city. Tauromenium, inside this province, was Hiero's."
