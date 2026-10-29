@@ -118,7 +118,7 @@ provinces:
       - "Velleius 1.14.6 (citizenship without the vote, 290 BC), 1.14.7 (the vote, 268 BC)"
 
   # --- Etruria and the Etruscan borderlands ---
-  # 264 BC: an Etruscan-held ally of Rome (socius). Falerii revolts in 241, is taken in a few days (Polybius 1.65.2), and loses half its land; the old hill-town is pulled down and rebuilt on the plain (Zonaras 8.18).
+  # 264 BC: an ally of Rome (socius), drawn with the Etruscan allies. Falerii revolts in 241, is taken in a few days (Polybius 1.65.2), and loses half its land; the old hill-town is pulled down and rebuilt on the plain (Zonaras 8.18).
   # note: ADDED: the Falisci are a people of their own with their own speech, not Etruscans (Strabo 5.2.9).
   - id: it_falisci
     name: "Falisci (Falerii Veteres, Capena)"
@@ -251,7 +251,8 @@ provinces:
       - "Pliny NH 35.46 (Bostock; Arretine pottery still prized)"
 
   # --- Umbria, Picenum and the Adriatic coast ---
-  # source: Livy (battle of Mevania, 308 BC); (Narnia colony 299 BC); Velleius (Spoletium colony 241 BC); Strabo; Polybius 2.24 (Umbrians and Sarsinates 20,000 foot, 3,000 horse)  # unverified: passage numbers not yet read and so withheld
+  # 264 BC: Umbrian allies of Rome (socii), beaten again in 267-266 (Livy Per. 15.7; triumphs over the Sassinates, Fasti 266).
+  #   Narnia is a Latin colony of 299 (Livy 10.10): Rome's town inside allied land (DEC013). Spoletium follows in 241 (Velleius 1.14.8).
   - id: it_umbria
     name: "Umbria (Mevania, Spoletium, Iguvium, Narnia)"
     latlon: [42.93, 12.61]
@@ -261,7 +262,17 @@ provinces:
     capacity: 95000
     resources: {}
     neighbours: [it_arretium, it_falisci, it_picenum, it_sabina, it_senones, it_volsinii]
-  # source: Strabo (Picentes, Asculum, Ancona); Livy (Picenes defeated 268 BC), Florus; Livy (Asculum and the Social War)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Livy 9.41 (the Umbrians routed at Mevania, 308 BC)"
+      - "Livy 10.9-10 (Nequinum taken; a colony sent there as an outpost against the Umbrians, named Narnia from the river Nar)"
+      - "Livy, Periochae 15.7 (the Umbrians and Sallentines defeated, their surrender accepted)"
+      - "Fasti Triumphales, 266/5 BC (D. Junius Pera and N. Fabius Pictor over the Sassinates)"
+      - "Velleius 1.14.8 (Spoletium colony)"
+      - "Polybius 2.24.7 (Umbrians and Sarsinates of the Apennines, about 20,000, in 225 BC)"
+      - "Livy 28.45 (the Umbrian communities promise men; Camerinum, allied on equal terms, sends a cohort, 205 BC)"
+    disputed: "Narnia was a Latin colony (Rome's) inside allied Umbria in 264; the map cannot draw a one-town enclave, so the province stays with the Umbrians."
+  # 264 BC: Rome's. The Picentes were beaten in 268 and given peace (Livy Per. 15.4; two triumphs, Fasti 268); Hadria (Livy Per. 11.7) and Firmum,
+  #   founded as the First Punic War broke out (Velleius 1.14.8), are colonies.
   - id: it_picenum
     name: "Picenum (Asculum, Firmum, Auximum, Ancona)"
     latlon: [42.85, 13.57]
@@ -271,7 +282,15 @@ provinces:
     capacity: 130000
     resources: {}
     neighbours: [it_marsi, it_sabina, it_senones, it_umbria]
-  # source: Polybius (Senones expelled 283 BC); (Gallic land divided 232 BC); Livy (Ariminum colony 268 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 5.4.2 (the Picentine country from Ancona: Auxumum, Potentia, Firmum Picenum, Asculum, Adria)"
+      - "Livy, Periochae 15.4 (the Picentes subdued and given peace, 268 BC)"
+      - "Fasti Triumphales, 268/7 BC (P. Sempronius Sophus and Ap. Claudius Russus over the Picentes)"
+      - "Livy, Periochae 11.7 (colonies at Castrum, Sena and Hadria)"
+      - "Velleius 1.14.8 (Firmum and Castrum colonies at the outbreak of the First Punic War)"
+    disputed: "Livy says the Picentes were given peace in 268 (Per. 15.4), not that their land was annexed; Rome is drawn as holding all of it."
+  # 264 BC: Rome's: the ager Gallicus, from which the Senones were driven in 283 (Polybius 2.19.11-12). Sena is a colony; Ariminum a Latin colony
+  #   of 268 (Velleius 1.14.7; Livy Per. 15.5), drawn as Rome's. The land is shared out among citizens only in 232 (Polybius 2.21.7-8).
   - id: it_senones
     name: "Ager Gallicus (Sena Gallica, Ariminum)"
     latlon: [43.72, 13.22]
@@ -281,8 +300,14 @@ provinces:
     capacity: 55000
     resources: {}
     neighbours: [it_arretium, it_boii, it_picenum, it_umbria]
-  # source: Livy (Marsi, Paeligni, Marrucini, Vestini); Strabo; Polybius 2.24 (Marsi, Marrucini, Frentani, Vestini 20,000 foot, 4,000 horse); Diodorus (Corfinium as Italica, 90 BC)  # unverified: passage numbers not yet read and so withheld
-  # note: Corfinium is central to all four peoples.
+    sources:
+      - "Polybius 2.19.11-12 (the Senones defeated and driven out; Sena, the first colony in Gaul)"
+      - "Polybius 2.21.7-8 (the Gallic land called Picenum divided among citizens by Flaminius' law, 232 BC)"
+      - "Velleius 1.14.7 (Ariminum and Beneventum colonies, 268 BC)"
+      - "Livy, Periochae 15.5 (colonies at Ariminum in Picenum and Beneventum in Samnium)"
+      - "Livy, Periochae 11.7 (Sena colony)"
+  # 264 BC: allies of Rome (socii) by the treaties of 304, when the Marrucini, Marsi and Paeligni sued for peace and friendship (Livy 9.45).
+  # note: Corfinium is central to all four peoples; in the Marsic War it was made their common city, Italica (Strabo 5.4.2).
   - id: it_marsi
     name: "Marsi, Paeligni, Vestini and Marrucini (Marruvium, Corfinium)"
     latlon: [42.12, 13.84]
@@ -292,7 +317,12 @@ provinces:
     capacity: 85000
     resources: {}
     neighbours: [it_aequi, it_frentani, it_hernici, it_picenum, it_samnium]
-  # source: Strabo (Frentani from the Marrucini to Apulia); Livy (Frentani treaty with Rome 304 BC); Polybius 2.24  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Livy 9.45 (the Marrucini, Marsi, Paeligni and Feretrani obtain peace and a treaty, 304 BC)"
+      - "Strabo 5.4.2 (Vestini, Marsi, Peligni, Marrucini; Corfinium, Sulmon, Maruvium, Teate; Corfinium renamed Italica)"
+      - "Polybius 2.24.12 (Marsi, Marrucini, Frentani and Vestini, 20,000 foot and 4,000 horse, in 225 BC)"
+      - "Livy 28.45 (Marsi, Paeligni and Marrucini volunteer for Scipio's fleet, 205 BC)"
+  # 264 BC: allies of Rome (socii). They surrendered in 319 (Livy 9.16); Livy's list of the peoples given a treaty in 304 names the 'Feretrani' beside the Marsi and Paeligni (Livy 9.45).
   - id: it_frentani
     name: "Frentani (Histonium, Anxanum, Larinum)"
     latlon: [42.11, 14.71]
@@ -302,6 +332,11 @@ provinces:
     capacity: 35000
     resources: {}
     neighbours: [it_apulia, it_marsi, it_samnium]
+    sources:
+      - "Strabo 5.4.2 (the Frentani, a Samnite tribe; their ports Orton and Buca, bordering Teanum Apulum)"
+      - "Livy 9.16 (the Frentani beaten in one battle, give hostages, 319 BC)"
+      - "Livy 9.45 (the Marrucini, Marsi, Paeligni and Feretrani obtain a treaty, 304 BC)"
+      - "Polybius 2.24.12 (Marsi, Marrucini, Frentani and Vestini, 20,000 foot and 4,000 horse, in 225 BC)"
 
   # --- Campania, Samnium and the south ---
   # source: Polybius (Falernian plain, richest of Italy); Livy (Campania submits to Rome, 343 BC); (Capua and its cavalry); Strabo 5.4.3  # unverified: passage numbers not yet read and so withheld
