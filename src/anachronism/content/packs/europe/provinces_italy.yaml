@@ -2,10 +2,10 @@ schema_version: 1
 # Italy, Sicily, Sardinia and Corsica at the grain of their peoples, for the Roman Republic, 509-27 BC (D-286).
 # Each province is one people or region, centred on its chief ancient town (latlon: degrees north, east).
 # SOURCES: each province carries `sources` (ancient author first, book.chapter.section, each passage opened
-# and read: Strabo 4-6 and Polybius 1-3 (LacusCurtius), Livy (Wikisource, Roberts; Latin Library), Livy's
+# and read: Strabo 4-6 and Polybius 1-3, 8 (LacusCurtius), Livy (Wikisource, Roberts; Latin Library), Livy's
 # Periochae (livius.org), Velleius 1.14-15 and Diodorus 22-23 (LacusCurtius), Zonaras 8 and the Fasti
 # Triumphales (LacusCurtius, attalus.org), Cicero's Verrines and Brutus (Latin Library), Pliny NH (Bostock,
-# Perseus: Bostock's chapter numbers), Diodorus 5.13 (Perseus Greek), Pausanias 10.17 (theoi.com)) and
+# Perseus: Bostock's chapter numbers), Diodorus 5.13 (Perseus Greek), Pausanias 10.17 (theoi.com), Vitruvius 2.6) and
 # `disputed` where the sources conflict. Modern works were used only to check, never cited.
 # Each province's comment starts with what it was in 264 BC, the start of rome_264; the holder there matches the
 # ownership table at the top of scenarios/rome_264.yaml. Latin and Roman colonies are named on the province that holds
@@ -361,7 +361,7 @@ provinces:
       - "Polybius 2.24.14 (Romans and Campanians on the rolls in 225 BC: 250,000 foot, 23,000 horse)"
   # 264 BC: a Greek ally of Rome by treaty (Livy 8.26); Naples lends Rome boats for the first crossing to Sicily (Polybius 1.20.14).
   # note: ADDED: the Greek coast of the Bay is a separate people and harbour from Capua.
-  # note: the stone is the Bay's volcanic sand and tufa: Vitruvius 2.6 (pulvis Puteolanus) was not opened.  # unverified: LacusCurtius would not load
+  # note: the stone is the volcanic sand of Baiae and Vesuvius that sets hard under water when mixed with lime (Vitruvius 2.6.1).
   - id: it_neapolis
     name: "Neapolis, Cumae and the Bay (Puteoli, Pompeii, Nola)"
     latlon: [40.85, 14.27]
@@ -378,6 +378,7 @@ provinces:
       - "Strabo 5.4.6 (Dicaearchia, now Puteoli; the Forum of Hephaestus full of drifted sulphur)"
       - "Strabo 5.4.7-8 (Neapolis; Pompaia, port of Nola and Nuceria)"
       - "Diodorus 5.13.2 (Elban iron carried to Dicaearchia)"
+      - "Vitruvius 2.6.1 (the sand about Baiae and Vesuvius that hardens under water with lime)"
   # 264 BC: Rome's. Paestum (Greek Poseidonia) is a Latin colony of 273 (Velleius 1.14.7; Livy Per. 14.8), and Rome moved Picentes from the Adriatic
   #   here (Strabo 5.4.13; he gives no date: the Picentes were beaten in 268, Livy Per. 15.4). Salernum was fortified against them only after Hannibal.
   # note: ADDED: Paestum and the Picentine deportees hold the Salerno coast between Campania and Lucania.
