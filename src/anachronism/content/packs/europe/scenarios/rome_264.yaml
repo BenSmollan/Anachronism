@@ -848,15 +848,30 @@ scenarios:
           sailing: adopted
           coinage: concept
       carthage:
+        # navy_bp 40,000 (four times the usual): Carthage sails 130 ships at Mylae (Polybius 1.23.3) and 350 decked
+        # ships at Ecnomus (Polybius 1.25.9), while Rome in 264 has no warship at all (Polybius 1.20.13).
         navy_bp: 40000
         disposition: mercantile
+        sources:
+          - "Polybius 1.10.5 (Carthage holds Libya, a great part of Spain and all the islands of the Sardinian and Tyrrhenian seas)"
+          - "Polybius 1.10.8 (masters of almost all the rest of Sicily)"
+          - "Polybius 1.23.3, 1.25.9 (Carthaginian fleets of 130 and 350 ships)"
+          - "Diodorus 23.1.2 (Hanno gathers forces at Lilybaeum, fortifies the citadel of Acragas, allies with Hiero)"
         scripts:
-          - {id: "carthage_defends_sicily", goal: "conquer", target: "rome", preconditions: {after_year: -266}, note: "Carthage, holding western Sicily, goes to war with Rome over Messana (264-241 BC). Polybius 1.11-1.63."}
-          - {id: "barcid_spain", goal: "conquer", target: "e2_celtiberians", preconditions: {after_year: -239}, depends_on: ["first_punic_war"], note: "Hamilcar Barca builds a new empire in Spain from 237 BC. Polybius 2.1.5-9, 2.13."}
-          - {id: "hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["first_punic_war"], note: "Saguntum falls (219); Hannibal crosses the Alps and wins at the Ticinus, Trebia, Trasimene and Cannae (218-216). Polybius 3.17, 3.56, 3.66-74, 3.82-84, 3.107-117."}
+          - {id: "carthage_defends_sicily", goal: "conquer", target: "rome", preconditions: {after_year: -266}, note: "Carthage, holding western Sicily, goes to war with Rome over Messana (264-241 BC). Polybius 1.11-1.63.", sources: ["Polybius 1.11.5-6 (the commander crucified; the fleet at Pelorias, the army before Messana)", "Polybius 1.62.8-9 (the peace of 241: Carthage leaves Sicily)"]}
+          - {id: "barcid_spain", goal: "conquer", target: "e2_celtiberians", preconditions: {after_year: -239}, depends_on: ["first_punic_war"], note: "Hamilcar Barca builds a new empire in Spain from 237 BC. Polybius 2.1.5-9, 2.13.", sources: ["Polybius 2.1.5-9 (Hamilcar subjugates Spain for nine years)", "Polybius 2.13.1-7 (Hasdrubal's New Carthage and the Ebro treaty)"]}
+          - {id: "hannibals_war", goal: "conquer", target: "rome", preconditions: {after_year: -222}, depends_on: ["first_punic_war"], note: "Saguntum falls (219); Hannibal crosses the Alps and wins at the Ticinus, Trebia, Trasimene and Cannae (218-216). Polybius 3.17, 3.56, 3.66-74, 3.82-84, 3.107-117.", sources: ["Polybius 3.17.1 (Saguntum)", "Polybius 3.56.1-3 (down from the Alps)", "Polybius 3.66-74 (Ticinus and Trebia)", "Polybius 3.82-84 (Trasimene)", "Polybius 3.107-117 (Cannae)"]}
         capital: car_carthage
         music: near_east
-        generals: [{name: "Hanno", skill: 2, trait: quartermaster, note: "Relieves Agrigentum with fifty elephants and loses the battle (262 BC). Polybius 1.18-19."}, {name: "Hannibal, besieged at Agrigentum", skill: 2, trait: shield, note: "Carthaginian commander shut in Agrigentum (Polybius 1.19)."}, {name: "Hamilcar Barca", skill: 5, trait: bold, note: "Undefeated in Sicily; father of Hannibal."}, {name: "Xanthippus", skill: 4, trait: horse, note: "Spartan mercenary who crushed Regulus in 255 BC."}, {name: "Hanno the Great", skill: 2, trait: quartermaster, note: "Leader of Carthage's landed party, who fights the Mercenary War (Polybius 1.67, 1.82)."}]
+        # Generals in the order the war used them. The Hanno who holds Sicily in 264 (Diodorus 23.1.2, "son of
+        # Hannibal"; Zonaras 8.9, at Messana) and the Hanno who relieves Agrigentum in 262 (Polybius 1.18.8-19)
+        # may be one man or two: disputed, so one entry carries both (and keeps the name a test pins).
+        generals:
+          - {name: "Hanno", skill: 2, trait: quartermaster, note: "Commands in Sicily in 264, fortifies Acragas and allies with Hiero; relieves Agrigentum with some fifty elephants and loses (262 BC).", sources: ["Diodorus 23.1.2 (Hanno son of Hannibal at Lilybaeum and Acragas, 264)", "Zonaras 8.9 (Hanno leaves Messana and is punished)", "Polybius 1.18.8-1.19.11 (Hanno at Agrigentum, 262)"], disputed: "Whether the Hanno of 264 and the Hanno of 262 are the same man; Diodorus 23.8.1 calls the latter Hanno the Elder."}
+          - {name: "Hannibal of Agrigentum", skill: 2, trait: shield, note: "Holds Agrigentum through the siege and breaks out by night (262); loses at Mylae (260) and is crucified by his own men in Sardinia.", sources: ["Polybius 1.19.12-13", "Polybius 1.23.4 (in Pyrrhus' seven-banked galley at Mylae)", "Polybius 1.24.5-6"], disputed: "Later writers call him son of Gisgo; the passages read here give no father."}
+          - {name: "Hamilcar Barca", skill: 5, trait: bold, note: "Takes the Sicilian command in the war's eighteenth year and is never beaten there; father of Hannibal.", sources: ["Polybius 1.56.1-3", "Polybius 1.64.6 (the best general of the war)"]}
+          - {name: "Xanthippus", skill: 4, trait: horse, note: "Spartan mercenary who crushed Regulus in 255 BC.", sources: ["Polybius 1.32.1-7", "Polybius 1.34.8-12"]}
+          - {name: "Hanno the Great", skill: 2, trait: quartermaster, note: "Leader of Carthage's landed party, who fights the Mercenary War (Polybius 1.67, 1.74).", sources: ["Polybius 1.67.1", "Polybius 1.74.1 (good at supply, poor in the field)"]}
         pitch: "The richest city in the west, and its sea. But Rome is looking at Sicily. Buy, build and out-think them."
         provinces:
           car_carthage: 700000
@@ -905,15 +920,22 @@ scenarios:
           canals: adopted
       syracuse:
         disposition: cautious
+        sources:
+          - "Polybius 1.8.3-1.9.8 (Hiero chosen general by the army, beats the Mamertines at the Longanus, is hailed king)"
+          - "Polybius 1.11.7-8 (Hiero allies with Carthage against the Mamertines, 264 BC)"
+          - "Diodorus 23.4.1 (Hiero keeps Syracuse and its subject cities Acrae, Leontini, Megara, Helorum, Neetum and Tauromenium, 263)"
+          - "Polybius 7.8.4-7 (a reign of fifty-four years; he lived past ninety)"
         scripts:
-          - {id: "hieronymus_to_carthage", goal: "ally", target: "carthage", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Hieronymus breaks with Rome and allies with Carthage (215 BC). Livy 24.4-6, 24.21-33 (unverified)."}
-          - {id: "hiero_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -265}, depends_on: ["first_punic_war"], note: "Hiero II switches sides and becomes Rome's loyal ally (263 BC)."}
+          - {id: "hieronymus_to_carthage", goal: "ally", target: "carthage", preconditions: {after_year: -216}, depends_on: ["hannibals_war"], note: "Hieronymus breaks with Rome and allies with Carthage (215 BC). Livy 24.4-7; Polybius 7.2-5.", sources: ["Polybius 7.2.1 (Hieronymus sends an embassy to Hannibal)", "Polybius 7.5.1 (Roman envoys protest the broken treaty)", "Livy 24.4-6"]}
+          - {id: "hiero_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -265}, depends_on: ["first_punic_war"], note: "Hiero II switches sides and becomes Rome's loyal ally (263 BC). Polybius 1.16.4-10.", sources: ["Polybius 1.16.4-10", "Diodorus 23.4.1 (a fifteen-year peace)"]}
         capital: si_syracuse
         leader: Hiero II
-        leader_age: 41
-        # Hiero b. about 305 BC (a ninety-year life ending in 215): Polybius 7.8 (unverified), so about 41 in 264.
+        # Hiero died in 215 having lived "till over ninety" (Polybius 7.8.7), so he was at least 42 in 264.
+        leader_age: 42
         leader_died: -215
-        successors: [{name: "Hieronymus", age: 15, disposition: "aggressive", died: -214, ends: "is assassinated at Leontini"}, {name: "General Epicydes", age: 40, until: -212}]
+        successors:
+          - {name: "Hieronymus", age: 15, disposition: "aggressive", died: -214, ends: "is assassinated at Leontini", sources: ["Polybius 7.7.3 (a boy when he succeeded, he lived thirteen months more)", "Livy 24.4 (Hiero's grandson, a boy)", "Livy 24.7 (murdered at Leontini)"], disputed: "His age: the passages read say only 'a boy'; fifteen is an estimate."}
+          - {name: "General Epicydes", age: 40, until: -212, sources: ["Livy 24.32 (the crowd elects Hippocrates and Epicydes praetors)", "Livy 25.23-31 (Epicydes holds Syracuse until Marcellus takes it, 212)", "Polybius 8.3.1 (Epicydes and Hippocrates seize Syracuse)"], disputed: "His age is unknown; forty is a placeholder."}
         pitch: "One city, two giants, and Archimedes. Survive by ingenuity alone."
         provinces:
           si_syracuse: 136000
@@ -953,9 +975,15 @@ scenarios:
       numidia:
         navy_bp: 0
         disposition: aggressive
+        sources:
+          - "Polybius 1.19.2 (Numidian horse ride ahead of Hanno's army, 262 BC)"
+          - "Polybius 1.31.2 (the Numidians ravage Carthage's land while Regulus is in Africa)"
+          - "Livy 29.29 (Gala, king of the Maesulii, father of Masinissa; Oezalces and Capussa after him)"
+          - "Livy 24.48 (Syphax, king of the Numidians of the west)"
+        disputed: "One Numidia stands for two kingdoms, the Massyli (Gala) and the Masaesyli (Syphax). Gala's reign in 264 is not attested: he is only known as king in the 210s (Livy 29.29), so his start is an assumption."
         scripts:
-          - {id: "masinissa_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -206}, depends_on: ["scipio_in_africa"], note: "Masinissa leaves Carthage for Scipio and fights at Zama (206-202 BC). Livy 28.35, 30.29-35."}
-          - {id: "masinissa_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -170}, note: "Masinissa's Numidia nibbles at Carthage's lands (from 160 BC)."}
+          - {id: "masinissa_joins_rome", goal: "ally", target: "rome", preconditions: {after_year: -206}, depends_on: ["scipio_in_africa"], note: "Masinissa leaves Carthage for Scipio and fights at Zama (206-202 BC). Livy 28.35, 30.29-35.", sources: ["Livy 28.35 (Masinissa meets Scipio)", "Livy 30.33, 30.35 (Masinissa's Numidians on the wing at Zama)"]}
+          - {id: "masinissa_vs_carthage", goal: "conquer", target: "carthage", preconditions: {after_year: -170}, note: "Masinissa's Numidia nibbles at Carthage's lands (from 160 BC). Livy, Periochae 47-48.", sources: ["Livy, Periochae 47.8 (Rome settles a border dispute between Masinissa and Carthage)", "Livy, Periochae 48.26 (Carthage makes war on Masinissa and is beaten)"]}
         capital: num_massyli
         music: near_east
         leader: Gala
@@ -964,7 +992,11 @@ scenarios:
         # Dates approximate (D-XXX). Gala (king of the Massyli) d. c. 207; his brother Oezalces and
         # Oezalces' son Capussa are passed over before Masinissa (c. 238-148) wins the kingdom. Micipsa
         # reigned 148-118; Jugurtha seized power 118-117 and fell in 105; Gauda (Mastanabal's son) followed.
-        successors: [{name: "Masinissa", age: 32, disposition: "aggressive", died: -148}, {name: "Micipsa", age: 37, died: -118}, {name: "Jugurtha", age: 42, disposition: "aggressive", until: -104}, {name: "Gauda", age: 45, until: -94}]
+        successors:
+          - {name: "Masinissa", age: 32, disposition: "aggressive", died: -148, sources: ["Livy 29.29 (Gala dies while Masinissa fights in Spain; Oezalces and Capussa reign first)", "Livy, Periochae 50.5 (dies past ninety, 148 BC)"], disputed: "Oezalces, Capussa and Lacumazes reigned between Gala and Masinissa (Livy 29.29); they are passed over here."}
+          - {name: "Micipsa", age: 37, died: -118, sources: ["Sallust, Jugurtha 5.6 (Micipsa sole ruler after Masinissa)", "Sallust, Jugurtha 9.4 (old and ill, he nears his end)"]}
+          - {name: "Jugurtha", age: 42, disposition: "aggressive", until: -104, sources: ["Sallust, Jugurtha 5.7 (Mastanabal's son, raised by Micipsa)", "Sallust, Jugurtha 12.1-5 (the kingdom divided; Hiempsal killed)"]}
+          - {name: "Gauda", age: 45, until: -94, sources: ["Sallust, Jugurtha 65 (Gauda, son of Mastanabal) # unverified"]}
         pitch: "The best horsemen in the world, between Carthage and the desert."
         provinces:
           num_massyli: 400000
