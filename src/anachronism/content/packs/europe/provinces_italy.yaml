@@ -878,8 +878,9 @@ provinces:
       - "Strabo 6.2.6 (Eryx and its temple of Aphrodite)"
 
   # --- Sardinia and Corsica ---
-  # source: Livy (Sardinian revolt and Carthaginian landing, 215 BC); Cicero (grain); Pausanias; Strabo  # unverified: passage numbers not yet read and so withheld
-  # note: Silver rests on later Roman mining at Metalla near Iglesias; Republican working is uncertain.
+  # 264 BC: Carthaginian: Carthage holds 'all the islands in the Sardinian and Tyrrhenian Seas' (Polybius 1.10.5) and founded Caralis and Sulci (Pausanias 10.17.9).
+  #   Its mercenaries revolt in 240 and Rome seizes the island in 238 (Polybius 1.79, 1.88.8-12).
+  # note: the silver rests on later Roman mining near Iglesias; no passage opened attests Republican working.  # unverified: resource kept as limited
   - id: sa_sardinia
     name: "Sardinia (Carales, Nora, Sulci, Tharros)"
     latlon: [39.23, 9.11]
@@ -889,8 +890,17 @@ provinces:
     capacity: 140000
     resources: {silver: limited}
     neighbours: [sa_barbagia]
-  # source: Strabo (mountain raiders: Diagesbes, Iolaei, Balari, Corsi); Pausanias (Ilienses, Balari, Corsi); Livy,(Gracchus' Sardinian war, 177 BC)  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: Sardinia's unsubjugated interior, fought from 238 BC to 177 BC (Livy,).  # unverified
+    sources:
+      - "Polybius 1.10.5 (Carthage holds all the islands of the Sardinian and Tyrrhenian Seas)"
+      - "Pausanias 10.17.9 (the Carthaginians subdue most of Sardinia and found Caralis and Sulci)"
+      - "Strabo 5.2.7 (Sardo rich in grain; Caralis and Sulchi its noteworthy cities; once under Carthage)"
+      - "Polybius 1.24.5-6 (Hannibal blockaded in a Sardinian harbour, 258 BC)"
+      - "Polybius 1.79.1-6 (the mercenaries in Sardinia revolt; the island lost to Carthage)"
+      - "Polybius 1.88.8-12 (Rome takes Sardinia and 1,200 talents, 238 BC)"
+      - "Livy 23.32-41 (the Sardinian revolt with Carthage under Hampsicora and Hanno, 215 BC)"
+  # 264 BC: free, held by no state: Carthage never subdued the Ilians and Corsi of the highlands (Pausanias 10.17.9). Rome fights them from 238 to Gracchus' war
+  #   of 177, which killed or took 80,000 (Livy 41.28).
+  # note: ADDED: Sardinia's unsubdued interior. The timber is not named by any passage opened.  # unverified: resource kept from terrain
   - id: sa_barbagia
     name: "Sardinian highlands (Ilienses, Balari, Corsi)"
     latlon: [40.32, 9.33]
@@ -900,7 +910,14 @@ provinces:
     capacity: 90000
     resources: {timber: accessible}
     neighbours: [sa_sardinia]
-  # source: Diodorus (Corsica, Kyrnos; Alalia); Strabo; Livy (Roman wars in Corsica, 181 and 173 BC); Theophrastus HP (Corsican timber, to check)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Pausanias 10.17.6-9 (the Ilians, the Corsi and the Balari in the highlands; Carthage could not subdue the Ilians or Corsi)"
+      - "Strabo 5.2.7 (the mountaineers, Diagesbes, once Iolaës; Parati, Sossinati, Balari, Aconites in caves, raiding the farms)"
+      - "Livy 40.34 (the Ilienses, not yet pacified, 181 BC)"
+      - "Livy 41.6 (the Ilienses with the Balari invade the province, 178 BC)"
+      - "Livy 41.28 (Gracchus' tablet: 80,000 Sardinians killed or taken, 177 BC)"
+  # 264 BC: drawn as Carthaginian, as Polybius 1.10.5 puts it; L. Cornelius Scipio takes Aleria in 259 (Zonaras 8.11; Fasti 259).
+  # note: the timber rests on Theophrastus' praise of Corsican trees, a passage not opened.  # unverified: LacusCurtius would not load
   - id: co_corsica
     name: "Corsica (Aleria, Mariana)"
     latlon: [42.11, 9.51]
@@ -910,3 +927,12 @@ provinces:
     capacity: 60000
     resources: {timber: accessible}
     neighbours: []
+    sources:
+      - "Polybius 1.10.5 (Carthage holds all the islands of the Sardinian and Tyrrhenian Seas)"
+      - "Zonaras 8.11 (Scipio lands in Corsica, takes Aleria, its chief city, and subdues the rest, 259 BC)"
+      - "Fasti Triumphales, 259/8 BC (L. Cornelius Scipio over the Carthaginians, Sardinia and Corsica)"
+      - "Livy, Periochae 17.4 (Scipio fights the Sardinians, Corsicans and Hanno)"
+      - "Diodorus 5.13.3-4 (Cyrnus, called Corsica; Calaris founded by the Phocaeans, Nicaea by the Tyrrhenians)"
+      - "Strabo 5.2.7 (Corsica rough and mostly impassable; its mountain brigands)"
+      - "Livy 40.34 (Pinarius' war in Corsica, 181 BC), 42.7 (Cicereius defeats the Corsicans; tribute of wax, 173 BC)"
+    disputed: "Polybius 1.10.5 gives Carthage all the Tyrrhenian islands in 264, but no source shows a Punic hold on Corsica before Scipio's raid of 259; the game follows Polybius."
