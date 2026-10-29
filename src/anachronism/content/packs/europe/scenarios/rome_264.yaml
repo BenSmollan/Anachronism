@@ -1023,14 +1023,23 @@ scenarios:
           composite_bow: adopted
       macedon:
         disposition: aggressive
+        sources:
+          - "Jerome, Chronicle, Abr. 1738 (Antigonus Gonatas king of Macedonia for 36 years)"
+          - "Justin 26.2.1-8 (Antigonus at war with the Spartans and Ptolemy, then turns on Athens)"
+          - "Pausanias 3.6.4-6 (Antigonus besieges Athens; Patroclus' Egyptian fleet and King Areus come to help)"
+          - "Polybius 2.43.4 (Antigonus holds the citadel of Corinth)"
         scripts:
-          - {id: "chremonidean_war", goal: "conquer", target: "athens", preconditions: {after_year: -266}, note: "Antigonus Gonatas besieges Athens, which surrenders in 261 BC."}
-          - {id: "macedon_vs_achaea", goal: "conquer", target: "achaea", preconditions: {after_year: -245}, note: "Macedon and the Achaean League struggle for the Peloponnese."}
+          - {id: "chremonidean_war", goal: "conquer", target: "athens", preconditions: {after_year: -266}, note: "Antigonus Gonatas besieges Athens, which surrenders in 261 BC.", sources: ["Pausanias 3.6.4-6", "Justin 26.2.8"]}
+          - {id: "macedon_vs_achaea", goal: "conquer", target: "achaea", preconditions: {after_year: -245}, note: "Macedon and the Achaean League struggle for the Peloponnese.", sources: ["Polybius 2.43.4 (Aratus seizes Acrocorinth from Antigonus)", "Polybius 2.43.9-10 (Antigonus and the Aetolians plot to break the League)"]}
         capital: mac_macedonia
         leader: Antigonus II Gonatas
         leader_age: 55
         leader_died: -239
-        successors: [{name: "Demetrius II", age: 38, died: -229}, {name: "Antigonus III Doson", age: 36, disposition: "cautious", died: -221}, {name: "Philip V", age: 17, disposition: "aggressive", died: -179}, {name: "Perseus", age: 33, until: -168}]
+        successors:
+          - {name: "Demetrius II", age: 38, died: -229, sources: ["Jerome, Chronicle, Abr. 1774 (Demetrius king of Macedonia for 10 years)", "Polybius 2.44.1-2 (Antigonus dies; Demetrius reigns ten years)"]}
+          - {name: "Antigonus III Doson", age: 36, disposition: "cautious", died: -221, sources: ["Polybius 2.45.2 (regent and guardian of the child Philip)", "Polybius 2.70.6 (dies of a burst blood vessel after beating the Illyrians)"]}
+          - {name: "Philip V", age: 17, disposition: "aggressive", died: -179, sources: ["Polybius 4.2.5 (Philip, still a boy, inherits the throne)", "Polybius 4.24.1 (a boy of seventeen)", "Livy 40.54 (Philip dies, worn out by age and grief)"]}
+          - {name: "Perseus", age: 33, until: -168, sources: ["Jerome, Chronicle, Abr. 1841 (Perseus king of Macedonia for 10 years)", "Livy 44.40-42 (Pydna)"]}
         pitch: "Hold Greece, rebuild Alexander's kingdom, and keep the Ptolemies out of the Aegean."
         provinces:
           mac_macedonia: 700000
@@ -1070,6 +1079,12 @@ scenarios:
           piston_bellows: adopted
       athens:
         disposition: scholarly
+        sources:
+          - "Pausanias 3.6.4-6 (Antigonus besieges Athens; Egypt and Sparta send help)"
+          - "Justin 26.2.8 (Antigonus turns his arms on the Athenians)"
+          - "Pausanias 2.8.6 (Aratus pays Diogenes to give up Peiraeus and the Macedonian garrisons, 229)"
+          - "Polybius 5.106.6-8 (Athens free of Macedon, led by Eurycleidas and Micion)"
+        disputed: "Chremonides, who gave the war its name, is not named in the passages read here; he is known from his decree (an inscription) and later writers."
         capital: ath_attica
         leader: Chremonides
         leader_age: 45
@@ -1077,7 +1092,10 @@ scenarios:
         # Athens had no king: the ruler is the leading man of each period (as for early Rome). Chremonides
         # (the war of 267-261), then the assembly under the Macedonian garrison until it is bought out in
         # 229, Eurycleides and Micion (approximate: their influence waned by about 205), then the Assembly.
-        successors: [{name: "The Assembly under the garrison", age: 50, died: -230}, {name: "Eurycleides", age: 40, disposition: "cautious", died: -206}, {name: "The Assembly of Athens", age: 50, until: -100}]
+        successors:
+          - {name: "The Assembly under the garrison", age: 50, died: -230, sources: ["Pausanias 2.8.6 (the Macedonian garrisons in Peiraeus, Munychia, Salamis and Sunium until Aratus buys them out)"]}
+          - {name: "Eurycleides", age: 40, disposition: "cautious", died: -206, sources: ["Polybius 5.106.6-8"], disputed: "The end of his influence (here 206) is not dated in any source read."}
+          - {name: "The Assembly of Athens", age: 50, until: -100, sources: ["Polybius 5.106.6-8 (the people decree honours to the kings)"]}
         pitch: "The schools of Plato and Aristotle, the silver of Laurion - and a Macedonian army outside the walls."
         provinces:
           ath_attica: 300000
@@ -1117,6 +1135,10 @@ scenarios:
           piston_bellows: adopted
       sparta:
         disposition: aggressive
+        sources:
+          - "Pausanias 3.6.4-6 (King Areus leads the Spartans to help Athens against Antigonus)"
+          - "Plutarch, Agis 3.4-5 (Areus, then his son Acrotatus, slain at Megalopolis by the tyrant Aristodemus)"
+        disputed: "Whether Areus or his son Acrotatus was the Agiad king in 264: Areus fought in the Chremonidean War (Pausanias 3.6.4-6), and no source read dates his death."
         capital: spa_laconia
         leader: Acrotatus II
         leader_age: 35
@@ -1125,7 +1147,16 @@ scenarios:
         # (Eurypontid Eudamidas II and Agis IV, then Agiad Leonidas II and Cleomenes III).
         # Dates adjusted a year or two to the turn grid (Eudamidas II, Agis IV, Cleomenes, Nabis) and approximate: Acrotatus' death at Megalopolis c. 262, Lycurgus c. 211, the ephors
         # (rule under Macedonian protection) to Lycurgus's accession in 219.
-        successors: [{name: "Eudamidas II", age: 40, died: -246}, {name: "Agis IV", age: 20, disposition: "cautious", died: -240, ends: "is strangled in prison by the ephors"}, {name: "Leonidas II", age: 60, died: -235}, {name: "Cleomenes III", age: 25, disposition: "aggressive", until: -220}, {name: "The Ephors", age: 45, died: -219}, {name: "King Lycurgus", age: 30, died: -211}, {name: "Machanidas", age: 40, disposition: "aggressive", died: -207, ends: "is killed by Philopoemen at Mantinea"}, {name: "Nabis", age: 45, disposition: "aggressive", died: -191, ends: "is murdered by an Aetolian guest at Sparta"}, {name: "The Ephors", age: 45, until: -186}]
+        successors:
+          - {name: "Eudamidas II", age: 40, died: -246, sources: ["Plutarch, Agis 3.2 (Agis, of the Eurypontid house, son of Eudamidas)"], disputed: "His dates are not given in any source read."}
+          - {name: "Agis IV", age: 20, disposition: "cautious", died: -240, ends: "is strangled in prison by the ephors", sources: ["Plutarch, Agis 19.6-20.1", "Plutarch, Agis 21.3 (the first Spartan king put to death by the ephors)"]}
+          - {name: "Leonidas II", age: 60, died: -235, sources: ["Plutarch, Agis 3.3-6 (Leonidas son of Cleonymus, guardian of the infant king, then king)", "Plutarch, Cleomenes 3.1 (Cleomenes succeeds at his death)"]}
+          - {name: "Cleomenes III", age: 25, disposition: "aggressive", until: -220, sources: ["Plutarch, Cleomenes 3.1", "Polybius 2.69.11 (after Sellasia he sails for Alexandria)"]}
+          - {name: "The Ephors", age: 45, died: -219, sources: ["Polybius 4.35.10-11 (the ephors choose the kings, 219)"]}
+          - {name: "King Lycurgus", age: 30, died: -211, sources: ["Polybius 4.35.11 (Lycurgus made king by bribing the ephors)"], disputed: "The year of his death is not given in any source read."}
+          - {name: "Machanidas", age: 40, disposition: "aggressive", died: -207, ends: "is killed by Philopoemen at Mantinea", sources: ["Polybius 11.18.4"]}
+          - {name: "Nabis", age: 45, disposition: "aggressive", died: -191, ends: "is murdered by an Aetolian guest at Sparta", sources: ["Polybius 13.6.1-2 (Nabis' tyranny)", "Livy 35.35 (Alexamenus the Aetolian spears his horse and kills him)"]}
+          - {name: "The Ephors", age: 45, until: -186, sources: ["Livy 35.35"], disputed: "Who governed Sparta after Nabis is not named in the passages read."}
         pitch: "Few citizens, iron discipline. Can Sparta reform before it withers away?"
         provinces:
           spa_laconia: 180000
@@ -1161,15 +1192,25 @@ scenarios:
           roads: adopted
       aetolia:
         disposition: aggressive
+        sources:
+          - "Polybius 4.37.2 (the Aetolians elect their strategus each year after the autumn equinox)"
+          - "Polybius 2.43.9-10, 2.45.1 (the Aetolians against the Achaean League)"
         leader: The General of the Aetolians
         leader_age: 45
         leader_died: -222
         # The League chose a general (strategos) each year, so the ruler is the leading man of each
         # chapter. Before 222 no single name is safe, hence the unnamed general; the dates of the others
         # are the chapter years, and each leaves office in his chapter.
-        successors: [{name: "Scopas", age: 40, disposition: "aggressive", until: -218}, {name: "Agelaus of Naupactus", age: 45, disposition: "cautious", until: -216}, {name: "Scopas", age: 46, disposition: "aggressive", until: -210}, {name: "Pyrrhias", age: 40, until: -206}, {name: "Phaeneas", age: 45, until: -198}, {name: "Thoas", age: 45, disposition: "aggressive", until: -192}, {name: "Phaeneas", age: 52, disposition: "cautious", until: -150}]
+        successors:
+          - {name: "Scopas", age: 40, disposition: "aggressive", until: -218, sources: ["Polybius 4.27.1 (the Aetolians elect Scopas strategus)"]}
+          - {name: "Agelaus of Naupactus", age: 45, disposition: "cautious", until: -216, sources: ["Polybius 5.107.5 (elected strategus for his part in the peace of 217)"]}
+          - {name: "Scopas", age: 46, disposition: "aggressive", until: -210, sources: ["Livy 26.24 (Scopas, chief magistrate of Aetolia, at the Roman treaty)"]}
+          - {name: "Pyrrhias", age: 40, until: -206, sources: ["Polybius 5.30.2, 5.91.3 (Pyrrhias, Aetolian general in Elis)"], disputed: "The passages read show him commanding in Elis (217), not as strategus of the League in 210-206."}
+          - {name: "Phaeneas", age: 45, until: -198, sources: ["Polybius 18.1.9 (Phaeneas, strategus of the Aetolians at the conference of 198)"]}
+          - {name: "Thoas", age: 45, disposition: "aggressive", until: -192, sources: ["Livy 35.12 (Thoas, chief magistrate, complains of Rome)"]}
+          - {name: "Phaeneas", age: 52, disposition: "cautious", until: -150, sources: ["Polybius 18.1.9"], disputed: "Phaeneas standing for the League to 150 is a placeholder for the later strategoi, not attested."}
         scripts:
-          - {id: "aetolian_raids", goal: "conquer", target: "achaea", preconditions: {after_year: -230}, note: "The Aetolian League raids the Peloponnese (220s BC)."}
+          - {id: "aetolian_raids", goal: "conquer", target: "achaea", preconditions: {after_year: -230}, note: "The Aetolian League raids the Peloponnese (220s BC).", sources: ["Polybius 4.5.1-8 (Dorimachus and Scopas plan to plunder Messenia)", "Polybius 4.6.2 (they pillage the coast of Epirus)"]}
         capital: aet_aetolia
         pitch: "Mountain warriors and a federal league: lead Greece your own way."
         provinces:
@@ -1206,12 +1247,22 @@ scenarios:
           piston_bellows: adopted
       achaea:
         disposition: cautious
-        leader: Margos of Caryneia
+        sources:
+          - "Polybius 2.43.1-2 (for twenty-five years the League elects a secretary and two strategi; then one, Margus of Caryneia first)"
+          - "Polybius 2.43.3-4 (Aratus frees Sicyon and later takes Acrocorinth)"
+        # In 264 the League still had two generals a year (Polybius 2.43.1); the sole generalship begins in 255
+        # with Margos of Caryneia (2.43.2). The League chose its general each year; the ruler is its leading man.
+        leader: The two generals of the Achaean League
         leader_age: 40
-        leader_died: -254
-        # The League chose a general (strategos) each year; the ruler is its leading man in each chapter.
-        # Margos, the first sole general (255), is a stand-in until Aratus; his death date is not recorded.
-        successors: [{name: "Aratus of Sicyon", age: 21, disposition: "cautious", died: -213, ends: "is poisoned, the story goes, on Philip's orders"}, {name: "Philopoemen", age: 40, disposition: "aggressive", until: -206}, {name: "Aristaenus of Megalopolis", age: 50, until: -198}, {name: "Philopoemen", age: 60, disposition: "aggressive", died: -184, ends: "is made to drink poison at Messene"}, {name: "Callicrates of Leontion", age: 40, until: -166}, {name: "Diaeus of Megalopolis", age: 45, disposition: "aggressive", until: -140}]
+        leader_until: -256
+        successors:
+          - {name: "Margos of Caryneia", age: 40, until: -251, sources: ["Polybius 2.43.2 (the first sole strategus)"], disputed: "His age and the end of his influence are not recorded."}
+          - {name: "Aratus of Sicyon", age: 21, disposition: "cautious", died: -213, ends: "is poisoned, the story goes, on Philip's orders", sources: ["Polybius 2.43.3 (only twenty when he frees Sicyon)", "Plutarch, Aratus 52.2 (a slow poison given at Philip's bidding)"]}
+          - {name: "Philopoemen", age: 40, disposition: "aggressive", until: -206, sources: ["Polybius 11.9-18 (Philopoemen trains the Achaeans and kills Machanidas)"]}
+          - {name: "Aristaenus of Megalopolis", age: 50, until: -198, sources: ["Livy 32.19 (Aristaenus, friend of Rome, chief magistrate of the Achaeans)"]}
+          - {name: "Philopoemen", age: 60, disposition: "aggressive", died: -184, ends: "is made to drink poison at Messene", sources: ["Plutarch, Philopoemen 20.1-3"]}
+          - {name: "Callicrates of Leontion", age: 40, until: -166, sources: ["Polybius 24.8.6-8 (Callicrates urges compliance with Rome and is sent as envoy)"]}
+          - {name: "Diaeus of Megalopolis", age: 45, disposition: "aggressive", until: -140, sources: ["Polybius 38.10.8 (Diaeus and Critolaus lead the League to war)"]}
         capital: ach_achaea
         pitch: "A small federation with big ambitions: unite the Peloponnese."
         provinces:
