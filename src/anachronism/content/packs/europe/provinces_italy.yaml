@@ -699,7 +699,12 @@ provinces:
       - "Livy 41.13 (2,000 Roman colonists at Luna, 177 BC)"
 
   # --- Sicily ---
-  # source: Polybius (Mamertines at Messana; the quarrel that began the First Punic War); Thucydides  # unverified: passage numbers not yet read and so withheld
+  # 264 BC: the Mamertines' city. Campanian mercenaries of Agathocles seized Messana (Polybius 1.7.2-5); beaten by Hiero on the Longanus (1.9.7-8), one party
+  #   gave the citadel to a Punic garrison and another appealed to Rome (1.10.1-2); they then ousted the Punic commander and let in Appius Claudius (1.11.4).
+  # note: the north coast west of Messana: Mylae is 25 Roman miles from Pelorias and Tyndaris 25 more (Strabo 6.2.1). Hiero stormed Mylae in his war on the Mamertines
+  #   (Diodorus 22.13.1). Both towns stand nearer this province's centre than si_halaesa's, so the sea fights off Mylae (260, Polybius 1.23.2) and Tyndaris
+  #   (257, Polybius 1.25.1) are fought off this coast. No source shows a land border with Halaesa's country in 264, so si_messana and si_halaesa
+  #   keep no shared border.
   - id: si_messana
     name: "Messana and the Peloritani"
     latlon: [38.19, 15.55]
@@ -709,8 +714,18 @@ provinces:
     capacity: 50000
     resources: {}
     neighbours: [si_catana, si_enna]
-  # source: Strabo (Catana, Tauromenium, Aetna); Cicero Verr. (Catana and its grain-lands)  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: the east-coast plain under Etna, outside the Syracusan royal territory in 264 BC (Diodorus, Hiero's kingdom).  # unverified
+    sources:
+      - "Polybius 1.7.1-5 (the Campanians seize Messene)"
+      - "Polybius 1.9.7-8 (Hiero beats the Mamertines in the Mylaean plain by the Longanus)"
+      - "Polybius 1.10.1-2 (one party offers the citadel to Carthage, another appeals to Rome)"
+      - "Polybius 1.11.4-5 (the Mamertines dislodge the Carthaginian commander from the citadel and admit Appius)"
+      - "Diodorus 22.13.1-2 (Hiero storms Mylae and hems the Mamertines in)"
+      - "Strabo 6.2.1 (the coast in Roman miles: Pelorias, Mylae, Tyndaris, Agathyrnum, Alaesa, Cephaloedium)"
+      - "Strabo 6.2.3 (Messene, once Zancle; the Mamertini, a tribe of the Campani; Rome's base in the Sicilian war)"
+      - "Polybius 1.23.2 (the Carthaginians ravage the territory of Mylae; Duilius sails against them, 260 BC)"
+  # 264 BC: a free Greek city, held by no state (the CTO's ruling with T004, 28 Oct 2026; rome_264.yaml leaves si_catana unowned).
+  #   Catana had welcomed Pyrrhus with golden crowns in 278 (Diodorus 22.8.3). Tauromenium, in this province, is Hiero's (Diodorus 22.13.2, 23.4.1).
+  # note: ADDED: the east-coast plain under Etna.
   - id: si_catana
     name: "Catana, Tauromenium and Aetna"
     latlon: [37.5, 15.09]
@@ -720,8 +735,17 @@ provinces:
     capacity: 80000
     resources: {}
     neighbours: [si_enna, si_messana, si_syracuse]
-  # source: Thucydides; Diodorus (Hiero's treaty 263 BC); Polybius; Cicero Verr. (Syracuse's quarries, latomiae)  # unverified: passage numbers not yet read and so withheld
-  # note: Leontini (,) is only 40 km from Syracuse and was part of Hiero's kingdom (Diodorus), so no separate province.  # unverified
+    sources:
+      - "Diodorus 23.4.1 (Hiero's treaty of 263: he keeps Syracuse and its subject cities Acrae, Leontini, Megara, Helorum, Neetum and Tauromenium; Catana is not named)"
+      - "Pliny NH 7.214 (Bostock 7.60; Varro: the consul M. Valerius Messala brought Rome's first public sundial from the capture of Catina, 263 BC)"
+      - "Diodorus 22.8.3 (Pyrrhus welcomed at Catana, 278 BC)"
+      - "Diodorus 22.13.2 (Hiero holds Tauromenium near Messana, c. 269 BC)"
+      - "Strabo 6.2.3 (Catana; the city of Aetna eighty stadia above it)"
+      - "Cicero, Verrines 2.3.103 (the rich farmers of Catina and their fields)"
+    disputed: "Catana's master in 264 is not told. Diodorus 23.4.1 leaves Catana out of Hiero's cities in 263, so it was outside his kingdom; Pliny NH 7.214 has Catina 'captured' by Valerius Messala in 263, so it held out against Rome. The game makes it a free city. Tauromenium, inside this province, was Hiero's."
+  # 264 BC: Hiero II's kingdom: Syracuse with Acrae, Leontini, Megara, Helorum and Neetum (Diodorus 23.4.1). Hiero is Carthage's ally in 264 and makes
+  #   peace with Rome in 263 (Polybius 1.16.9).
+  # note: Leontini is only 40 km from Syracuse and was Hiero's (Diodorus 23.4.1), so it has no separate province.
   - id: si_syracuse
     name: "Syracuse (with Leontini)"
     latlon: [37.07, 15.29]
@@ -731,8 +755,16 @@ provinces:
     capacity: 170000
     resources: {stone: accessible}
     neighbours: [si_catana, si_gela]
-  # source: Cicero Verr. (Enna in the heart of Sicily); Diodorus (first Servile War rises at Enna, 135 BC)  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: the Sicel grain interior and scene of both Servile Wars, absent from the skeleton.
+    sources:
+      - "Polybius 1.8.3-1.9.8 (Hiero chosen general, then proclaimed king after the Longanus)"
+      - "Diodorus 23.1.2-3 (Hiero allied with Carthage against Rome; camps on the Chalcidian Mount before Messana, 264 BC)"
+      - "Diodorus 23.4.1 (the treaty of 263 and Hiero's subject cities)"
+      - "Polybius 1.16.9 (Hiero's treaty with Rome: prisoners freed, a hundred talents)"
+      - "Polybius 1.15.10 (Echetla, between the Syracusan and Carthaginian provinces)"
+      - "Cicero, Verrines 2.5.68 (the latomiae, Syracuse's quarries cut deep into the rock, the work of kings and tyrants)"
+  # 264 BC: drawn as Carthaginian. Enna kept a Punic garrison against Phintias until it handed itself to Pyrrhus in 278 (Diodorus 22.10.1); in 258
+  #   Hamilcar took it by treachery and Rome took it back from its garrison (Diodorus 23.9.4-5; Polybius 1.24.12). Centuripa, inside it, was besieged by Rome in 263.
+  # note: ADDED: the Sicel grain interior and the scene of both Servile Wars (Strabo 6.2.6).
   - id: si_enna
     name: "Enna and the Sicel interior (Centuripae, Morgantina)"
     latlon: [37.57, 14.28]
@@ -742,8 +774,16 @@ provinces:
     capacity: 55000
     resources: {}
     neighbours: [si_akragas, si_catana, si_gela, si_halaesa, si_messana]
-  # source: Polybius (siege of Akragas 262 BC); Strabo; Pliny NH (rock salt of Agrigentum)  # unverified: passage numbers not yet read and so withheld
-  # note: Salt rests on Pliny alone and the passage number is from memory: to check.
+    sources:
+      - "Diodorus 22.10.1 (the men of Enna expel the Carthaginian garrison and join Pyrrhus)"
+      - "Diodorus 23.4.1 (the consuls besiege Centuripa, 263 BC)"
+      - "Diodorus 23.9.4-5 (Hamilcar takes Enna by treachery; the Romans retake it, 258 BC)"
+      - "Polybius 1.24.12 (the Romans take Enna and other small places belonging to the Carthaginians)"
+      - "Strabo 6.2.6 (Enna on its hill above tillable plateaus; Eunus' slaves besieged there)"
+      - "Cicero, Verrines 2.4.107 (Henna on a high plateau), 2.3.192 (Henna's grain carried to the coast)"
+    disputed: "Enna's master in 264 is not told: it had a Punic garrison in 278 (Diodorus 22.10.1) and Polybius counts it a Carthaginian place in 258 (1.24.12), but Hamilcar had to retake it by treachery that year (Diodorus 23.9.4)."
+  # 264 BC: drawn as Carthaginian: an allied city whose citadel Hanno fortified in 264 (Diodorus 23.1.2); by 262 Carthage's base in Sicily (Polybius 1.17.5).
+  # note: the salt is Pliny's 'salt of Agrigentum' (NH 31.41, Bostock's chapter).
   - id: si_akragas
     name: "Akragas"
     latlon: [37.29, 13.58]
@@ -753,7 +793,16 @@ provinces:
     capacity: 85000
     resources: {salt: limited}
     neighbours: [si_enna, si_panormus]
-  # source: Diodorus (Gela razed by Phintias of Akragas, 282 BC); (Camarina destroyed by the Romans, 258 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Diodorus 23.1.2 (Hanno fortifies the citadel of Acragas, its citizens already friendly to Carthage, and makes them allies, 264 BC)"
+      - "Polybius 1.17.5-6 (Agrigentum, the most important city in the Carthaginian province, their base, 262 BC)"
+      - "Polybius 1.17.6-1.19 (the Roman siege of Agrigentum, 262-261 BC)"
+      - "Diodorus 22.2.1 (Phintias tyrant of Acragas)"
+      - "Strabo 6.2.5 (Acragas and its seaport still endure)"
+      - "Pliny NH 31.41 (Bostock; the salt of Agrigentum resists fire)"
+    disputed: "Akragas in 264 was a free city allied to Carthage (Diodorus 23.1.2); Polybius 1.17.5 already calls it a city of the Carthaginian province (262). The game gives it to Carthage."
+  # 264 BC: free, held by no state. Phintias of Akragas had razed Gela and moved its people to his new city of Phintias (Diodorus 22.2.2); the Mamertines
+  #   had laid waste Camarina and Gela (Diodorus 23.1.4). Rome storms Camarina in 258 (Polybius 1.24.12).
   # note: ADDED: the south-coast plain between Akragas and Syracuse; without it the interior (Enna) would wrongly touch the south sea.
   - id: si_gela
     name: "Gela and Camarina (southern Sicily)"
@@ -764,8 +813,17 @@ provinces:
     capacity: 35000
     resources: {}
     neighbours: [si_enna, si_syracuse]
-  # source: Cicero Verrines (Halaesa, a free Sicilian city; Cephaloedium; Tyndaris); Diodorus (Halaesa founded 403 BC)
-  # note: ADDED: the north-coast strip between Panormus and Messana; without it Enna would wrongly reach the northern sea. unverified town positions.
+    sources:
+      - "Diodorus 22.2.2 (Phintias founds Phintias and moves the people of Gela there)"
+      - "Diodorus 23.1.4 (Hiero: the Mamertines laid waste Camarina and Gela)"
+      - "Polybius 1.24.12 (Camarina, lately deserted to Carthage, retaken, 258 BC)"
+      - "Diodorus 23.9.5 (Camarina taken with Hiero's engines; most of its people sold)"
+      - "Strabo 6.2.5-6 (Camarina and Gela without settled people in Strabo's day)"
+    disputed: "No source states Gela's ties in 264; it is drawn free."
+  # 264 BC: free, held by no state. Hiero won Halaesa, Abacaenum and Tyndaris in his war on the Mamertines (Diodorus 22.13.2), yet in 263 Halaesa
+  #   is the first city to treat with Rome on its own (Diodorus 23.4.1), and Tyndaris is in Carthage's grip by 262 (Diodorus 23.5.1).
+  # note: ADDED: the north-coast strip between Panormus and Messana; without it Enna would wrongly reach the northern sea. Halaesa, Cephaloedium and
+  #   Agathyrnum are its towns (Strabo 6.2.1); Tyndaris, though named here, stands nearer si_messana's centre (see the note on si_messana).
   - id: si_halaesa
     name: "Halaesa, Cephaloedium and Tyndaris (the north coast)"
     latlon: [38.0, 14.18]
@@ -775,7 +833,16 @@ provinces:
     capacity: 45000
     resources: {}
     neighbours: [si_enna, si_panormus]
-  # source: Polybius (Panormus taken 254 BC); Strabo  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Diodorus 22.13.2 (Hiero wins over Halaesa, Abacaenum and Tyndaris)"
+      - "Diodorus 23.4.1 (Halaesa's envoys come first to the Romans, 263 BC)"
+      - "Diodorus 23.5.1 (the Tyndarians wish to go over; the Carthaginians take their leading men as hostages to Lilybaeum)"
+      - "Diodorus 23.18.5 (Tyndaris goes over to Rome, 254 BC)"
+      - "Polybius 1.25.1 (the consul anchored off Tyndaris, 257 BC)"
+      - "Strabo 6.2.1 (Tyndaris, Agathyrnum, Alaesa, Cephaloedium, small towns of the north coast)"
+      - "Cicero, Verrines 2.3.13 (Halaesa one of the five free cities exempt from tithe), 2.2.130 (the Cephaloeditani)"
+    disputed: "Hiero took Halaesa and Tyndaris in his Mamertine war (Diodorus 22.13.2), but Halaesa treats with Rome on its own in 263 (Diodorus 23.4.1); the game makes it free."
+  # 264 BC: Carthaginian. Panormus is 'the most important city in the Carthaginian province' when Rome storms it in 254 (Polybius 1.38.7-10).
   - id: si_panormus
     name: "Panormus and Himera"
     latlon: [38.12, 13.36]
@@ -785,8 +852,15 @@ provinces:
     capacity: 75000
     resources: {}
     neighbours: [si_akragas, si_halaesa, si_lilybaeum]
-  # source: Polybius (siege of Lilybaeum); (Eryx, Drepana); Diodorus  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: the Carthaginian epikrateia in the west, the last Punic holdings in Sicily (Polybius,).  # unverified
+    sources:
+      - "Polybius 1.21.6 (Hannibal with the Punic fleet at Panormus, 260 BC)"
+      - "Polybius 1.24.3-4 (Hamilcar near Panormus; the hot springs of Himera)"
+      - "Polybius 1.38.7-10 (Panormus besieged and taken, 254 BC)"
+      - "Diodorus 23.18.3-5 (Panormus taken; Iaetia, Solus and Tyndaris come over)"
+      - "Strabo 6.2.1 (the river Himera; Panormus on the north coast)"
+  # 264 BC: Carthaginian: Lilybaeum, founded by Carthage for the survivors of Motya, held even against Pyrrhus (Diodorus 22.10.4); with Drepana it is
+  #   the last Punic hold in Sicily (Polybius 1.41).
+  # note: ADDED: the Carthaginian west.
   - id: si_lilybaeum
     name: "Lilybaeum, Eryx and Drepana (western Sicily)"
     latlon: [37.8, 12.43]
@@ -796,6 +870,12 @@ provinces:
     capacity: 60000
     resources: {}
     neighbours: [si_panormus]
+    sources:
+      - "Diodorus 22.10.4 (Pyrrhus takes all Carthage's empire in Sicily except Lilybaeum, founded from Motya's survivors)"
+      - "Polybius 1.41.4-6 (the Roman siege of Lilybaeum; Drepana the only other Punic base left)"
+      - "Diodorus 23.9.4 (Hamilcar fortifies Drepanum and moves the Erycinians there)"
+      - "Polybius 1.55.6-7 (Hamilcar seizes Eryx, between Drepana and Panormus)"
+      - "Strabo 6.2.6 (Eryx and its temple of Aphrodite)"
 
   # --- Sardinia and Corsica ---
   # source: Livy (Sardinian revolt and Carthaginian landing, 215 BC); Cicero (grain); Pausanias; Strabo  # unverified: passage numbers not yet read and so withheld
