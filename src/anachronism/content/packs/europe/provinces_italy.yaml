@@ -339,7 +339,8 @@ provinces:
       - "Polybius 2.24.12 (Marsi, Marrucini, Frentani and Vestini, 20,000 foot and 4,000 horse, in 225 BC)"
 
   # --- Campania, Samnium and the south ---
-  # source: Polybius (Falernian plain, richest of Italy); Livy (Campania submits to Rome, 343 BC); (Capua and its cavalry); Strabo 5.4.3  # unverified: passage numbers not yet read and so withheld
+  # 264 BC: Rome's. Capua gave itself to Rome in 343 (Livy 7.31) and has held citizenship without the vote since 338 (Livy 8.14; Velleius 1.14.3);
+  #   Cales is a Latin colony (Velleius 1.14.3). The Campanian knights were honoured for not joining the Latins (Livy 8.14), hence the horses.
   # note: Neapolis and the Bay are split off as it_neapolis: Capua alone is inland (centre 25 km from the Bay).
   - id: it_campania
     name: "Campania (Capua, Cales, Teanum, Casilinum)"
@@ -350,8 +351,17 @@ provinces:
     capacity: 300000
     resources: {horses: accessible}
     neighbours: [it_aurunci, it_hirpini, it_neapolis, it_samnium]
-  # source: Strabo 5.4.6 (sulphur at Puteoli); (Neapolis); Vitruvius (volcanic sand); Diodorus (Elba iron carried to Dicaearchia/Puteoli); Livy (Neapolis' treaty with Rome 326 BC)  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: the Greek coast of the Bay is a separate people and harbour from Capua; 
+    sources:
+      - "Livy 7.31 (the Campanians surrender Capua and its land to Rome, 343 BC)"
+      - "Livy 8.14 (the Campanian knights honoured; citizenship without the vote for Capua, 338 BC)"
+      - "Velleius 1.14.3 (citizenship without the vote for the Campanians; colony at Cales)"
+      - "Polybius 3.91.2-6 (the plain round Capua, the most celebrated in Italy; Cales, Teanum, Capua in its midst)"
+      - "Strabo 5.4.3 (the Campanian plain sown three and four times a year; Falernian, Statanian and Calenian wine)"
+      - "Strabo 5.4.10-11 (Capua the capital; Teanum Sidicinum; Cales, Nola, Nuceria)"
+      - "Polybius 2.24.14 (Romans and Campanians on the rolls in 225 BC: 250,000 foot, 23,000 horse)"
+  # 264 BC: a Greek ally of Rome by treaty (Livy 8.26); Naples lends Rome boats for the first crossing to Sicily (Polybius 1.20.14).
+  # note: ADDED: the Greek coast of the Bay is a separate people and harbour from Capua.
+  # note: the stone is the Bay's volcanic sand and tufa: Vitruvius 2.6 (pulvis Puteolanus) was not opened.  # unverified: LacusCurtius would not load
   - id: it_neapolis
     name: "Neapolis, Cumae and the Bay (Puteoli, Pompeii, Nola)"
     latlon: [40.85, 14.27]
@@ -361,8 +371,16 @@ provinces:
     capacity: 80000
     resources: {sulphur: limited, stone: accessible}
     neighbours: [it_campania, it_picentini]
-  # source: Strabo 5.4.13 (Picentini deported to the gulf of Posidonia; Paestum); Velleius (Paestum, Latin colony 273 BC)  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: Paestum (Latin colony 273 BC) and the Picentine deportees (Strabo 5.4.13) hold the Salerno coast between Campania and Lucania.
+    sources:
+      - "Livy 8.22 (Palaepolis and Neapolis one community, founded from Cumae)"
+      - "Livy 8.26 (Neapolis' treaty with Rome, 326 BC)"
+      - "Polybius 1.20.14 (boats borrowed from Tarentum, Locri, Elea and Naples, 264 BC)"
+      - "Strabo 5.4.6 (Dicaearchia, now Puteoli; the Forum of Hephaestus full of drifted sulphur)"
+      - "Strabo 5.4.7-8 (Neapolis; Pompaia, port of Nola and Nuceria)"
+      - "Diodorus 5.13.2 (Elban iron carried to Dicaearchia)"
+  # 264 BC: Rome's. Paestum (Greek Poseidonia) is a Latin colony of 273 (Velleius 1.14.7; Livy Per. 14.8), and Rome moved Picentes from the Adriatic
+  #   here (Strabo 5.4.13; he gives no date: the Picentes were beaten in 268, Livy Per. 15.4). Salernum was fortified against them only after Hannibal.
+  # note: ADDED: Paestum and the Picentine deportees hold the Salerno coast between Campania and Lucania.
   - id: it_picentini
     name: "Picentini (Picentia, Salernum, Paestum)"
     latlon: [40.68, 14.77]
@@ -372,7 +390,15 @@ provinces:
     capacity: 40000
     resources: {}
     neighbours: [it_hirpini, it_lucania, it_neapolis]
-  # source: Livy (Ausones betrayed and destroyed, 314 BC); (Fundi and Formiae, citizens without vote 338 BC); Strabo 5.3.6 (Formiae, Fundi)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 5.4.13 (Picentini transplanted by the Romans to the Poseidonian Gulf; Poseidonia now Paestum; Picentia; Salernum fortified)"
+      - "Strabo 6.1.1 (Poseidonia within fifty stadia of the Silaris)"
+      - "Velleius 1.14.7 (colonies at Cosa and Paestum, 273 BC)"
+      - "Livy, Periochae 14.8 (colonies founded at Posidonia and Cosa)"
+      - "Livy, Periochae 15.4 (the Picentes subdued, 268 BC)"
+    disputed: "Paestum was a Latin colony (in law an allied state) and the Picentini were deportees, not Roman citizen land; drawn as Rome's in 264."
+  # 264 BC: Rome's. Fundi and Formiae hold Roman citizenship (Livy 8.14; Velleius 1.14.3); Suessa Aurunca (Velleius 1.14.4), Minturnae and
+  #   Sinuessa (Velleius 1.14.6) are colonies. The Ausones were wiped out in 314 (Livy 9.25).
   - id: it_aurunci
     name: "Aurunci and Ausones (Fundi, Formiae, Minturnae, Suessa)"
     latlon: [41.25, 13.75]
@@ -382,7 +408,13 @@ provinces:
     capacity: 55000
     resources: {}
     neighbours: [it_campania, it_hernici, it_samnium, it_volsci]
-  # source: Livy (Bovianum taken 305 BC); Livy (Aesernia colony 263 BC); Strabo; Polybius 2.24 (Samnites 70,000 foot, 7,000 horse)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Livy 8.14 (Fundi and Formiae given citizenship without the vote, 338 BC)"
+      - "Livy 9.25 (the three Ausonian towns taken and the nation destroyed, 314 BC)"
+      - "Velleius 1.14.3 (Fundi and Formiae admitted to the citizenship), 1.14.4 (Suessa Aurunca colony), 1.14.6 (Minturnae and Sinuessa colonies)"
+      - "Strabo 5.3.6 (Tarracina, Formiae, Minturnae and Sinuessa on the Appian Way; the Liris at Minturnae)"
+  # 264 BC: the Samnites are allies of Rome by the treaty renewed in 290 (Livy Per. 11.5). Aesernia becomes a Latin colony in 263 (Livy Per. 16.7).
+  # note: the timber is the Apennine forest; no passage opened names it for Samnium.  # unverified: resource kept as limited from terrain
   - id: it_samnium
     name: "Samnium (Pentri, Caudini, Carricini: Bovianum, Aesernia)"
     latlon: [41.48, 14.47]
@@ -392,7 +424,15 @@ provinces:
     capacity: 150000
     resources: {timber: limited}
     neighbours: [it_aurunci, it_campania, it_frentani, it_hirpini, it_marsi]
-  # source: Strabo (Hirpini, Aeclanum, Beneventum); Velleius (Latin colony Beneventum, 268 BC); Livy (Compsa)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Livy 9.31 (Bovianum, chief city of the Pentrian Samnites), 9.44 (Bovianum taken, 305 BC)"
+      - "Livy, Periochae 11.5 (the Samnites sue for peace; the treaty renewed a fourth time, 290 BC)"
+      - "Zonaras 8.7 (Lollius' revolt among the Caraceni put down)"
+      - "Livy, Periochae 16.7 (colony at Aesernia)"
+      - "Velleius 1.14.8 (Aesernia colony a year after Firmum)"
+      - "Strabo 5.4.11 (Bovianum, Aesernia, Panna, Telesia reduced to villages)"
+      - "Polybius 2.24.10 (Samnites, 70,000 foot and 7,000 horse, in 225 BC)"
+  # 264 BC: Samnite allies of Rome. Beneventum (Samnite Maleventum) is a Latin colony of 268 (Velleius 1.14.7; Livy Per. 15.5): Rome's town inside allied land (DEC013).
   - id: it_hirpini
     name: "Hirpini (Aeclanum, Compsa, Beneventum)"
     latlon: [41.04, 15.01]
@@ -402,7 +442,16 @@ provinces:
     capacity: 65000
     resources: {}
     neighbours: [it_apulia, it_campania, it_lucania, it_picentini, it_samnium]
-  # source: Strabo 6.1.3 (Lucani, Samnite in race); Livy (Hannibal at Grumentum, 207 BC); Polybius 2.24 (Lucanians 30,000 foot, 3,000 horse)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 5.4.12 (the Hirpini are Samnites, named from the wolf)"
+      - "Strabo 5.4.10-11 (Beneventum on the Appian Way; it has held up well)"
+      - "Livy 9.27 (Maleventum, now called Beneventum)"
+      - "Velleius 1.14.7 (Ariminum and Beneventum colonies, 268 BC)"
+      - "Livy, Periochae 15.5 (colonies at Ariminum and at Beneventum in Samnium)"
+      - "Livy 23.1 (Compsa in the land of the Hirpini handed to Hannibal, 216 BC)"
+    disputed: "Beneventum was a Latin colony (Rome's) inside allied Samnite land in 264; the map cannot draw a one-town enclave, so the province stays with the Samnites."
+  # 264 BC: Lucanian allies of Rome (socii), beaten in the Pyrrhic war (triumphs over the Lucani, Fasti 273-272).
+  # note: Venusia, the Latin colony of 291, stands where Lucania meets Apulia (Strabo 6.1.3) and lies in it_apulia's cell; it is noted there.
   - id: it_lucania
     name: "Lucania (Grumentum, Volcei, Potentia, Heraclea)"
     latlon: [40.29, 15.91]
@@ -412,7 +461,13 @@ provinces:
     capacity: 120000
     resources: {}
     neighbours: [it_apulia, it_bruttium, it_hirpini, it_picentini, it_tarentum]
-  # source: Strabo 6.3.9 (Daunians, Arpi, Sipontum, fertile pasture); Polybius (Gerunium, Hannibal's winter camp 217 BC); Livy (Luceria colony 314 BC)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 6.1.2-3 (the Leucani, Samnite in race; Grumentum and Vertinae inland, then Venusia)"
+      - "Strabo 6.1.14 (Heracleia a little above the sea)"
+      - "Fasti Triumphales, 273/2 and 272/1 BC (triumphs over the Lucani, Samnites and Bruttii)"
+      - "Livy 27.41 (Hannibal marches to Grumentum in Lucania, 207 BC)"
+      - "Polybius 2.24.12 (Lucanians, 30,000 foot and 3,000 horse, in 225 BC)"
+  # 264 BC: Apulian allies of Rome (socii). Luceria (314) and Venusia (291) are Latin colonies here: Rome's towns inside allied land (DEC013).
   - id: it_apulia
     name: "Apulia (Daunia: Arpi, Luceria, Teanum, Sipontum)"
     latlon: [41.48, 15.58]
@@ -422,8 +477,16 @@ provinces:
     capacity: 100000
     resources: {horses: accessible}
     neighbours: [it_frentani, it_hirpini, it_lucania, it_peucetia, it_tarentum]
-  # source: Strabo 6.3.8 (Peucetii, Barium, Egnatia); (Canusium); Polybius (Canusium); Polybius 2.24 (Iapygian horse)  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: Peucetia is neither Daunia (Arpi) nor Messapia in Strabo; Barium lies 140 km from Brundisium. Horse figures are Polybius' for Iapygians, Strabo 6.3.9.
+    sources:
+      - "Strabo 6.3.9 (Arpi and Sipus founded by Diomedes; Luceria, once a city of the Daunii; the country excellent for horses and sheep)"
+      - "Strabo 6.3.11 (Teanum Apulum)"
+      - "Livy 9.26 (Luceria retaken and colonists sent, 314 BC)"
+      - "Velleius 1.14.4 (Luceria colony), 1.14.6 (Venusia colony)"
+      - "Polybius 3.100.1-3 (Hannibal winters at Geronium, near Luceria, for its corn, 217 BC)"
+    disputed: "Luceria and Venusia were Latin colonies (Rome's) inside allied Apulia in 264; the map cannot draw one-town enclaves, so the province stays with the allies."
+  # 264 BC: Apulian allies of Rome (socii).
+  # note: ADDED: Strabo divides Apulia into Daunii and Peucetii (Poedicli), apart from Messapia (6.3.1); Barium lies 140 km from Brundisium.
+  # note: the horses are Polybius' Iapygian horse (2.24.11) and Strabo's Apulian horse country (6.3.9).
   - id: it_peucetia
     name: "Peucetia (Barium, Gnathia, Egnatia, Canusium)"
     latlon: [40.89, 17.39]
@@ -433,7 +496,13 @@ provinces:
     capacity: 70000
     resources: {horses: limited}
     neighbours: [it_apulia, it_tarentum]
-  # source: Strabo 6.3.1 (Messapia); Livy (Brundisium Latin colony, 244 BC); Polybius 2.24 (Iapygians and Messapians 50,000 foot, 16,000 horse)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 6.3.1 (north of the Calabri, the Peucetii, also called Poedicli, and the Daunii)"
+      - "Strabo 6.3.7 (the mule-road through the Peucetii: Egnatia, Celia, Netium, Canusium, Herdonia)"
+      - "Strabo 6.3.8 (Egnatia, Barium; the Peucetii reach inland to Silvium)"
+      - "Polybius 2.24.11 (Iapygians and Messapians, 50,000 foot and 16,000 horse, in 225 BC)"
+  # 264 BC: allies of Rome since the Sallentini and Messapii were beaten in 267-266 (Livy Per. 15.7; four triumphs, Fasti 267-266). Rome took Brundisium
+  #   for its harbour (Zonaras 8.7); the Latin colony there follows in 244 (Livy Per. 19.5).
   - id: it_messapia
     name: "Messapia (Brundisium, Uria, Hydruntum, Lupiae)"
     latlon: [40.64, 17.94]
@@ -443,7 +512,16 @@ provinces:
     capacity: 110000
     resources: {}
     neighbours: [it_tarentum]
-  # source: Strabo 6.3.1 (Tarentum, Metapontum); Polybius (Tarentum 212-209 BC); Livy (Tarentum surrenders 272 BC)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 6.3.1 (Iapygia, called Messapia: the Salentini and the Calabri)"
+      - "Strabo 6.3.5-6 (Hydrus; Brentesium; Lupiae and Uria inland)"
+      - "Livy, Periochae 15.7 (the Umbrians and Sallentines defeated, their surrender accepted)"
+      - "Fasti Triumphales, 267/6 and 266/5 BC (over the Sallentini and Messapii)"
+      - "Zonaras 8.7 (the campaign in Calabria to get Brundisium and its harbour)"
+      - "Livy, Periochae 19.5 (colonies at Fregenae and at Brundisium in the Sallentine country, 244 BC)"
+      - "Polybius 2.24.11 (Iapygians and Messapians, 50,000 foot and 16,000 horse, in 225 BC)"
+  # 264 BC: a Greek ally of Rome since its surrender in 272 (Livy Per. 15.1); Tarentum lends boats for the first crossing (Polybius 1.20.14).
+  #   Hannibal takes it in 212 (Polybius 8.24-34); Fabius Maximus retakes it in 209 (Strabo 6.3.1).
   - id: it_tarentum
     name: "Tarentum and Metapontum"
     latlon: [40.47, 17.24]
@@ -453,7 +531,14 @@ provinces:
     capacity: 100000
     resources: {}
     neighbours: [it_apulia, it_lucania, it_messapia, it_peucetia]
-  # source: Strabo 6.1.4 (Brettii); (Consentia; Temesa's copper mines, abandoned by his day); (Sila forest, Brettian pitch); Cicero Brutus (Bruttian pitch)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Livy, Periochae 15.1 (the Tarentines subdued and given peace and freedom, 272 BC)"
+      - "Fasti Triumphales, 272/1 BC (Sp. Carvilius and L. Papirius Cursor over the Tarentines)"
+      - "Polybius 1.20.14 (boats borrowed from Tarentum, Locri, Elea and Naples, 264 BC)"
+      - "Polybius 8.24-34 (Tarentum betrayed to Hannibal, 212 BC)"
+      - "Strabo 6.3.1-4 (Taras: Lysippus' Heracles dedicated by Fabius Maximus, who captured the city; its founding)"
+      - "Strabo 6.1.15 (Metapontium, 140 stadia from Heracleia)"
+  # 264 BC: Bruttian and Greek allies of Rome (socii), beaten in the Pyrrhic war (triumphs over the Bruttii, Fasti 273-272); Locri lends boats in 264 (Polybius 1.20.14).
   - id: it_bruttium
     name: "Bruttium (Consentia, Croton, Locri, Thurii)"
     latlon: [39.3, 16.25]
@@ -463,7 +548,15 @@ provinces:
     capacity: 165000
     resources: {timber: accessible, copper: limited}
     neighbours: [it_lucania, it_rhegium]
-  # source: Polybius (Rhegium's Campanian garrison, retaken 270 BC); Strabo 6.1.6 (Rhegium)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 6.1.4 (the Brettii, named by the Leucani for revolters)"
+      - "Strabo 6.1.5 (Consentia, metropolis of the Brettii; abandoned copper mines near Temesa)"
+      - "Strabo 6.1.9 (the Sila forest above Locri, which gives the best pitch, the Brettian)"
+      - "Cicero, Brutus 85 (the company that farmed the pitch-works in the Sila forest)"
+      - "Fasti Triumphales, 273/2 and 272/1 BC (triumphs over the Bruttii)"
+      - "Polybius 1.20.14 (boats borrowed from Tarentum, Locri, Elea and Naples, 264 BC)"
+  # 264 BC: a Greek ally of Rome, restored to its own citizens in 270 after Rome took it back from the Campanian garrison (Polybius 1.7.6-13).
+  #   The consul Appius Claudius gathers at Rhegium to cross to Messana (Diodorus 23.1.4).
   - id: it_rhegium
     name: "Rhegium"
     latlon: [38.11, 15.65]
@@ -473,6 +566,12 @@ provinces:
     capacity: 35000
     resources: {}
     neighbours: [it_bruttium]
+    sources:
+      - "Polybius 1.7.6-13 (Decius' Campanian garrison seizes Rhegium; Rome besieges it and restores city and land to the citizens)"
+      - "Livy, Periochae 12.6, 15.2 (the Campanian legion occupies Rhegium; besieged and beheaded, 270 BC)"
+      - "Fasti Triumphales, 270/69 BC (Cn. Cornelius Blasio over the Regini)"
+      - "Diodorus 23.1.4 (Appius Claudius goes straight to Rhegium)"
+      - "Strabo 6.1.6 (Rhegium founded by the Chalcidians)"
 
   # --- Cisalpine Gaul and Liguria ---
   # source: Polybius (oak woods and swine of the plain); Strabo 5.1.6 (Boii driven out); Livy,(Boii beaten 191 BC); (Bononia colony 189 BC)  # unverified: passage numbers not yet read and so withheld
