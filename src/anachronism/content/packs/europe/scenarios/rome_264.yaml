@@ -604,8 +604,11 @@ scenarios:
       e2_insubres:
         navy_bp: 0
         disposition: aggressive
+        sources:
+          - "Polybius 2.17.4 (the Insubres, the largest tribe of the plain)"
+          - "Polybius 2.21.1 (the Gauls at peace with Rome for forty-five years)"
         scripts:
-          - {id: "insubres_hannibal", goal: "ally", target: "carthage", preconditions: {after_year: -219}, note: "Hannibal wins over the Po Gauls after crossing the Alps (218 BC). Polybius 3.44, 3.60-65."}
+          - {id: "insubres_hannibal", goal: "ally", target: "carthage", preconditions: {after_year: -219}, note: "Hannibal wins over the Po Gauls after crossing the Alps (218 BC). Polybius 3.40, 3.60, 3.66.", sources: ["Polybius 3.40.8 (the Insubres join the Boii against Rome)", "Polybius 3.60.11 (the Celts of the plain impatient to join Carthage)", "Polybius 3.66.7 (after the Ticinus the neighbouring Celts ally with Carthage)"]}
         capital: it_insubres
         leader: The Chiefs of the Insubres
         leader_age: 45
@@ -635,8 +638,11 @@ scenarios:
       e2_cenomani:
         navy_bp: 0
         disposition: cautious
+        sources:
+          - "Polybius 2.17.4 (the Cenomani after the Insubres on the plain)"
+          - "Polybius 2.23.2 (the Veneti and Cenomani take Rome's side, 225 BC)"
         scripts:
-          - {id: "cenomani_with_rome", goal: "ally", target: "rome", preconditions: {after_year: -227}, note: "The Cenomani and Veneti decline to join their kinsmen and support Rome (225 BC). Polybius 2.23.2."}
+          - {id: "cenomani_with_rome", goal: "ally", target: "rome", preconditions: {after_year: -227}, note: "The Cenomani and Veneti decline to join their kinsmen and support Rome (225 BC). Polybius 2.23.2.", sources: ["Polybius 2.23.2", "Polybius 2.24.7 (20,000 Veneti and Cenomani on the Gallic frontier)"]}
         capital: it_cenomani
         leader: The Chiefs of the Cenomani
         leader_age: 45
@@ -667,6 +673,9 @@ scenarios:
         navy_bp: 3000
         disposition: cautious
         capital: it_veneti
+        sources:
+          - "Polybius 2.17.5-6 (the Veneti, a very ancient people near the Adriatic, unlike the Gauls in speech)"
+          - "Polybius 2.23.2 (the Veneti take Rome's side, 225 BC)"
         leader: The Venetic chiefs
         leader_age: 45
         pitch: "A people of horses and the Adriatic marshes, in no hurry to choose a side."
@@ -696,6 +705,9 @@ scenarios:
         navy_bp: 0
         disposition: aggressive
         capital: it_liguria
+        sources:
+          - "Polybius 2.16.1-2 (the Ligurians hold both slopes of the Apennines, to Pisa and Arretium)"
+          - "Polybius 1.17.4 (Ligurians among the mercenaries Carthage hires for Sicily, 262 BC)"
         leader: The Ligurian tribes
         leader_age: 45
         pitch: "Mountain raiders who will cost Rome more lives than any richer enemy."
@@ -726,8 +738,13 @@ scenarios:
         # Polybius 1.10-11: a Carthaginian garrison stands in the citadel when the Roman consul arrives.
         navy_bp: 1000
         disposition: aggressive
+        sources:
+          - "Polybius 1.7.2-5 (Campanian mercenaries of Agathocles seize Messene by treachery)"
+          - "Polybius 1.8.1 (they take the name Mamertines)"
+          - "Polybius 1.9.7-8 (Hiero beats them by the Longanus and captures their leaders)"
+          - "Diodorus 22.13.1-8 (the battle at the Longanus; Hannibal's garrison saves Messana)"
         scripts:
-          - {id: "mamertines_appeal", goal: "ally", target: "rome", preconditions: {after_year: -266}, note: "The Mamertines divide: some call on Carthage, others on Rome (264 BC). Polybius 1.10.1-2."}
+          - {id: "mamertines_appeal", goal: "ally", target: "rome", preconditions: {after_year: -266}, note: "The Mamertines divide: some call on Carthage, others on Rome (264 BC). Polybius 1.10.1-2.", sources: ["Polybius 1.10.1-2", "Polybius 1.11.4 (they dislodge the Punic commander and let Appius in)"]}
         capital: si_messana
         leader: The Mamertine council
         leader_age: 45
@@ -766,6 +783,10 @@ scenarios:
         # Polybius 2.2-12: King Agron rules until his death (231 BC), then his widow Teuta; no ruler of 264 BC is named, so the slot is unnamed.
         navy_bp: 5000
         disposition: aggressive
+        sources:
+          - "Polybius 2.2.4 (Agron, son of Pleuratus, the strongest king Illyria had had by land and sea)"
+          - "Polybius 2.4.7 (Agron dies; his wife Teuta succeeds)"
+          - "Polybius 2.8.1-2 (Illyrian ships long in the habit of preying on Italian traders)"
         capital: illyria
         leader: The Ardiaean king
         leader_age: 45
@@ -796,6 +817,11 @@ scenarios:
         navy_bp: 0
         disposition: aggressive
         capital: celtiberia
+        sources:
+          - "Polybius 3.5.1 (Rome's later war with the Celtiberians and Vaccaei)"
+          - "Polybius 3.14.1 (Hannibal against the Vaccaei of the interior, 220 BC)"
+          - "Livy, Periochae 59.1 (Numantia falls to Scipio Aemilianus, 133 BC)"
+        disputed: "Nothing is told of the Celtiberians in 264 BC itself; this snapshot projects back from Polybius' account of 220."
         leader: The Celtiberian chiefs
         leader_age: 45
         pitch: "Hill fortresses and iron swords in the Spanish interior."
