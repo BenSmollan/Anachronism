@@ -1301,6 +1301,9 @@ scenarios:
           piston_bellows: adopted
       epirus:
         disposition: aggressive
+        sources:
+          - "Justin 26.2.9-12, 26.3.1 (Alexander, king of Epirus, avenges Pyrrhus on Macedon, is driven out by the boy Demetrius and restored)"
+          - "Justin 28.1.1 (Olympias, widow of Alexander, rules for her sons Pyrrhus and Ptolemy)"
         capital: epi_epirus
         leader: Alexander II
         leader_age: 30
@@ -1309,7 +1312,11 @@ scenarios:
         # and Ptolemy (c. 238-235); Pyrrhus II is passed over, as no chapter falls in his years. Deidameia
         # (c. 235-232) is the last Aeacid; the League then rules through its annual strategos and
         # assembly, here "The Epirote Assembly".
-        successors: [{name: "Olympias II (regent)", age: 45, died: -237}, {name: "Ptolemy", age: 20, died: -235}, {name: "Deidameia", age: 25, until: -230}, {name: "The Epirote Assembly", age: 45, until: -94}]
+        successors:
+          - {name: "Olympias II (regent)", age: 45, died: -237, sources: ["Justin 28.1.1", "Justin 28.3.1-3 (she gives up the kingdom to her sons and soon dies after them)"]}
+          - {name: "Ptolemy", age: 20, died: -235, sources: ["Justin 28.3.1-2 (succeeds his brother Pyrrhus and dies of sickness on the march)"]}
+          - {name: "Deidameia", age: 25, until: -230, sources: ["Justin 28.3.4-5 (the last princess killed at the altar of Diana)"], disputed: "Justin 28.3.4-5 calls the last princess Laodamia; Deidameia is the name in other writers not read here."}
+          - {name: "The Epirote Assembly", age: 45, until: -94, sources: ["Justin 28.3.4-7 (the royal line ends; the Epirotes suffer famine and civil strife)"]}
         pitch: "Pyrrhus won battles and lost wars. Win the peace this time."
         provinces:
           epi_epirus: 300000
@@ -1347,6 +1354,10 @@ scenarios:
       rhodes:
         navy_bp: 30000
         disposition: mercantile
+        sources:
+          - "Polybius 5.88.1-7 (after the earthquake kings and cities send Rhodes gifts; Hiero frees Rhodian ships of customs)"
+          - "Polybius 13.5.1 (the prytaneis of Rhodes)"
+          - "Polybius 16.15.8 (the Rhodian senate and prytaneis)"
         capital: rho_rhodes
         # Rhodes was a republic: the ruler is the board of prytaneis, who changed every six months.
         leader: The Prytaneis of Rhodes
@@ -1391,12 +1402,21 @@ scenarios:
           piston_bellows: adopted
       pergamon:
         disposition: scholarly
+        sources:
+          - "Strabo 13.4.1 (Philetaerus of Tieium, keeper of Lysimachus' treasure at Pergamon, makes it revolt and holds it twenty years)"
+          - "Strabo 13.4.2 (the dynasty: Eumenes I, Attalus I, Eumenes II, Attalus II, Attalus III)"
+        disputed: "Philetaerus' age: no source read gives it; 79 is an estimate."
         capital: per_pergamon
         leader: Philetaerus
         leader_age: 79
         leader_died: -263
         # Ages are at accession and approximate for Eumenes I (b. c. 300?) and Attalus III.
-        successors: [{name: "Eumenes I", age: 40, died: -241}, {name: "Attalus I Soter", age: 28, disposition: "aggressive", died: -197}, {name: "Eumenes II", age: 24, disposition: "scholarly", died: -159}, {name: "Attalus II Philadelphus", age: 61, died: -138}, {name: "Attalus III", age: 33, died: -133}]
+        successors:
+          - {name: "Eumenes I", age: 40, died: -241, sources: ["Strabo 13.4.2 (Eumenes beats Antiochus son of Seleucus near Sardis; dies after twenty-two years)"]}
+          - {name: "Attalus I Soter", age: 28, disposition: "aggressive", died: -197, sources: ["Strabo 13.4.2 (first proclaimed king after beating the Galatians; reigns forty-three years)"]}
+          - {name: "Eumenes II", age: 24, disposition: "scholarly", died: -159, sources: ["Strabo 13.4.2 (reigns forty-nine years)"]}
+          - {name: "Attalus II Philadelphus", age: 61, died: -138, sources: ["Strabo 13.4.2 (guardian, then king for twenty-one years; dies an old man)"]}
+          - {name: "Attalus III", age: 33, died: -133, sources: ["Strabo 13.4.2 (Philometor reigns five years and leaves the Romans his heirs)"]}
         pitch: "A fortress, a fortune and a founding dynasty. Build a great library, and more."
         provinces:
           per_pergamon: 200000
@@ -1434,6 +1454,10 @@ scenarios:
           piston_bellows: adopted
       bithynia:
         disposition: cautious
+        sources:
+          - "Memnon, History of Heracleia 10.1-2 (Nicomedes, king of Bithynia, ally of Antigonus against Antiochus)"
+          - "Memnon, History of Heracleia 12.1 (Nicomedes prospers and founds a city named after himself)"
+          - "Jerome, Chronicle, Abr. 1755 (Nicomedes enlarges a city and calls it Nicomedeia)"
         capital: bit_bithynia
         leader: Nicomedes I
         pitch: "Guard the gateway between Europe and Asia."
