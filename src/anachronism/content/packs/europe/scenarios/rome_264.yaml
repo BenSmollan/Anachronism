@@ -1497,6 +1497,10 @@ scenarios:
           piston_bellows: adopted
       pontus:
         disposition: cautious
+        sources:
+          - "Polybius 4.56.1 (the kings of Pontus: Mithridates makes war on Sinope, 220 BC)"
+          - "Memnon, History of Heracleia 16 (Ariobarzanes and the Galatians) # unverified"
+        disputed: "Ariobarzanes' reign (c. 266-250) rests on Memnon and coins; the passage was not read here, and the dates of all the early kings of Pontus are modern reconstructions."
         capital: pon_pontus
         leader: Ariobarzanes
         leader_age: 45
@@ -1504,7 +1508,13 @@ scenarios:
         # Reign dates approximate (D-XXX): Ariobarzanes c. 266-250, Mithridates II c. 250-220,
         # Mithridates III c. 220-185, Pharnaces I c. 185-170, Mithridates IV c. 170-150,
         # Mithridates V c. 150-120 (murdered at Sinope), Mithridates VI 120-63 (a boy until he seized power c. 113-112).
-        successors: [{name: "Mithridates II", age: 25, died: -220}, {name: "Mithridates III", age: 30, died: -186}, {name: "Pharnaces I", age: 35, disposition: "aggressive", died: -170}, {name: "Mithridates IV Philopator", age: 30, died: -151}, {name: "Mithridates V Euergetes", age: 40, died: -120, ends: "is murdered at a banquet in Sinope"}, {name: "Mithridates VI Eupator", age: 14, disposition: "aggressive", until: -94}]
+        successors:
+          - {name: "Mithridates II", age: 25, died: -220, sources: ["Polybius 4.56.1-7 (King Mithridates makes war on Sinope, 220 BC)", "Polybius 8.20.11 (Achaeus married Laodice, daughter of King Mithridates)"]}
+          - {name: "Mithridates III", age: 30, died: -186, sources: ["(no passage read names him) # unverified"], disputed: "Known from coins and later lists, not from any passage read; his dates are a modern reconstruction."}
+          - {name: "Pharnaces I", age: 35, disposition: "aggressive", died: -170, sources: ["Polybius 24.1.1-2, 24.5.1 (the war of Pharnaces with Eumenes and Ariarathes, and its peace)"]}
+          - {name: "Mithridates IV Philopator", age: 30, died: -151, sources: ["(no passage read names him) # unverified"], disputed: "Known from coins and inscriptions, not from any passage read."}
+          - {name: "Mithridates V Euergetes", age: 40, died: -120, ends: "is murdered at a banquet in Sinope", sources: ["Justin 37.1.2 (Mithridates of Pontus rewarded with Greater Phrygia)", "Strabo 10.4.10 (murdered at Sinope) # unverified"]}
+          - {name: "Mithridates VI Eupator", age: 14, disposition: "aggressive", until: -94, sources: ["Justin 37.2.1-5 (comets at his birth and accession; plots against the boy king)"]}
         pitch: "Iron, timber and Persian royal blood on the Black Sea."
         provinces:
           pon_pontus: 300000
@@ -1543,14 +1553,23 @@ scenarios:
       ptolemaic:
         navy_bp: 15000
         disposition: scholarly
+        sources:
+          - "Jerome, Chronicle, Abr. 1733 (Ptolemy Philadelphus, second king of Egypt, for 38 years)"
+          - "Livy, Periochae 14.6 (a treaty of friendship with King Ptolemy of Egypt, 273 BC)"
+          - "Pausanias 1.7.1-3 (Philadelphus, his sister-wife Arsinoe, the revolt of Magas)"
+          - "Pausanias 3.6.4-5 (Patroclus' fleet sent to help Athens against Antigonus)"
+        disputed: "Cyrene (pto_cyrenaica) is Magas' kingdom in 264, not Egypt's (DEC014): see e2_cyrene."
         scripts:
-          - {id: "third_syrian_war", goal: "conquer", target: "seleucid", preconditions: {after_year: -248}, depends_on: ["second_syrian_war"], note: "Ptolemy III marches to Babylon to avenge his sister (246 BC)."}
+          - {id: "third_syrian_war", goal: "conquer", target: "seleucid", preconditions: {after_year: -248}, depends_on: ["second_syrian_war"], note: "Ptolemy III marches to avenge his sister Berenice, murdered by Seleucus II (246 BC).", sources: ["Justin 27.1.1-9 (Berenice murdered; Ptolemy would have taken all Seleucus' realm had trouble at home not recalled him)", "Polybius 5.58.10-11 (Ptolemy Euergetes seizes Seleucia in his anger at Berenice's murder)"]}
         capital: pto_delta
         music: near_east
         leader: Ptolemy II Philadelphus
         leader_age: 45
         leader_died: -247
-        successors: [{name: "Ptolemy III", age: 38, disposition: "aggressive", died: -222}, {name: "Ptolemy IV", age: 23, disposition: "cautious", died: -204}, {name: "Ptolemy V", age: 6, died: -180}]
+        successors:
+          - {name: "Ptolemy III", age: 38, disposition: "aggressive", died: -222, sources: ["Jerome, Chronicle, Abr. 1771 (Ptolemy Euergetes, third king of Egypt, for 26 years)", "Justin 26.3.2 (Magas' daughter betrothed to him)"]}
+          - {name: "Ptolemy IV", age: 23, disposition: "cautious", died: -204, sources: ["Polybius 5.34.1 (Philopator succeeds his father after killing his brother Magas)", "Jerome, Chronicle, Abr. 1797 (fourth king of Egypt, for 17 years)"]}
+          - {name: "Ptolemy V", age: 6, died: -180, sources: ["Jerome, Chronicle, Abr. 1814 (Ptolemy Epiphanes, fifth king of Egypt, for 24 years)", "Polybius 15.25.1 (Sosibius, the boy king's guardian)"]}
         pitch: "The Library of Alexandria, the grain of the Nile and the best scholars alive. What could they build ahead of time?"
         provinces:
           pto_delta: 1800000
@@ -1600,7 +1619,12 @@ scenarios:
         navy_bp: 3000
         disposition: cautious
         scripts:
-          - {id: "cyrene_returns_to_egypt", goal: "ally", target: "ptolemaic", preconditions: {after_year: -250}, note: "Magas dies; his daughter Berenice, betrothed to Ptolemy's son, has Demetrius the Fair killed and marries as her father chose, bringing Cyrene back to Egypt (c. 250-246 BC)."}
+          - {id: "cyrene_returns_to_egypt", goal: "ally", target: "ptolemaic", preconditions: {after_year: -250}, note: "Magas dies; his daughter Berenice, betrothed to Ptolemy's son, has Demetrius the Fair killed and marries as her father chose, bringing Cyrene back to Egypt (c. 250-246 BC).", sources: ["Justin 26.3.2-8"], disputed: "The year: Justin dates Magas' death only 'about the same time' as Alexander of Epirus' restoration; c. 250 is an estimate."}
+        sources:
+          - "Pausanias 1.7.1-3 (Magas, Ptolemy's half-brother, leads Cyrene in revolt, marches on Egypt, marries Antiochus' daughter Apame)"
+          - "Pausanias 1.6.8 (Magas captures Cyrene in the fifth year of its rebellion)"
+          - "Justin 26.3.2 (Magas, king of Cyrene)"
+        disputed: "Magas' age and the length of his reign are not in the passages read; 50 is an estimate. His wife is Apame in Pausanias 1.7.3 and Arsinoe in Justin 26.3.3."
         capital: pto_cyrenaica
         music: near_east
         leader: King Magas
@@ -1642,15 +1666,24 @@ scenarios:
           roads: adopted
       seleucid:
         disposition: aggressive
+        sources:
+          - "Jerome, Chronicle, Abr. 1737 (Antiochus Soter king of Syria and Asia for 19 years)"
+          - "Pausanias 1.7.3 (Antiochus, urged by Magas, breaks his father's treaty with Ptolemy)"
+          - "Memnon, History of Heracleia 10.1-2 (Antiochus at war with Antigonus and Nicomedes)"
         scripts:
-          - {id: "second_syrian_war", goal: "conquer", target: "ptolemaic", preconditions: {after_year: -262}, note: "Antiochus II fights Ptolemy II for Syria (260-253 BC)."}
-          - {id: "seleucids_vs_pergamon", goal: "conquer", target: "pergamon", preconditions: {after_year: -240}, note: "Attalus I defeats the Seleucids and Galatians (c. 230 BC)."}
+          - {id: "second_syrian_war", goal: "conquer", target: "ptolemaic", preconditions: {after_year: -262}, note: "Antiochus II fights Ptolemy II for Syria (260-253 BC).", sources: ["Porphyry, on Daniel 11.6 (Antiochus Theos fights many wars against Ptolemy Philadelphus; peace sealed by Berenice's marriage)"]}
+          - {id: "seleucids_vs_pergamon", goal: "conquer", target: "pergamon", preconditions: {after_year: -240}, note: "Attalus I defeats the Seleucids and Galatians (c. 230 BC).", sources: ["Strabo 13.4.2 (Attalus proclaimed king after beating the Galatians)", "Justin 27.3.1-2 (the king of Pergamon, miscalled Eumenes of Bithynia, attacks Antiochus and the Gauls)"]}
         capital: sel_syria
         music: near_east
         leader: Antiochus I Soter
         leader_age: 60
         leader_died: -261
-        successors: [{name: "Antiochus II", age: 25, disposition: "aggressive", died: -247}, {name: "Seleucus II", age: 20, died: -225, ends: "is killed in a fall from his horse"}, {name: "Seleucus III", age: 20, died: -223, ends: "is murdered by his own officers"}, {name: "Antiochus III", age: 18, disposition: "aggressive", until: -186}, {name: "Seleucus IV", age: 30, died: -175, ends: "is murdered by his minister Heliodorus"}]
+        successors:
+          - {name: "Antiochus II", age: 25, disposition: "aggressive", died: -247, sources: ["Jerome, Chronicle, Abr. 1756 (Antiochus Theos king of Syria for 15 years)", "Justin 27.1.1 (his death; his son Seleucus succeeds)"]}
+          - {name: "Seleucus II", age: 20, died: -225, ends: "is killed in a fall from his horse", sources: ["Justin 27.1.1-3", "Justin 27.3.12 (killed by a fall from his horse)"]}
+          - {name: "Seleucus III", age: 20, died: -223, ends: "is murdered by his own officers", sources: ["Polybius 4.48.6-9 (assassinated beyond the Taurus by Apaturius and Nicanor)"]}
+          - {name: "Antiochus III", age: 18, disposition: "aggressive", until: -186, sources: ["Polybius 5.40.5-6 (the younger son succeeds his murdered brother)", "Livy 37.37-44 (Magnesia)"]}
+          - {name: "Seleucus IV", age: 30, died: -175, ends: "is murdered by his minister Heliodorus", sources: ["Jerome, Chronicle, Abr. 1830 (Seleucus Philopator king of Syria and Asia for 12 years)", "Appian, Syriaca 45 (murdered by Heliodorus) # unverified"]}
         pitch: "The biggest empire in the west, stretched thin from Sardis to Persia. Hold it together."
         provinces:
           sel_syria: 1200000
@@ -1698,6 +1731,9 @@ scenarios:
       massalia:
         navy_bp: 20000
         disposition: mercantile
+        sources:
+          - "Strabo 4.1.5 (the aristocracy of Massalia and its assembly of six hundred)"
+          - "Justin 43.5.3 (Massalia keeps faith with the Romans in all their wars)"
         capital: mas_massalia
         # Massalia was ruled by the Six Hundred (timouchoi), who served for life (Strabo 4.1.5).
         leader: The Six Hundred of Massalia
@@ -1741,12 +1777,20 @@ scenarios:
           piston_bellows: adopted
       kush:
         disposition: pious
+        sources:
+          - "Diodorus 3.6.3 (Ergamenes, king of the Ethiopians in the reign of the second Ptolemy, Greek-educated, defies the priests)"
         capital: kus_meroe
         # Kings of Kush, dates approximate (D-XXX): Arkamani I (Ergamenes), Amanislo, Arnekhamani, Arqamani II, Adikhalamani.
+        # After Ergamenes no ancient writer names these kings: they are known from their own monuments and
+        # pyramids, which were not read here. Their names and order are kept; their sources are marked.
         leader: Arkamani I (Ergamenes)
         leader_age: 45
         leader_died: -258
-        successors: [{name: "Amanislo", age: 35, died: -236}, {name: "Arnekhamani", age: 35, died: -218}, {name: "Arqamani II", age: 30, died: -206}, {name: "Adikhalamani", age: 30, died: -186}]
+        successors:
+          - {name: "Amanislo", age: 35, died: -236, sources: ["Meroitic royal inscriptions (not read here) # unverified"], disputed: "Order and dates rest on monuments, not on any ancient narrative."}
+          - {name: "Arnekhamani", age: 35, died: -218, sources: ["Meroitic royal inscriptions (not read here) # unverified"], disputed: "Order and dates rest on monuments, not on any ancient narrative."}
+          - {name: "Arqamani II", age: 30, died: -206, sources: ["Meroitic royal inscriptions (not read here) # unverified"], disputed: "Order and dates rest on monuments, not on any ancient narrative."}
+          - {name: "Adikhalamani", age: 30, died: -186, sources: ["Meroitic royal inscriptions (not read here) # unverified"], disputed: "Order and dates rest on monuments, not on any ancient narrative."}
         music: near_east
         pitch: "Iron, gold and your own script on the upper Nile, far from the Greek quarrels."
         provinces:
