@@ -574,7 +574,8 @@ provinces:
       - "Strabo 6.1.6 (Rhegium founded by the Chalcidians)"
 
   # --- Cisalpine Gaul and Liguria ---
-  # source: Polybius (oak woods and swine of the plain); Strabo 5.1.6 (Boii driven out); Livy,(Boii beaten 191 BC); (Bononia colony 189 BC)  # unverified: passage numbers not yet read and so withheld
+  # 264 BC: free Gauls, at peace with Rome under the treaty they sought after Lake Vadimon (Polybius 2.20.5); the peace holds forty-five years (Polybius 2.21.1).
+  #   Rome takes half their land in 191 (Livy 36.39) and founds Bononia in 189 (Livy 37.57).
   - id: it_boii
     name: "Boii (Felsina/Bononia, Mutina)"
     latlon: [44.49, 11.34]
@@ -584,7 +585,15 @@ provinces:
     capacity: 95000
     resources: {timber: accessible}
     neighbours: [it_arretium, it_cenomani, it_ligures_apuani, it_senones, it_veneti]
-  # source: Polybius (Mediolanum); Livy; Strabo 5.1.6  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Polybius 2.15.2-3 (the Po plain's woods and acorns; nearly all Italy's swine come from it)"
+      - "Polybius 2.17.7 (south of the Po: the Anares, the Boii, the Lingones, the Senones)"
+      - "Polybius 2.20.1-5 (the Boii beaten at Lake Vadimon and the next year; they sue for terms)"
+      - "Polybius 2.21.1 (the Gauls at peace with Rome for forty-five years)"
+      - "Strabo 5.1.6 (the Boii driven out, not destroyed), 5.1.11 (Bononia, Mutina, Parma), 5.1.12 (Rome fed on the swine of these acorn woods)"
+      - "Livy 36.38-39 (the Boii beaten and fined of nearly half their land, 191 BC)"
+      - "Livy 37.57 (the Latin colony of Bononia, 189 BC)"
+  # 264 BC: free Gauls, the largest tribe of the Po (Polybius 2.17.4), at peace with Rome (Polybius 2.21.1). Rome takes Mediolanum in 222 (Polybius 2.34).
   - id: it_insubres
     name: "Insubres (Mediolanum, Comum)"
     latlon: [45.46, 9.19]
@@ -594,7 +603,12 @@ provinces:
     capacity: 140000
     resources: {timber: accessible}
     neighbours: [it_cenomani, it_ligures_apuani, it_liguria, it_salassi, it_taurini]
-  # source: Livy (Cenomani); Polybius,(Placentia and Cremona colonies, 218 BC)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Polybius 2.17.4 (the Insubres, the largest tribe of all)"
+      - "Polybius 2.21.1 (the Gauls at peace with Rome for forty-five years)"
+      - "Polybius 2.34.10-15 (Acerrae taken; the consul before Mediolanum, the Insubres' chief place, 222 BC)"
+      - "Strabo 5.1.6 (Mediolanum their metropolis, once a village; Comum)"
+  # 264 BC: free Gauls, friends of Rome: they side with Rome in 225 (Polybius 2.23.2). Rome plants Cremona and Placentia in 218 (Polybius 3.40.5).
   - id: it_cenomani
     name: "Cenomani (Brixia, Verona, Cremona)"
     latlon: [45.54, 10.22]
@@ -604,7 +618,14 @@ provinces:
     capacity: 85000
     resources: {}
     neighbours: [it_boii, it_insubres, it_veneti]
-  # source: Strabo 5.1.4 (Venetic horse-breeding, prized in the past, gone by Strabo's day); (Patavium); Polybius (Veneti allied to Rome); Livy (Patavium)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Polybius 2.17.4 (the Cenomani beside the Insubres, on the river)"
+      - "Polybius 2.23.2 (the Veneti and Cenomani take Rome's side, 225 BC)"
+      - "Polybius 2.24.7 (20,000 Veneti and Cenomani on the Boian frontier)"
+      - "Polybius 3.40.4-5 (Placentia and Cremona founded, 218 BC)"
+      - "Strabo 5.1.6 (Verona, Brixia, Mantua), 5.1.9 (the Cenomani and Heneti helped the Romans in their battles)"
+  # 264 BC: free, an old people apart from the Gauls in speech (Polybius 2.17.5), friends of Rome in 225 (Polybius 2.23.2).
+  # note: the horses: the Heneti once bred famous horses, a devotion gone by Strabo's day (Strabo 5.1.4).
   - id: it_veneti
     name: "Veneti (Patavium, Ateste, Altinum)"
     latlon: [45.41, 11.87]
@@ -614,8 +635,13 @@ provinces:
     capacity: 120000
     resources: {horses: accessible}
     neighbours: [it_boii, it_cenomani]
-  # source: Polybius (Hannibal storms the capital of the Taurini); Livy; Strabo  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: the Taurini lie west of the Insubres, on the road Hannibal took (Polybius).  # unverified
+    sources:
+      - "Polybius 2.17.5-6 (the Veneti, very ancient, differing from the Gauls in customs and speech)"
+      - "Polybius 2.23.2 (the Veneti and Cenomani take Rome's side, 225 BC)"
+      - "Strabo 5.1.4 (Heneti horse-breeding, prized in the past)"
+      - "Strabo 5.1.7 (Patavium, best of the cities there; Altinum in a marsh)"
+  # 264 BC: free, held by no state. Hannibal storms their chief city in 218 (Polybius 3.60.8-10).
+  # note: ADDED: the Taurini, a Ligurian tribe (Strabo 4.6.6), lie west of the Insubres on Hannibal's road.
   - id: it_taurini
     name: "Taurini (Taurasia)"
     latlon: [45.07, 7.69]
@@ -625,8 +651,11 @@ provinces:
     capacity: 55000
     resources: {}
     neighbours: [it_insubres, it_liguria, it_salassi]
-  # source: Strabo 4.6.7 (Salassi gold-washing in the Duria; Rome's war on them, 143 and 25 BC); Cassius Dio  # unverified: passage numbers not yet read and so withheld
-  # note: ADDED: Alpine pass-keepers whom Rome crushed in 25 BC (Cassius Dio), the end of this game's span.  # unverified
+    sources:
+      - "Polybius 3.60.8-10 (the Taurini quarrel with the Insubres; Hannibal takes their chief city in three days)"
+      - "Strabo 4.6.6 (the Taurini, a Ligurian tribe, on the Italian slopes of the Alps)"
+  # 264 BC: free, held by no state; no source speaks of them for 264.
+  # note: ADDED: Alpine pass-keepers whom Augustus' general Terentius Varro crushed and sold, founding Augusta (Strabo 4.6.7), the end of this game's span.
   - id: it_salassi
     name: "Salassi (Aosta valley)"
     latlon: [45.74, 7.32]
@@ -636,7 +665,9 @@ provinces:
     capacity: 35000
     resources: {gold: limited}
     neighbours: [it_insubres, it_taurini]
-  # source: Strabo 4.6.2 (Ligurian ship-timber, flocks, hides, honey; Genua); Livy (Mago takes Genua, 205 BC)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Strabo 4.6.7 (the Salassi wash gold in the Durias; masters of the passes; crushed by Terentius Varro, Augusta founded)"
+  # 264 BC: free Ligurians, unconquered by Rome. Mago takes Genua in 205 (Livy 28.46).
   - id: it_liguria
     name: "Liguria (Genua, Albingaunum, Vada Sabatia)"
     latlon: [44.41, 8.93]
@@ -646,7 +677,12 @@ provinces:
     capacity: 90000
     resources: {timber: accessible}
     neighbours: [it_insubres, it_ligures_apuani, it_taurini]
-  # source: Strabo 5.2.5 (Luna's marble); Pliny NH; Livy (Apuani deported 180 BC); (Luna colony 177 BC)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Polybius 2.16.1-2 (the Ligurians hold both slopes of the Apennines down to Pisa and Arretium)"
+      - "Strabo 4.6.1 (Genua, the emporium of the Ligures; Vada Sabatorum; Albingaunum of the Ligures Ingauni)"
+      - "Strabo 4.6.2 (the Ligures live by flocks; great ship-timber)"
+      - "Livy 28.46 (Mago surprises and takes Genua, 205 BC)"
+  # 264 BC: free Ligurians. Rome deports 40,000 Apuani to Samnium in 180 (Livy 40.38) and founds Luna in 177 (Livy 41.13).
   - id: it_ligures_apuani
     name: "Apuan Ligurians and Luna"
     latlon: [44.1, 10.03]
@@ -656,6 +692,11 @@ provinces:
     capacity: 35000
     resources: {stone: accessible}
     neighbours: [it_boii, it_etruria_n, it_insubres, it_liguria]
+    sources:
+      - "Strabo 5.2.5 (Luna's harbour and its white and grey marble quarries)"
+      - "Pliny NH 36.4 (Bostock; the marble of the Luna quarries)"
+      - "Livy 40.38 (40,000 Apuani moved to Samnium, 180 BC), 40.41 (7,000 more shipped to Neapolis and Samnium)"
+      - "Livy 41.13 (2,000 Roman colonists at Luna, 177 BC)"
 
   # --- Sicily ---
   # source: Polybius (Mamertines at Messana; the quarrel that began the First Punic War); Thucydides  # unverified: passage numbers not yet read and so withheld
