@@ -1,7 +1,7 @@
 schema_version: 1
 # Peoples of the scenario rome_264 (Rome and Carthage, 264 BC) that civs_ancient.yaml lacks.
-# Ids carry the e2_ prefix. Every entry names its sources; passages marked "# unverified" in a
-# source string were not read in this session (only the author and work are given).
+# Ids carry the e2_ prefix. Every entry names its sources, each passage read in place (T004: Polybius
+# on LacusCurtius, Livy on Wikisource, the Periochae on livius.org, Justin on attalus.org, Pausanias on theoi.com).
 # How the Italian allies (socii) are modelled is explained in scenarios/rome_264.yaml.
 civs:
   - id: e2_mamertines
@@ -31,7 +31,7 @@ civs:
       The hill cantons of Samnium and the Hirpini, beaten in three wars and now allies of Rome by treaty. Polybius counts 70,000 foot and 7,000 horse on their muster rolls in 225 BC.
     sources:
       - "Polybius 2.24.10 (Samnites: 70,000 foot and 7,000 horse in 225 BC)"
-      - "Livy 10.45 (Samnite wars end 290 BC; treaty of alliance) # unverified"
+      - "Livy, Periochae 11.5 (the Samnites sue for peace; the treaty renewed for the fourth time, 290 BC)"
     confidence: medium
   - id: e2_central_italics
     name: Central Italic Peoples
@@ -45,7 +45,7 @@ civs:
       The Marsi, Frentani and their neighbours of the Apennines, allies of Rome since the end of the Samnite wars, who fight beside the legions as socii.
     sources:
       - "Polybius 2.24.12 (Marsi, Marrucini, Frentani and Vestini: 20,000 foot and 4,000 horse)"
-      - "Livy 9.45 (treaties with the Marsi, Marrucini, Paeligni and Frentani, 304 BC) # unverified"
+      - "Livy 9.45 (the Marrucini, Marsi, Paeligni and Frentani obtain a treaty with Rome, 304 BC)"
     confidence: medium
   - id: e2_etruscans
     name: Etruscan and Faliscan Cities
@@ -56,11 +56,11 @@ civs:
     emblem: ETR
     portrait: roman
     description: >-
-      The old city-states of Etruria, bound to Rome by separate treaties, with the Faliscans of Falerii. Volsinii will be taken in 264 BC; Falerii will rise and fall in 241.
+      The old city-states of Etruria, bound to Rome by separate treaties, with the Faliscans of Falerii. Volsinii, at war with Rome in 264 BC, stands apart; Falerii will rise and fall in 241.
     sources:
       - "Polybius 2.24.5 (Sabines and Etruscans: above 50,000 foot and 4,000 horse)"
       - "Polybius 2.20 (Etruscans and Boii beaten by Rome at Lake Vadimon)"
-      - "Zonaras 8.7 (Volsinii taken 264 BC) # unverified"
+      - "Fasti Triumphales, 241/0 BC (two consuls triumph over the Falisci)"
     confidence: medium
   - id: e2_umbrians
     name: Umbrians
@@ -88,7 +88,7 @@ civs:
       Lucanians, Bruttians, Apulians and Messapians, who came into Rome's alliance after Pyrrhus and Tarentum, and whose loyalty Hannibal will test.
     sources:
       - "Polybius 2.24.11-12 (Iapygians and Messapians 50,000 foot and 16,000 horse; Lucanians 30,000 and 3,000)"
-      - "Livy 22.61 (Bruttians, Apulians and Lucanians go over to Hannibal after Cannae) # unverified"
+      - "Livy 22.61 (after Cannae part of the Apulians, all the Bruttii and the Lucanians go over to Carthage)"
     confidence: medium
   - id: e2_italiote_greeks
     name: Greek Cities of Italy
@@ -103,7 +103,7 @@ civs:
     sources:
       - "Polybius 1.7.6-13 (Rhegium, the Roman garrison, and its restoration)"
       - "Polybius 3.118.2 (Tarentum surrenders to Hannibal after Cannae)"
-      - "Livy 9.20, 9.25 (Neapolis' treaty, 326 BC) # unverified"
+      - "Livy 8.26 (the treaty with Neapolis, 326 BC)"
     confidence: medium
   - id: e2_boii
     name: Boii
@@ -201,7 +201,7 @@ civs:
       Hill peoples of the Spanish interior whose last great stand will be at Numantia.
     sources:
       - "Polybius 3.14 (Hannibal against the Vaccaei and Carpetani of the Spanish interior)"
-      - "Appian, Iberica 97 (Numantia, 133 BC) # unverified"
+      - "Livy, Periochae 59.1 (Numantia falls to Scipio Aemilianus, 133 BC)"
     confidence: low
   - id: e2_volsinii
     name: Volsinii

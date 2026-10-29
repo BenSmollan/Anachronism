@@ -997,7 +997,7 @@ scenarios:
           - {name: "Masinissa", age: 32, disposition: "aggressive", died: -148, sources: ["Livy 29.29 (Gala dies while Masinissa fights in Spain; Oezalces and Capussa reign first)", "Livy, Periochae 50.5 (dies past ninety, 148 BC)"], disputed: "Oezalces, Capussa and Lacumazes reigned between Gala and Masinissa (Livy 29.29); they are passed over here."}
           - {name: "Micipsa", age: 37, died: -118, sources: ["Sallust, Jugurtha 5.6 (Micipsa sole ruler after Masinissa)", "Sallust, Jugurtha 9.4 (old and ill, he nears his end)"]}
           - {name: "Jugurtha", age: 42, disposition: "aggressive", until: -104, sources: ["Sallust, Jugurtha 5.7 (Mastanabal's son, raised by Micipsa)", "Sallust, Jugurtha 12.1-5 (the kingdom divided; Hiempsal killed)"]}
-          - {name: "Gauda", age: 45, until: -94, sources: ["Sallust, Jugurtha 65 (Gauda, son of Mastanabal) # unverified"]}
+          - {name: "Gauda", age: 45, until: -94, sources: ["Sallust, Jugurtha 65.1 (Gauda, son of Mastanabal and grandson of Masinissa, an heir of Micipsa)"]}
         pitch: "The best horsemen in the world, between Carthage and the desert."
         provinces:
           num_massyli: 400000
