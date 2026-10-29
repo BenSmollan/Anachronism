@@ -1,9 +1,16 @@
 schema_version: 1
 # Italy, Sicily, Sardinia and Corsica at the grain of their peoples, for the Roman Republic, 509-27 BC (D-286).
 # Each province is one people or region, centred on its chief ancient town (latlon: degrees north, east).
-# Sources are in the `# source:` comment on each province: ancient authors first (Strabo book 5-6 for
-# the peoples and towns, Polybius 2 for the manpower of Italy in 225 BC, Livy for conquests and colonies).
-# capacity is about the free-and-slave population each region carried c. 225 BC (Polybius 2.24 gives
+# SOURCES: each province carries `sources` (ancient author first, book.chapter.section, each passage opened
+# and read: Strabo 4-6 and Polybius 1-3 (LacusCurtius), Livy (Wikisource, Roberts; Latin Library), Livy's
+# Periochae (livius.org), Velleius 1.14-15 and Diodorus 22-23 (LacusCurtius), Zonaras 8 and the Fasti
+# Triumphales (LacusCurtius, attalus.org), Cicero's Verrines and Brutus (Latin Library), Pliny NH (Bostock,
+# Perseus: Bostock's chapter numbers), Diodorus 5.13 (Perseus Greek), Pausanias 10.17 (theoi.com)) and
+# `disputed` where the sources conflict. Modern works were used only to check, never cited.
+# Each province's comment starts with what it was in 264 BC, the start of rome_264; the holder there matches the
+# ownership table at the top of scenarios/rome_264.yaml. Latin and Roman colonies are named on the province that holds
+# them (DEC013: no new provinces).
+# capacity is about the free-and-slave population each region carried c. 225 BC (Polybius 2.24.16 gives
 # ~700,000 foot and ~70,000 horse for Rome and her allies, hence 3-5 million people in all): the
 # peninsula with Cisalpine Gaul sums to ~4.0 million, the islands to ~0.9 million.
 # Resources are only those an ancient source attests; grain and pasture come from the terrain.
@@ -12,7 +19,8 @@ schema_version: 1
 provinces:
 
   # --- Rome, Latium and the Latin-speaking south of the Tiber ---
-  # source: Livy (Ancus Marcius' salt-works at Ostia); Strabo 5.3.5 (Ostia, harbourless, silted by the Tiber); Polybius 2.24 (250,000 foot and 23,000 horse of Romans and Campanians in 225 BC)  # unverified: passage numbers not yet read and so withheld
+  # 264 BC: Rome's own: the City and the citizen land round it (ager Romanus), with Ostia, Rome's port and salt-works at the Tiber mouth.
+  # note: the stone is the Tiburtine and Gabine stone shipped down to Rome by water (Strabo 5.3.11).
   - id: it_roma
     name: "Rome and the Ager Romanus"
     latlon: [41.85, 12.42]
@@ -22,8 +30,14 @@ provinces:
     capacity: 320000
     resources: {salt: accessible, stone: accessible}
     neighbours: [it_latium, it_veii]
-  # source: Livy (the Latin cities after 338 BC); Strabo 5.3.10(Gabii's quarry and 'red stone'); Polybius 2.24 (Latins 80,000 foot, 5,000 horse)  # unverified: passage numbers not yet read and so withheld
-  # note: Praeneste is the centre; the Alban hills (Tusculum, the old Latin League sanctuary) lie inside it, and Alba Longa, destroyed in legend (Livy), gets no separate province.  # unverified
+    sources:
+      - "Livy 1.33.9 (Ancus Marcius builds Ostia at the Tiber mouth; salt-works on both banks)"
+      - "Strabo 5.3.5 (Ostia harbourless, silted by the Tiber; founded by Ancus Marcius)"
+      - "Strabo 5.3.11 (Tiburtine and Gabine stone carried to Rome by water)"
+      - "Polybius 2.24.14 (Romans and Campanians on the rolls in 225 BC: 250,000 foot, 23,000 horse)"
+  # 264 BC: Rome's. After the Latin War (338) Lanuvium, Aricia, Nomentum and Pedum were made Roman citizens and Tusculum kept its citizenship;
+  #   Tibur and Praeneste stayed Latin allies, fined of land (Livy 8.14). Drawn as Rome's; the two Latin allies are the dispute.
+  # note: Praeneste is the centre; the Alban hills (Tusculum, the old Latin sanctuary) lie inside it. Alba itself was destroyed but for its temple (Strabo 5.3.4) and gets no province.
   - id: it_latium
     name: "Latium (Praeneste, Tibur, Tusculum, the Alban hills, Lavinium)"
     latlon: [41.84, 12.89]
@@ -33,8 +47,16 @@ provinces:
     capacity: 240000
     resources: {stone: accessible}
     neighbours: [it_aequi, it_hernici, it_roma, it_veii, it_volsci]
-  # source: Livy (Corioli, Antium); (Antium taken 338 BC); Strabo 5.3.5 (Antium on rock)  # unverified: passage numbers not yet read and so withheld
-  # note: Centred inland on Setia and Privernum so the province borders Latium, Hernici and Aurunci as the real Volscian country did; Antium and the coast belong to it. The Rutuli of Ardea (Livy) are folded into Latium and Rome: Ardea is too small for its own province.  # unverified
+    sources:
+      - "Livy 8.14 (the settlement of Latium, 338 BC; Tibur and Praeneste fined of land, 8.14.9)"
+      - "Strabo 5.3.4 (Alba destroyed except the temple)"
+      - "Strabo 5.3.10 (Gabii's quarry, the most serviceable to Rome; Praeneste)"
+      - "Strabo 5.3.11 (Tibur, Praeneste and Tusculum; the Tiburtine and Gabine 'red stone' quarries)"
+      - "Polybius 2.24.10 (Latins on the rolls in 225 BC: 80,000 foot, 5,000 horse)"
+    disputed: "Tibur and Praeneste were Latin allies, not Roman citizens, in 264 (Livy 8.14.9); the province is drawn as Rome's because most of it was Roman citizen land."
+  # 264 BC: Rome's. Antium lost its fleet and took Roman settlers in 338 (Livy 8.14); Setia (Velleius 1.14.2) and Tarracina (Velleius 1.14.4) are colonies.
+  # note: centred inland on Setia and Privernum so the province borders Latium, Hernici and Aurunci as the real Volscian country did; Antium and the coast belong to it.
+  # note: the Rutuli of Ardea (Strabo 5.3.2) are folded into Latium and Rome: Ardea is too small for its own province.
   - id: it_volsci
     name: "Volsci (Setia, Privernum, Velitrae, Antium, the Pomptine plain)"
     latlon: [41.48, 13.06]
@@ -44,7 +66,12 @@ provinces:
     capacity: 130000
     resources: {}
     neighbours: [it_aurunci, it_hernici, it_latium]
-  # source: Livy (Hernici lose independence 306 BC, Anagnia their capital); Strabo 5.3.10 (Anagnia)  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Livy 8.14 (Antium's ships burnt or taken to Rome, its people settled; Velitrae punished, 338 BC)"
+      - "Velleius 1.14.2 (Setia colony), 1.14.4 (Tarracina colony)"
+      - "Strabo 5.3.5 (Antium, harbourless, on rock; once pirates with the Tyrrheni)"
+      - "Strabo 5.3.10 (Setia, Signia, Privernum, Velitrae)"
+  # 264 BC: Rome's. The Hernici rose and were beaten in 306: Anagnia and the rebels became citizens without the vote; Aletrium, Verulae and Ferentinum kept their own laws (Livy 9.43).
   - id: it_hernici
     name: "Hernici (Anagnia, Ferentinum, Aletrium)"
     latlon: [41.74, 13.15]
@@ -54,7 +81,11 @@ provinces:
     capacity: 65000
     resources: {}
     neighbours: [it_aequi, it_aurunci, it_latium, it_marsi, it_volsci]
-  # source: Livy (Aequi crushed 304 BC); (Alba Fucens colony 303 BC); (Carseoli colony 298 BC); Strabo 5.3.1  # unverified: passage numbers not yet read and so withheld
+    sources:
+      - "Livy 9.42-43 (the Hernican council at Anagnia; the settlement of 306 BC)"
+      - "Strabo 5.3.10 (Anagnia, a noteworthy city of the Hernici)"
+    disputed: "Aletrium, Verulae and Ferentinum chose their own laws over Roman citizenship (Livy 9.43); the province is drawn as Rome's."
+  # 264 BC: Rome's. The Aequi were all but wiped out in 304 (Livy 9.45); Alba Fucens (303) and Carseoli (298) are Latin colonies, drawn as Rome's.
   - id: it_aequi
     name: "Aequi (Carseoli, Alba Fucens)"
     latlon: [42.07, 13.07]
@@ -64,8 +95,14 @@ provinces:
     capacity: 45000
     resources: {}
     neighbours: [it_hernici, it_latium, it_marsi, it_sabina]
-  # source: Strabo 5.3.1 (Sabines, Reate and its mules, Cures); Livy, Cicero Rep. (Sabines); Dionysius; Velleius (Sabines given citizenship 268 BC)  # unverified: passage numbers not yet read and so withheld
-  # note: Varro RR praises Reate's asses and mules, but no resource id fits.  # unverified
+    sources:
+      - "Livy 9.45 (thirty-one Aequian towns taken in fifteen days, 304 BC)"
+      - "Livy 10.1 (6,000 colonists to Alba in the Aequian country)"
+      - "Livy 10.13 (colony settled at Carseoli)"
+      - "Velleius 1.14.5 (Alba and Carseoli colonies)"
+      - "Strabo 5.3.4 (the overthrow of the Aequi), 5.3.11 (Carseoli and Alba on the Valerian Way)"
+  # 264 BC: Rome's. The Sabines were subdued in 290 (Livy Per. 11.6), given citizenship without the vote the same year and the vote in 268 (Velleius 1.14.6-7).
+  # note: Reate's mules are famous (Strabo 5.3.1), but no resource id fits.
   - id: it_sabina
     name: "Sabine country (Reate, Cures, Nomentum)"
     latlon: [42.4, 12.86]
@@ -75,6 +112,10 @@ provinces:
     capacity: 110000
     resources: {}
     neighbours: [it_aequi, it_falisci, it_picenum, it_umbria]
+    sources:
+      - "Strabo 5.3.1 (Sabine country from Nomentum to the Vestini; Reate and its mules; Cures)"
+      - "Livy, Periochae 11.6 (Curius Dentatus subdues the Sabines)"
+      - "Velleius 1.14.6 (citizenship without the vote, 290 BC), 1.14.7 (the vote, 268 BC)"
 
   # --- Etruria and the Etruscan borderlands ---
   # source: Livy (Falerii, the schoolmaster); (Falerii revolts 293 BC), Polybius (Falerian revolt 241 BC); Strabo  # unverified: passage numbers not yet read and so withheld
